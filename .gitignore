@@ -137,3 +137,17 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Monorepo generated artifacts
+narrivex-backend/dist/
+narrivex-frontend/.next/
+narrivex-frontend/out/
+
+# Local package manager files
+**/npm-debug.log*
+**/.pnpm-store/
+**/.turbo/
+
+# IDE / OS
+.DS_Store
+Thumbs.db
