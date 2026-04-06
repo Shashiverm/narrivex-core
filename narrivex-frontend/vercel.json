@@ -1,14 +1,4 @@
 {
   "buildCommand": "next build",
-  "framework": "nextjs",
-  "env": {
-    "NEXT_PUBLIC_API_URL": "@next_public_api_url",
-    "NEXT_PUBLIC_WS_URL": "@next_public_ws_url",
-    "NEXTAUTH_URL": "@nextauth_url",
-    "NEXTAUTH_SECRET": "@nextauth_secret",
-    "GITHUB_ID": "@github_id",
-    "GITHUB_SECRET": "@github_secret",
-    "GOOGLE_ID": "@google_id",
-    "GOOGLE_SECRET": "@google_secret"
-  }
+  "framework": "nextjs"
 }
