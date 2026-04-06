@@ -1,26 +1,31 @@
-import type { ReactNode } from 'react';
-import Link from 'next/link';
-import { Sparkles, ArrowRight } from 'lucide-react';
+import { ForgotPasswordForm } from '@/components/auth/ForgotPasswordForm';
 
-export default function AuthLayout({ children }: { children: ReactNode }) {
+export const metadata = {
+  title: 'Forgot Password - Narrivex',
+  description: 'Reset your Narrivex password',
+};
+
+export default function ForgotPasswordPage() {
   return (
     <div className="flex min-h-screen bg-grain">
       {/* Left Sidebar - Branding & Benefits */}
       <div className="hidden lg:flex w-1/2 flex-col justify-between bg-gradient-to-br from-sea/10 to-coral/10 px-12 py-12 backdrop-blur">
         <div>
-          <Link href="/" className="inline-flex items-center gap-2 font-display text-2xl font-bold text-ink hover:opacity-80 transition-opacity">
-            <Sparkles className="h-6 w-6 text-sea" />
+          <a href="/" className="inline-flex items-center gap-2 font-display text-2xl font-bold text-ink hover:opacity-80 transition-opacity">
+            <svg className="h-6 w-6 text-sea" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" />
+            </svg>
             Narrivex
-          </Link>
+          </a>
         </div>
 
         <div className="space-y-8">
           <div>
             <h2 className="font-display text-4xl font-bold leading-tight text-ink">
-              Market intelligence, simplified
+              Regain access to your account
             </h2>
             <p className="mt-4 text-lg text-slate-700">
-              Join thousands of traders making smarter decisions with real-time alerts and AI-generated market narratives.
+              We'll send you a secure link to reset your password in just a few minutes.
             </p>
           </div>
 
@@ -32,8 +37,8 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                 </svg>
               </div>
               <div>
-                <p className="font-semibold text-ink">Real-time alerts</p>
-                <p className="text-sm text-slate-600">Get notified instantly when markets move</p>
+                <p className="font-semibold text-ink">Secure reset link</p>
+                <p className="text-sm text-slate-600">24-hour expiration for safety</p>
               </div>
             </div>
 
@@ -44,8 +49,8 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                 </svg>
               </div>
               <div>
-                <p className="font-semibold text-ink">AI narratives</p>
-                <p className="text-sm text-slate-600">Understand market movements instantly</p>
+                <p className="font-semibold text-ink">Instant email delivery</p>
+                <p className="text-sm text-slate-600">Reset link sent to your inbox immediately</p>
               </div>
             </div>
 
@@ -56,8 +61,8 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                 </svg>
               </div>
               <div>
-                <p className="font-semibold text-ink">Enterprise security</p>
-                <p className="text-sm text-slate-600">Your data is encrypted and protected</p>
+                <p className="font-semibold text-ink">Full account control</p>
+                <p className="text-sm text-slate-600">Complete control over your security</p>
               </div>
             </div>
           </div>
@@ -65,14 +70,14 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 
         <div className="rounded-lg border border-black/10 bg-white/40 p-4 backdrop-blur">
           <p className="text-sm text-slate-600">
-            <span className="font-semibold text-ink">1,000+ traders</span> already using Narrivex daily
+            <span className="font-semibold text-ink">Trouble accessing Narrivex?</span> We're here to help you recover your account quickly and securely.
           </p>
         </div>
       </div>
 
-      {/* Right Side - Auth Form */}
+      {/* Right Side - Form */}
       <div className="flex w-full lg:w-1/2 items-center justify-center px-6 py-12">
-        {children}
+        <ForgotPasswordForm />
       </div>
     </div>
   );
