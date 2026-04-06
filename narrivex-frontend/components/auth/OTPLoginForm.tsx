@@ -49,7 +49,7 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
           return prev - 1;
         });
       }, 1000);
-    } catch (error) {
+    } catch {
       toast.error('Failed to send OTP. Please try again.');
     } finally {
       setIsLoading(false);
@@ -82,7 +82,7 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
       // Store token and redirect
       localStorage.setItem('authToken', data.accessToken);
       router.push('/dashboard');
-    } catch (error) {
+    } catch {
       toast.error('Invalid OTP. Please try again.');
     } finally {
       setIsLoading(false);
@@ -101,7 +101,7 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
           Back to login options
         </button>
         <h2 className="font-display text-3xl font-bold text-ink">Sign in with OTP</h2>
-        <p className="text-slate-600">We'll send a code to your email for verification.</p>
+        <p className="text-slate-600">We&apos;ll send a code to your email for verification.</p>
       </div>
 
       {step === 'email' ? (
@@ -157,7 +157,7 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
           </div>
 
           <div className="text-center text-sm text-slate-600">
-            Didn't receive the code?{' '}
+            Didn&apos;t receive the code?{' '}
             <button
               type="button"
               disabled={resendCountdown > 0 || isLoading}

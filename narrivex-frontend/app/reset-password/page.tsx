@@ -1,9 +1,7 @@
-import { ResetPasswordForm } from '@/components/auth/ResetPasswordForm';
+'use client';
 
-export const metadata = {
-  title: 'Reset Password - Narrivex',
-  description: 'Reset your Narrivex password',
-};
+import { Suspense } from 'react';
+import { ResetPasswordForm } from '@/components/auth/ResetPasswordForm';
 
 export default function ResetPasswordPage() {
   return (
@@ -70,14 +68,16 @@ export default function ResetPasswordPage() {
 
         <div className="rounded-lg border border-black/10 bg-white/40 p-4 backdrop-blur">
           <p className="text-sm text-slate-600">
-            <span className="font-semibold text-ink">Password security tip:</span> Use a unique password you don't use anywhere else and include uppercase, lowercase, numbers, and symbols.
+            <span className="font-semibold text-ink">Password security tip:</span> Use a unique password you don&apos;t use anywhere else and include uppercase, lowercase, numbers, and symbols.
           </p>
         </div>
       </div>
 
       {/* Right Side - Form */}
       <div className="flex w-full lg:w-1/2 items-center justify-center px-6 py-12">
-        <ResetPasswordForm />
+        <Suspense fallback={<div className="text-center"><div className="inline-block h-8 w-8 border-2 border-sea border-t-transparent rounded-full animate-spin" /></div>}>
+          <ResetPasswordForm />
+        </Suspense>
       </div>
     </div>
   );

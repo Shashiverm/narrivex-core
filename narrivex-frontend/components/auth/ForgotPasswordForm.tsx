@@ -37,7 +37,7 @@ export function ForgotPasswordForm() {
       toast.success('Reset link sent! Check your email.');
       setSubmitted(true);
       setEmail('');
-    } catch (error) {
+    } catch {
       toast.error('Failed to send reset email. Please try again.');
     } finally {
       setIsLoading(false);
@@ -50,7 +50,7 @@ export function ForgotPasswordForm() {
         {/* Header */}
         <div className="space-y-2">
           <h1 className="font-display text-3xl font-bold text-ink">Check your email</h1>
-          <p className="text-slate-600">We've sent a password reset link to your email address.</p>
+          <p className="text-slate-600">We&apos;ve sent a password reset link to your email address.</p>
         </div>
 
         {/* Success Message */}
@@ -72,7 +72,7 @@ export function ForgotPasswordForm() {
 
         {/* Instructions */}
         <div className="space-y-4 text-sm text-slate-600">
-          <p>If you don't see the email:</p>
+          <p>If you don&apos;t see the email:</p>
           <ul className="list-disc list-inside space-y-2 text-slate-600">
             <li>Check your spam or junk folders</li>
             <li>Make sure you entered the correct email address</li>
@@ -86,7 +86,7 @@ export function ForgotPasswordForm() {
             onClick={() => setSubmitted(false)}
             className="w-full py-3 rounded-lg border-2 border-slate-200 hover:border-slate-300 font-medium text-slate-700 transition-colors"
           >
-            Didn't receive the email? Try another address
+            Didn&apos;t receive the email? Try another address
           </button>
           <Link href="/login" className="block w-full">
             <Button variant="outline" className="w-full">
@@ -107,7 +107,7 @@ export function ForgotPasswordForm() {
           Back to sign in
         </Link>
         <h1 className="font-display text-3xl font-bold text-ink">Reset your password</h1>
-        <p className="text-slate-600">Enter your email address and we'll send you a link to reset your password.</p>
+        <p className="text-slate-600">Enter your email address and we&apos;ll send you a link to reset your password.</p>
       </div>
 
       {/* Form */}

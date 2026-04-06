@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { Github, Chrome, ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 export function SignupForm() {
   const handleOAuthSignup = (provider: 'github' | 'google') => {

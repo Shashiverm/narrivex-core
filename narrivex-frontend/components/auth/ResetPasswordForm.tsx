@@ -162,7 +162,7 @@ export function ResetPasswordForm() {
       {/* Header */}
       <div className="space-y-2">
         <h1 className="font-display text-3xl font-bold text-ink">Create new password</h1>
-        <p className="text-slate-600">Enter a new password below. Make sure it's strong and unique.</p>
+        <p className="text-slate-600">Enter a new password below. Make sure it&apos;s strong and unique.</p>
       </div>
 
       {/* Form */}

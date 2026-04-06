@@ -149,7 +149,7 @@ export function LoginForm() {
         {/* Sign Up Link */}
         <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-center">
           <p className="text-sm text-slate-600">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link href="/signup" className="font-semibold text-sea hover:text-sea/80 transition-colors">
               Create one in seconds
             </Link>
@@ -165,7 +165,7 @@ export function LoginForm() {
       {/* Header */}
       <div className="space-y-2">
         <h1 className="font-display text-4xl font-bold text-ink">Welcome back</h1>
-        <p className="text-slate-600">Choose how you'd like to sign in to your account.</p>
+        <p className="text-slate-600">Choose how you&apos;d like to sign in to your account.</p>
       </div>
 
       {/* OAuth Buttons */}
@@ -215,7 +215,7 @@ export function LoginForm() {
       {/* Sign Up Link */}
       <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-center">
         <p className="text-sm text-slate-600">
-          Don't have an account?{' '}
+          Don&apos;t have an account?{' '}
           <Link href="/signup" className="font-semibold text-sea hover:text-sea/80 transition-colors">
             Create one in seconds
           </Link>

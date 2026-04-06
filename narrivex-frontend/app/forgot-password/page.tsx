@@ -25,7 +25,7 @@ export default function ForgotPasswordPage() {
               Regain access to your account
             </h2>
             <p className="mt-4 text-lg text-slate-700">
-              We'll send you a secure link to reset your password in just a few minutes.
+              We&apos;ll send you a secure link to reset your password in just a few minutes.
             </p>
           </div>
 
@@ -70,7 +70,7 @@ export default function ForgotPasswordPage() {
 
         <div className="rounded-lg border border-black/10 bg-white/40 p-4 backdrop-blur">
           <p className="text-sm text-slate-600">
-            <span className="font-semibold text-ink">Trouble accessing Narrivex?</span> We're here to help you recover your account quickly and securely.
+            <span className="font-semibold text-ink">Trouble accessing Narrivex?</span> We&apos;re here to help you recover your account quickly and securely.
           </p>
         </div>
       </div>
