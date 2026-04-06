@@ -41,6 +41,12 @@ export class User {
   @Column({ nullable: true })
   slackWebhookUrl!: string | null;
 
+  @Column({ nullable: true })
+  passwordResetToken!: string | null;
+
+  @Column({ nullable: true, type: 'timestamp' })
+  passwordResetExpiresAt!: Date | null;
+
   @CreateDateColumn()
   createdAt!: Date;
 
