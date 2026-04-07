@@ -1,5 +1,6 @@
-import Link from 'next/link';
-import { APP_VERSION } from '@/lib/changelog';
+'use client';
+
+import { ComplianceModalLinks } from '@/components/common/ComplianceModal';
 
 export function Footer() {
   return (
@@ -7,21 +8,7 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-4 py-3 text-xs text-slate-600 sm:px-6">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
           <span>Narrivex</span>
-          <Link href="/privacy-policy" className="hover:underline">
-            Privacy Policy
-          </Link>
-          <Link href="/terms-and-conditions" className="hover:underline">
-            Terms of Service / Conditions
-          </Link>
-          <Link href="/financial-disclaimer" className="hover:underline">
-            Financial Disclaimer
-          </Link>
-          <Link href="/cookie-policy" className="hover:underline">
-            Cookie Policy
-          </Link>
-          <Link href="/changelog" className="font-semibold text-sea hover:underline">
-            v{APP_VERSION}
-          </Link>
+          <ComplianceModalLinks className="flex flex-wrap items-center gap-x-4 gap-y-2" />
         </div>
         <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-slate-500">
           <span>Contact: info@navviex.tech</span>
