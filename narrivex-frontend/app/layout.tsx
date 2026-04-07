@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import Providers from './providers';
+import { CookieConsentBanner } from '@/components/common/CookieConsentBanner';
 import { Footer } from '@/components/common/Footer';
 
 export const metadata: Metadata = {
@@ -14,8 +15,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body>
         <Providers>
-          <div className="min-h-screen pb-12">{children}</div>
+          <div className="min-h-screen pb-28">{children}</div>
           <Footer />
+          <CookieConsentBanner />
         </Providers>
       </body>
     </html>

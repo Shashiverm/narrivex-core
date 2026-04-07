@@ -222,7 +222,22 @@ export default function LandingPage() {
 
         {/* Footer */}
         <footer className="border-t border-black/10 pt-8 pb-20 text-center text-sm text-slate-600">
-          <p>&copy; 2026 Narrivex. All rights reserved.</p>
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+            <Link href="/privacy-policy" className="hover:underline">
+              Privacy Policy
+            </Link>
+            <Link href="/terms-and-conditions" className="hover:underline">
+              Terms of Service / Conditions
+            </Link>
+            <Link href="/financial-disclaimer" className="hover:underline">
+              Financial Disclaimer
+            </Link>
+            <Link href="/cookie-policy" className="hover:underline">
+              Cookie Policy
+            </Link>
+          </div>
+          <p className="mt-3">Contact: info@narrivex.tech, New Delhi, India</p>
+          <p className="mt-2">&copy; 2026 Narrivex. All rights reserved.</p>
         </footer>
       </div>
     </div>
