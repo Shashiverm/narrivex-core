@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { CONSENT_UPDATED_EVENT, COOKIE_CONSENT_KEY } from '@/lib/analytics';
 
 type CookieConsent = {
   essential: true;
@@ -10,7 +11,6 @@ type CookieConsent = {
   updatedAt: string;
 };
 
-const COOKIE_CONSENT_KEY = 'narrivex_cookie_consent';
 const COOKIE_POLICY_UPDATED_AT = 'April 7, 2026';
 
 export function CookieConsentBanner() {
@@ -31,6 +31,7 @@ export function CookieConsentBanner() {
     };
 
     window.localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(payload));
+    window.dispatchEvent(new Event(CONSENT_UPDATED_EVENT));
     setIsVisible(false);
   };
 

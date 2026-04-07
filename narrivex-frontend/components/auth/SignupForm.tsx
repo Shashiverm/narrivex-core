@@ -3,9 +3,11 @@
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { Github, Chrome, ArrowRight } from 'lucide-react';
+import { trackEvent } from '@/lib/analytics';
 
 export function SignupForm() {
   const handleOAuthSignup = (provider: 'github' | 'google') => {
+    trackEvent('signup_oauth_click', { provider });
     signIn(provider, { callbackUrl: '/dashboard' });
   };
 

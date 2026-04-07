@@ -5,10 +5,15 @@ import { createChart, ColorType, type CandlestickData, type UTCTimestamp } from 
 import { useRealtimeData } from '@/hooks/useRealtimeData';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { trackEvent } from '@/lib/analytics';
 
 export function Chart({ symbol }: { symbol: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { data, loading } = useRealtimeData(symbol);
+
+  useEffect(() => {
+    trackEvent('chart_panel_view', { symbol });
+  }, [symbol]);
 
   useEffect(() => {
     if (!containerRef.current || data.length === 0) return;
@@ -42,6 +47,7 @@ export function Chart({ symbol }: { symbol: string }) {
 
     series.setData(chartData);
     chart.timeScale().fitContent();
+    trackEvent('chart_rendered', { symbol, points: chartData.length });
 
     const onResize = () => {
       if (containerRef.current) {
@@ -54,7 +60,7 @@ export function Chart({ symbol }: { symbol: string }) {
       window.removeEventListener('resize', onResize);
       chart.remove();
     };
-  }, [data]);
+  }, [data, symbol]);
 
   return (
     <Card className="bg-white p-5">

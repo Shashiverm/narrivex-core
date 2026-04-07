@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { OAuthButtons } from './OAuthButtons';
 import { OTPLoginForm } from './OTPLoginForm';
+import { trackEvent } from '@/lib/analytics';
 
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -38,6 +39,7 @@ export function LoginForm() {
 
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
+    trackEvent('login_attempt', { method: 'credentials' });
     const result = await signIn('credentials', {
       email: data.email,
       password: data.password,
@@ -45,9 +47,14 @@ export function LoginForm() {
     });
 
     if (result?.ok) {
+      trackEvent('login_success', { method: 'credentials' });
       toast.success('Welcome back! 🎉');
       router.push('/dashboard');
     } else {
+      trackEvent('login_failed', {
+        method: 'credentials',
+        error: result?.error || 'invalid_credentials',
+      });
       toast.error('Invalid email or password. Please try again.');
     }
     setIsLoading(false);
@@ -185,7 +192,10 @@ export function LoginForm() {
       <div className="grid gap-3">
         {/* Email + Password Button */}
         <button
-          onClick={() => setAuthMethod('password')}
+          onClick={() => {
+            trackEvent('login_method_selected', { method: 'password' });
+            setAuthMethod('password');
+          }}
           className="flex items-center gap-3 w-full px-4 py-4 rounded-lg border-2 border-slate-200 hover:border-sea hover:bg-sea/5 transition-all text-left font-medium text-ink"
         >
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-sea/10 text-sea flex-shrink-0">
@@ -199,7 +209,10 @@ export function LoginForm() {
 
         {/* Email + OTP Button */}
         <button
-          onClick={() => setAuthMethod('otp')}
+          onClick={() => {
+            trackEvent('login_method_selected', { method: 'otp' });
+            setAuthMethod('otp');
+          }}
           className="flex items-center gap-3 w-full px-4 py-4 rounded-lg border-2 border-slate-200 hover:border-coral hover:bg-coral/5 transition-all text-left font-medium text-ink"
         >
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-coral/10 text-coral flex-shrink-0">

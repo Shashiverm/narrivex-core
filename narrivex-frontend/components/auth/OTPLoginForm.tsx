@@ -6,6 +6,7 @@ import { Mail, Lock, ArrowRight, RotateCcw } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { trackEvent } from '@/lib/analytics';
 
 const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
 
@@ -26,6 +27,7 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
     }
 
     setIsLoading(true);
+    trackEvent('otp_send_attempt');
     try {
       const response = await fetch(`${apiBase}/auth/send-otp`, {
         method: 'POST',
@@ -37,6 +39,7 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
         throw new Error('Failed to send OTP');
       }
 
+      trackEvent('otp_send_success');
       toast.success('OTP sent to your email!');
       setStep('otp');
       setResendCountdown(60);
@@ -50,6 +53,7 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
         });
       }, 1000);
     } catch {
+      trackEvent('otp_send_failed');
       toast.error('Failed to send OTP. Please try again.');
     } finally {
       setIsLoading(false);
@@ -65,6 +69,7 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
     }
 
     setIsLoading(true);
+    trackEvent('otp_verify_attempt');
     try {
       const response = await fetch(`${apiBase}/auth/verify-otp`, {
         method: 'POST',
@@ -77,12 +82,14 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
       }
 
       const data = await response.json();
+      trackEvent('otp_verify_success');
       toast.success('Signed in successfully! 🎉');
       
       // Store token and redirect
       localStorage.setItem('authToken', data.accessToken);
       router.push('/dashboard');
     } catch {
+      trackEvent('otp_verify_failed');
       toast.error('Invalid OTP. Please try again.');
     } finally {
       setIsLoading(false);

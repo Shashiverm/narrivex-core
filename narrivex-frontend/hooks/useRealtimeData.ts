@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { socket } from '@/lib/socket';
+import { trackEvent } from '@/lib/analytics';
 
 export interface PriceData {
   time: number;
@@ -19,11 +20,16 @@ export function useRealtimeData(symbol: string) {
   useEffect(() => {
     if (!socket.connected) socket.connect();
 
+    trackEvent('chart_subscribe_attempt', { symbol });
     socket.emit('subscribe', symbol);
 
     const onInitialData = (initialData: PriceData[]) => {
       setData(initialData);
       setLoading(false);
+      trackEvent('chart_initial_data_received', {
+        symbol,
+        points: initialData.length,
+      });
     };
 
     const onPriceUpdate = (newData: PriceData) => {
@@ -35,6 +41,7 @@ export function useRealtimeData(symbol: string) {
 
     return () => {
       socket.emit('unsubscribe', symbol);
+      trackEvent('chart_unsubscribe', { symbol });
       socket.off('initial_data', onInitialData);
       socket.off(`price_update:${symbol}`, onPriceUpdate);
     };

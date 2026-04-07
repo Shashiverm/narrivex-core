@@ -1,6 +1,7 @@
 'use client';
 
 import { ComplianceModalLinks } from '@/components/common/ComplianceModal';
+import { trackEvent } from '@/lib/analytics';
 
 export function Footer() {
   return (
@@ -13,7 +14,13 @@ export function Footer() {
         <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-slate-500">
           <span>Contact: info@narrivex.tech</span>
           <span>New Delhi, India</span>
-          <a href="https://x.com/narrivex" target="_blank" rel="noreferrer" className="font-semibold text-sea hover:underline">
+          <a
+            href="https://x.com/narrivex"
+            target="_blank"
+            rel="noreferrer"
+            className="font-semibold text-sea hover:underline"
+            onClick={() => trackEvent('footer_social_click', { platform: 'x' })}
+          >
             X: @narrivex
           </a>
         </div>

@@ -1,12 +1,18 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useNarrative } from '@/hooks/useNarrative';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { trackEvent } from '@/lib/analytics';
 
 export function Narrative({ symbol }: { symbol: string }) {
   const { narrative, loading } = useNarrative(symbol);
+
+  useEffect(() => {
+    trackEvent('narrative_panel_view', { symbol });
+  }, [symbol]);
 
   if (loading) {
     return (

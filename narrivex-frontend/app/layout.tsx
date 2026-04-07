@@ -1,9 +1,11 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import { Suspense } from 'react';
 import Providers from './providers';
 import { CookieConsentBanner } from '@/components/common/CookieConsentBanner';
 import { Footer } from '@/components/common/Footer';
+import { AnalyticsTracker } from '@/components/common/AnalyticsTracker';
 
 const siteUrl = 'https://narrivex.tech';
 
@@ -72,6 +74,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body>
         <Providers>
+          <Suspense fallback={null}>
+            <AnalyticsTracker />
+          </Suspense>
           <div className="min-h-screen pb-28">{children}</div>
           <Footer />
           <CookieConsentBanner />

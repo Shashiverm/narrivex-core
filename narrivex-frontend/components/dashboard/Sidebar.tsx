@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BarChart3, Settings, Bell, WalletCards } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { trackEvent } from '@/lib/analytics';
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: BarChart3 },
@@ -25,6 +26,7 @@ export function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={() => trackEvent('sidebar_nav_click', { destination: item.href, label: item.name })}
               className={cn(
                 'flex items-center gap-3 rounded-lg px-4 py-3 font-semibold transition',
                 isActive ? 'bg-sea/10 text-sea' : 'text-slate-700 hover:bg-slate-100'

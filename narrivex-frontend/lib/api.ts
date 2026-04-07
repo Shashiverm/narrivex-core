@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { getSession } from 'next-auth/react';
+import { trackEvent } from '@/lib/analytics';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
 
@@ -28,6 +29,13 @@ apiClient.interceptors.response.use(
   }
 );
 
+const getErrorStatus = (error: unknown): number | null => {
+  if (axios.isAxiosError(error)) {
+    return error.response?.status ?? null;
+  }
+  return null;
+};
+
 export const api = {
   getNarrative: (symbol: string) => apiClient.get(`/narratives/${symbol}`),
   getNarrativeHistory: (symbol: string, limit = 20, offset = 0) =>
@@ -35,11 +43,51 @@ export const api = {
   regenerateNarrative: (symbol: string) => apiClient.post(`/narratives/${symbol}/regenerate`),
 
   getAssets: () => apiClient.get('/assets'),
-  addAsset: (symbol: string) => apiClient.post('/assets', { symbol }),
-  removeAsset: (symbol: string) => apiClient.delete(`/assets/${symbol}`),
+  addAsset: async (symbol: string) => {
+    trackEvent('asset_add_attempt', { symbol });
+    try {
+      const response = await apiClient.post('/assets', { symbol });
+      trackEvent('asset_add_success', { symbol });
+      return response;
+    } catch (error) {
+      trackEvent('asset_add_failed', { symbol, status: getErrorStatus(error) });
+      throw error;
+    }
+  },
+  removeAsset: async (symbol: string) => {
+    trackEvent('asset_remove_attempt', { symbol });
+    try {
+      const response = await apiClient.delete(`/assets/${symbol}`);
+      trackEvent('asset_remove_success', { symbol });
+      return response;
+    } catch (error) {
+      trackEvent('asset_remove_failed', { symbol, status: getErrorStatus(error) });
+      throw error;
+    }
+  },
 
   getAlertRules: () => apiClient.get('/alerts/rules'),
-  createAlertRule: (rule: unknown) => apiClient.post('/alerts/rules', rule),
+  createAlertRule: async (rule: unknown) => {
+    trackEvent('alert_rule_create_attempt');
+    try {
+      const response = await apiClient.post('/alerts/rules', rule);
+      trackEvent('alert_rule_create_success');
+      return response;
+    } catch (error) {
+      trackEvent('alert_rule_create_failed', { status: getErrorStatus(error) });
+      throw error;
+    }
+  },
   updateAlertRule: (id: string, rule: unknown) => apiClient.put(`/alerts/rules/${id}`, rule),
-  deleteAlertRule: (id: string) => apiClient.delete(`/alerts/rules/${id}`),
+  deleteAlertRule: async (id: string) => {
+    trackEvent('alert_rule_delete_attempt');
+    try {
+      const response = await apiClient.delete(`/alerts/rules/${id}`);
+      trackEvent('alert_rule_delete_success');
+      return response;
+    } catch (error) {
+      trackEvent('alert_rule_delete_failed', { status: getErrorStatus(error) });
+      throw error;
+    }
+  },
 };

@@ -2,6 +2,7 @@
 
 import { signOut, useSession } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
+import { trackEvent } from '@/lib/analytics';
 
 export function Header() {
   const { data: session } = useSession();
@@ -15,7 +16,13 @@ export function Header() {
         </div>
         <div className="flex items-center gap-3">
           <span className="text-sm text-slate-600">{session?.user?.email}</span>
-          <Button variant="outline" onClick={() => signOut({ callbackUrl: '/' })}>
+          <Button
+            variant="outline"
+            onClick={() => {
+              trackEvent('sign_out_click');
+              signOut({ callbackUrl: '/' });
+            }}
+          >
             Sign out
           </Button>
         </div>
