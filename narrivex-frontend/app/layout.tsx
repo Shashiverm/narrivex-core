@@ -5,9 +5,66 @@ import Providers from './providers';
 import { CookieConsentBanner } from '@/components/common/CookieConsentBanner';
 import { Footer } from '@/components/common/Footer';
 
+const siteUrl = 'https://narrivex.tech';
+
 export const metadata: Metadata = {
-  title: 'Narrivex',
-  description: 'AI-powered market narratives in real time',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'Narrivex | AI Market Intelligence Platform',
+    template: '%s | Narrivex',
+  },
+  description:
+    'Narrivex transforms market data into real-time AI narratives, alerts, and trading intelligence for crypto, equities, and forex.',
+  applicationName: 'Narrivex',
+  keywords: [
+    'AI market intelligence',
+    'real-time trading alerts',
+    'market narratives',
+    'crypto analysis platform',
+    'equity insights',
+    'forex monitoring',
+  ],
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: siteUrl,
+    siteName: 'Narrivex',
+    title: 'Narrivex | AI Market Intelligence Platform',
+    description:
+      'Track markets in real time with AI-powered narratives, smart alerts, and cross-asset intelligence.',
+    images: [
+      {
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: 'Narrivex AI market intelligence',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Narrivex | AI Market Intelligence Platform',
+    description:
+      'Real-time AI narratives and alerts for traders and analysts across crypto, equities, and forex.',
+    creator: '@narrivex',
+    site: '@narrivex',
+    images: ['/twitter-image'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
+  category: 'finance',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

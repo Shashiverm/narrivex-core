@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import Script from 'next/script';
+import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import {
   ChevronRight,
@@ -16,9 +18,133 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ComplianceModalLinks } from '@/components/common/ComplianceModal';
 
+const siteUrl = 'https://narrivex.tech';
+const xUrl = 'https://x.com/narrivex';
+
+export const metadata: Metadata = {
+  title: 'AI Market Narratives, Alerts, and Trading Intelligence',
+  description:
+    'Use Narrivex to monitor crypto, equities, and forex with real-time alerts and AI-generated market narratives built for modern traders.',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'Narrivex | AI Market Narratives and Alerts',
+    description:
+      'Cut research time and detect market-moving patterns with real-time narratives and actionable alerting.',
+    url: siteUrl,
+    images: [
+      {
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: 'Narrivex AI market intelligence dashboard',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Narrivex | AI Market Narratives and Alerts',
+    description:
+      'AI-powered market intelligence for traders and analysts across crypto, equities, and forex.',
+    creator: '@narrivex',
+    site: '@narrivex',
+    images: ['/twitter-image'],
+  },
+};
+
+const trustSignals = ['Crypto Traders', 'Equities Analysts', 'Forex Desks', 'Quant Teams', 'Independent Researchers'];
+
+const comparisonRows = [
+  {
+    label: 'Signal context',
+    narrivex: 'AI narrative explains why the move is happening',
+    generic: 'Raw alert with no interpretable reasoning',
+  },
+  {
+    label: 'Cross-asset view',
+    narrivex: 'Crypto, equities, and forex in one stream',
+    generic: 'Single market focus with fragmented tooling',
+  },
+  {
+    label: 'Reaction speed',
+    narrivex: 'Low-latency delivery via real-time feeds',
+    generic: 'Batch refresh intervals and delayed notifications',
+  },
+  {
+    label: 'Workflow fit',
+    narrivex: 'Dashboard plus API integrations for teams',
+    generic: 'Limited customization and manual handoffs',
+  },
+];
+
+const faqData = [
+  {
+    question: 'What does Narrivex do?',
+    answer:
+      'Narrivex converts fast-moving market data into AI-generated narratives and alert signals so you can identify context and opportunities faster.',
+  },
+  {
+    question: 'Which assets can I track?',
+    answer: 'You can monitor crypto, equities, and forex in one dashboard with real-time updates and configurable alerts.',
+  },
+  {
+    question: 'Is Narrivex suitable for teams?',
+    answer: 'Yes. Professional and enterprise plans support collaboration, API access, and custom workflow integrations.',
+  },
+  {
+    question: 'Does Narrivex provide financial advice?',
+    answer: 'No. Narrivex provides informational analytics and AI summaries, not investment advice.',
+  },
+];
+
 export default function LandingPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Narrivex',
+    applicationCategory: 'FinanceApplication',
+    operatingSystem: 'Web',
+    url: siteUrl,
+    description:
+      'Narrivex is an AI market intelligence platform with real-time narratives and alerts across crypto, equities, and forex.',
+    offers: [
+      {
+        '@type': 'Offer',
+        name: 'Starter',
+        price: '29',
+        priceCurrency: 'USD',
+      },
+      {
+        '@type': 'Offer',
+        name: 'Professional',
+        price: '99',
+        priceCurrency: 'USD',
+      },
+    ],
+    publisher: {
+      '@type': 'Organization',
+      name: 'Narrivex',
+      url: siteUrl,
+      sameAs: [xUrl],
+    },
+    mainEntity: {
+      '@type': 'FAQPage',
+      mainEntity: faqData.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.answer,
+        },
+      })),
+    },
+  };
+
   return (
     <div className="min-h-screen bg-grain">
+      <Script id="ld-json-home" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+
       {/* Navigation */}
       <div className="mx-auto max-w-6xl px-6 py-8">
         <nav className="mb-16 flex items-center justify-between rounded-full border border-black/10 bg-white/70 px-6 py-3 backdrop-blur">
@@ -107,6 +233,18 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Trust Strip */}
+        <section className="mb-20 rounded-2xl border border-black/10 bg-white/60 px-6 py-5 backdrop-blur">
+          <p className="text-center text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Used by active market operators</p>
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+            {trustSignals.map((item) => (
+              <span key={item} className="rounded-full border border-black/10 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-700">
+                {item}
+              </span>
+            ))}
+          </div>
+        </section>
+
         {/* Benefits Section */}
         <section className="mb-20 rounded-3xl border border-black/10 bg-white/50 px-8 py-16 backdrop-blur">
           <div className="grid gap-16 lg:grid-cols-2">
@@ -177,6 +315,34 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Use Cases Section */}
+        <section className="mb-20">
+          <div className="mb-12 text-center">
+            <h2 className="font-display text-4xl font-bold md:text-5xl">Built for real trading workflows</h2>
+            <p className="mt-4 text-lg text-slate-600">From solo analysts to desks, Narrivex adapts to how you work.</p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            <Card className="border-black/10 bg-white/70 p-6 backdrop-blur">
+              <h3 className="font-display text-2xl font-semibold">Day traders</h3>
+              <p className="mt-3 text-slate-600">
+                Detect short-term momentum shifts, validate entries with narrative context, and react faster with signal-first alerts.
+              </p>
+            </Card>
+            <Card className="border-black/10 bg-white/70 p-6 backdrop-blur">
+              <h3 className="font-display text-2xl font-semibold">Research analysts</h3>
+              <p className="mt-3 text-slate-600">
+                Compress hours of chart review into concise summaries and keep cross-asset coverage centralized in one stream.
+              </p>
+            </Card>
+            <Card className="border-black/10 bg-white/70 p-6 backdrop-blur">
+              <h3 className="font-display text-2xl font-semibold">Trading teams</h3>
+              <p className="mt-3 text-slate-600">
+                Standardize watchlists, push rules through API integrations, and collaborate around the same live market narrative.
+              </p>
+            </Card>
+          </div>
+        </section>
+
         {/* Pricing Preview */}
         <section className="mb-20 rounded-3xl bg-gradient-to-br from-sea/5 to-coral/5 px-8 py-16">
           <div className="mb-12 text-center">
@@ -202,6 +368,34 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Comparison Section */}
+        <section className="mb-20 rounded-3xl border border-black/10 bg-white/55 px-6 py-10 backdrop-blur sm:px-8">
+          <div className="mb-8 text-center">
+            <h2 className="font-display text-4xl font-bold md:text-5xl">Narrivex vs generic signal tools</h2>
+            <p className="mt-3 text-lg text-slate-600">Build conviction faster with context-rich intelligence, not noise.</p>
+          </div>
+          <div className="overflow-x-auto rounded-2xl border border-black/10 bg-white/80">
+            <table className="w-full min-w-[620px] text-left">
+              <thead className="bg-slate-50/90">
+                <tr className="text-sm">
+                  <th className="px-4 py-3 font-display text-base">Capability</th>
+                  <th className="px-4 py-3 font-display text-base text-sea">Narrivex</th>
+                  <th className="px-4 py-3 font-display text-base text-slate-600">Generic alternatives</th>
+                </tr>
+              </thead>
+              <tbody>
+                {comparisonRows.map((row) => (
+                  <tr key={row.label} className="border-t border-black/10 align-top text-sm sm:text-base">
+                    <td className="px-4 py-4 font-semibold text-ink">{row.label}</td>
+                    <td className="px-4 py-4 text-slate-700">{row.narrivex}</td>
+                    <td className="px-4 py-4 text-slate-600">{row.generic}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
         {/* CTA Section */}
         <section className="mb-12 rounded-3xl border border-black/10 bg-white/50 px-8 py-16 backdrop-blur">
           <div className="text-center">
@@ -218,6 +412,50 @@ export default function LandingPage() {
                 Contact sales
               </Button>
             </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-20">
+          <div className="mb-10 text-center">
+            <h2 className="font-display text-4xl font-bold md:text-5xl">Frequently asked questions</h2>
+          </div>
+          <div className="space-y-4">
+            {faqData.map((item) => (
+              <Card key={item.question} className="border-black/10 bg-white/70 p-6 backdrop-blur">
+                <h3 className="font-display text-xl font-semibold">{item.question}</h3>
+                <p className="mt-2 text-slate-600">{item.answer}</p>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* Internal SEO Links */}
+        <section className="mb-16 rounded-2xl border border-black/10 bg-white/60 p-6 backdrop-blur">
+          <h2 className="font-display text-2xl font-bold">Explore Narrivex resources</h2>
+          <p className="mt-2 text-slate-600">Learn about product updates, compliance, platform policies, and follow live updates on X.</p>
+          <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm font-semibold text-sea">
+            <Link href="/changelog" className="hover:underline">
+              Product changelog
+            </Link>
+            <Link href="/security-statement" className="hover:underline">
+              Security statement
+            </Link>
+            <Link href="/privacy-policy" className="hover:underline">
+              Privacy policy
+            </Link>
+            <Link href="/terms-and-conditions" className="hover:underline">
+              Terms and conditions
+            </Link>
+            <Link href="/risk-disclosure" className="hover:underline">
+              Risk disclosure
+            </Link>
+            <Link href="/api-terms" className="hover:underline">
+              API terms
+            </Link>
+            <a href={xUrl} target="_blank" rel="noreferrer" className="hover:underline">
+              Narrivex on X
+            </a>
           </div>
         </section>
 
