@@ -142,7 +142,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-grain">
+    <div className="landing-page min-h-screen bg-grain transition-colors duration-500">
       <Script id="ld-json-home" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* Navigation */}
@@ -162,10 +162,10 @@ export default function LandingPage() {
         {/* Hero Section */}
         <section className="mb-20 grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
-            <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-coral/30 bg-coral/10 px-4 py-2 text-sm font-semibold text-coral">
+            {/* <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-coral/30 bg-coral/10 px-4 py-2 text-sm font-semibold text-coral">
               <Sparkles className="h-4 w-4" />
               AI-Powered Market Intelligence
-            </p>
+            </p> */}
             <h1 className="font-display text-5xl font-bold leading-tight md:text-7xl">
               See the market story before everyone else.
             </h1>
