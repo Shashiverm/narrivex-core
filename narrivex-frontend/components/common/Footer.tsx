@@ -1,11 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ComplianceModalLinks } from '@/components/common/ComplianceModal';
 import { trackEvent } from '@/lib/analytics';
 
 export function Footer() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const storedTheme = window.localStorage.getItem('narrivex-theme');
@@ -15,6 +17,31 @@ export function Footer() {
     setTheme(initialTheme);
     document.documentElement.classList.toggle('theme-dark', initialTheme === 'dark');
     document.documentElement.classList.toggle('theme-light', initialTheme === 'light');
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      const directionDelta = currentY - lastScrollY.current;
+      const nearTop = currentY < 40;
+      const nearBottom = window.innerHeight + currentY >= document.documentElement.scrollHeight - 140;
+
+      if (nearTop || nearBottom) {
+        setIsVisible(true);
+      } else if (directionDelta > 8) {
+        setIsVisible(false);
+      } else if (directionDelta < -8) {
+        setIsVisible(true);
+      }
+
+      lastScrollY.current = currentY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const toggleTheme = () => {
@@ -27,7 +54,11 @@ export function Footer() {
   };
 
   return (
-    <footer className="footer-shell fixed bottom-0 left-0 right-0 border-t border-black/10 bg-white/85 backdrop-blur transition-colors duration-500">
+    <footer
+      className={`footer-shell fixed bottom-0 left-0 right-0 border-t border-black/10 bg-white/85 backdrop-blur transition-all duration-300 ${
+        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-[calc(100%+8px)] opacity-0'
+      }`}
+    >
       <div className="footer-content mx-auto max-w-6xl px-4 py-3 text-xs text-slate-600 sm:px-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
