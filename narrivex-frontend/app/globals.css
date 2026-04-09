@@ -58,6 +58,12 @@ html.theme-dark .theme-toggle-track {
   background-color: rgba(71, 85, 105, 0.9);
 }
 
+html.theme-dark .footer-reveal-btn {
+  border-color: rgba(255, 255, 255, 0.22);
+  color: #e2e8f0;
+  background: rgba(15, 23, 42, 0.88);
+}
+
 html.theme-dark .landing-page {
   color: #e5e7eb;
 }

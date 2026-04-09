@@ -23,6 +23,16 @@ export function CookieConsentBanner() {
     }
   }, []);
 
+  useEffect(() => {
+    document.body.dataset.cookieBannerVisible = isVisible ? 'true' : 'false';
+    window.dispatchEvent(new Event('cookie-banner-visibility'));
+
+    return () => {
+      document.body.dataset.cookieBannerVisible = 'false';
+      window.dispatchEvent(new Event('cookie-banner-visibility'));
+    };
+  }, [isVisible]);
+
   const saveConsent = (analytics: boolean) => {
     const payload: CookieConsent = {
       essential: true,
