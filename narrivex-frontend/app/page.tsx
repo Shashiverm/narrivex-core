@@ -16,7 +16,6 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ComplianceModalLinks } from '@/components/common/ComplianceModal';
 
 const siteUrl = 'https://narrivex.tech';
 const xUrl = 'https://x.com/narrivex';
@@ -459,14 +458,6 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="border-t border-black/10 pt-8 pb-20 text-center text-sm text-slate-600">
-          <div className="flex justify-center">
-            <ComplianceModalLinks className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2" />
-          </div>
-          <p className="mt-3">Contact: info@narrivex.tech, New Delhi, India</p>
-          <p className="mt-2">&copy; 2026 Narrivex. All rights reserved.</p>
-        </footer>
       </div>
     </div>
   );
