@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { APP_VERSION, CHANGELOG } from '@/lib/changelog';
 
 type ComplianceKey =
@@ -128,6 +129,11 @@ const LINK_ITEMS: { key: ComplianceKey; label: string }[] = [
 
 export function ComplianceModalLinks({ className = '' }: { className?: string }) {
   const [activeKey, setActiveKey] = useState<ComplianceKey | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!activeKey) {
@@ -160,6 +166,57 @@ export function ComplianceModalLinks({ className = '' }: { className?: string })
 
   const closeModal = () => setActiveKey(null);
 
+  const modalContent = activeKey ? (
+    <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/50 p-3 sm:p-4">
+      <div className="w-full max-w-3xl max-h-[88vh] overflow-hidden rounded-2xl border border-black/10 bg-white p-4 shadow-2xl sm:p-6">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h2 className="font-display text-2xl font-bold text-ink">
+              {activeKey === 'changelog' ? 'Changelog' : activeDoc?.title}
+            </h2>
+            <p className="mt-1 text-sm text-slate-500">
+              {activeKey === 'changelog' ? `Current version: v${APP_VERSION}` : `Last updated: ${activeDoc?.updated}`}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={closeModal}
+            className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Close
+          </button>
+        </div>
+
+        <div className="mt-4 max-h-[70vh] overflow-y-auto pr-1">
+          {activeKey === 'changelog' ? (
+            <div className="space-y-4">
+              {CHANGELOG.map((entry) => (
+                <section key={entry.version} className="rounded-xl border border-black/10 bg-slate-50/70 p-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-display text-xl font-semibold text-ink">v{entry.version}</h3>
+                    <span className="text-xs text-slate-500">{entry.date}</span>
+                  </div>
+                  <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-slate-700">
+                    {entry.notes.map((note) => (
+                      <li key={note}>{note}</li>
+                    ))}
+                  </ul>
+                </section>
+              ))}
+            </div>
+          ) : (
+            <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-700">
+              {activeDoc?.points.map((point) => (
+                <li key={point}>{point}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+      <button type="button" className="absolute inset-0 -z-10" aria-label="Close dialog background" onClick={closeModal} />
+    </div>
+  ) : null;
+
   return (
     <>
       <div className={className}>
@@ -175,56 +232,7 @@ export function ComplianceModalLinks({ className = '' }: { className?: string })
         ))}
       </div>
 
-      {activeKey && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/45 p-4">
-          <div className="w-full max-w-2xl rounded-2xl border border-black/10 bg-white p-6 shadow-2xl">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <h2 className="font-display text-2xl font-bold text-ink">
-                  {activeKey === 'changelog' ? 'Changelog' : activeDoc?.title}
-                </h2>
-                <p className="mt-1 text-sm text-slate-500">
-                  {activeKey === 'changelog' ? `Current version: v${APP_VERSION}` : `Last updated: ${activeDoc?.updated}`}
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={closeModal}
-                className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-              >
-                Close
-              </button>
-            </div>
-
-            <div className="mt-4 max-h-[60vh] overflow-auto pr-1">
-              {activeKey === 'changelog' ? (
-                <div className="space-y-4">
-                  {CHANGELOG.map((entry) => (
-                    <section key={entry.version} className="rounded-xl border border-black/10 bg-slate-50/70 p-4">
-                      <div className="flex items-center justify-between">
-                        <h3 className="font-display text-xl font-semibold text-ink">v{entry.version}</h3>
-                        <span className="text-xs text-slate-500">{entry.date}</span>
-                      </div>
-                      <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-slate-700">
-                        {entry.notes.map((note) => (
-                          <li key={note}>{note}</li>
-                        ))}
-                      </ul>
-                    </section>
-                  ))}
-                </div>
-              ) : (
-                <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-700">
-                  {activeDoc?.points.map((point) => (
-                    <li key={point}>{point}</li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </div>
-          <button type="button" className="absolute inset-0 -z-10" aria-label="Close dialog background" onClick={closeModal} />
-        </div>
-      )}
+      {isMounted && modalContent ? createPortal(modalContent, document.body) : null}
     </>
   );
 }
