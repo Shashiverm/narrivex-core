@@ -28,7 +28,7 @@ export const narrativeController = {
       let narrative = await repo.findOne({ where: { symbol, userId }, order: { createdAt: 'DESC' } });
 
       if (!narrative || Date.now() - narrative.createdAt.getTime() > 5 * 60 * 1000) {
-        narrative = await this.generateNarrative(symbol, userId);
+        narrative = await narrativeController.generateNarrative(symbol, userId);
       }
 
       return res.json(narrative);
@@ -85,7 +85,7 @@ export const narrativeController = {
       if (!userId) return res.status(401).json({ error: 'Unauthorized' });
       if (!symbol) return res.status(400).json({ error: 'Invalid symbol' });
 
-      const narrative = await this.generateNarrative(symbol, userId);
+      const narrative = await narrativeController.generateNarrative(symbol, userId);
       return res.json(narrative);
     } catch {
       return res.status(500).json({ error: 'Failed to regenerate narrative' });
