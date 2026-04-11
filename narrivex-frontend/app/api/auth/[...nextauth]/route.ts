@@ -75,6 +75,12 @@ const authOptions: NextAuthOptions = {
           if (!response.ok) {
             const errBody = await response.text();
             console.error('[OAuth] Backend error:', errBody);
+            try {
+              const errJson = JSON.parse(errBody);
+              console.error('[OAuth] Error details:', errJson.details || errJson.error);
+            } catch {
+              // errBody is not JSON, already logged as text
+            }
             return false;
           }
 

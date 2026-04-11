@@ -58,11 +58,14 @@ export const authController = {
         return res.status(400).json({ error: 'Email is required for OAuth login' });
       }
 
+      console.log(`[OAuth] Processing ${provider} login for ${email}`);
+
       let user = await repo.findOne({
         where: provider === 'github' ? { githubId: providerId } : { googleId: providerId },
       });
 
       if (!user) {
+        console.log(`[OAuth] Creating new user for ${email}`);
         user = repo.create({
           email,
           name: fallbackName,
@@ -70,16 +73,22 @@ export const authController = {
           ...(provider === 'github' ? { githubId: providerId } : { googleId: providerId }),
         });
       } else {
+        console.log(`[OAuth] Updating existing user ${user.id}`);
         user.email = email;
         user.name = fallbackName;
         user.image = image;
       }
 
       await repo.save(user);
+      console.log(`[OAuth] User saved successfully: ${user.id}`);
       const accessToken = authService.generateToken(user.id);
       return res.json({ id: user.id, email: user.email, name: user.name, image: user.image, accessToken });
-    } catch {
-      return res.status(500).json({ error: 'OAuth login failed' });
+    } catch (error) {
+      console.error('[OAuth] Error:', error instanceof Error ? error.message : String(error));
+      if (error instanceof Error) {
+        console.error('[OAuth] Stack:', error.stack);
+      }
+      return res.status(500).json({ error: 'OAuth login failed', details: error instanceof Error ? error.message : 'Unknown error' });
     }
   },
 
