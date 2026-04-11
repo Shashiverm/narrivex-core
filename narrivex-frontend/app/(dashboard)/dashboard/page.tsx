@@ -31,7 +31,7 @@ export default function DashboardPage() {
 
       <section className="grid gap-6 xl:grid-cols-4">
         <div className="space-y-6 xl:col-span-3">
-          <div className="grid gap-6 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             <section className="space-y-4">
               <Chart symbol="BTC" />
               <Narrative symbol="BTC" />

@@ -11,6 +11,7 @@ export function Chart({ symbol }: { symbol: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { data, loading } = useRealtimeData(symbol);
   const [isDark, setIsDark] = useState(false);
+  const [chartHeight, setChartHeight] = useState(340);
 
   useEffect(() => {
     const html = document.documentElement;
@@ -18,13 +19,28 @@ export function Chart({ symbol }: { symbol: string }) {
       setIsDark(html.classList.contains('theme-dark'));
     };
 
+    const syncChartHeight = () => {
+      if (window.innerWidth < 640) {
+        setChartHeight(240);
+        return;
+      }
+      if (window.innerWidth < 1024) {
+        setChartHeight(280);
+        return;
+      }
+      setChartHeight(340);
+    };
+
     syncTheme();
+    syncChartHeight();
 
     const observer = new MutationObserver(syncTheme);
     observer.observe(html, { attributes: true, attributeFilter: ['class'] });
+    window.addEventListener('resize', syncChartHeight);
 
     return () => {
       observer.disconnect();
+      window.removeEventListener('resize', syncChartHeight);
     };
   }, []);
 
@@ -37,7 +53,7 @@ export function Chart({ symbol }: { symbol: string }) {
 
     const chart = createChart(containerRef.current, {
       width: containerRef.current.clientWidth,
-      height: 340,
+      height: chartHeight,
       layout: {
         textColor: isDark ? '#cbd5e1' : '#1f2937',
         background: { type: ColorType.Solid, color: isDark ? '#0f172a' : '#ffffff' },
@@ -81,12 +97,12 @@ export function Chart({ symbol }: { symbol: string }) {
       window.removeEventListener('resize', onResize);
       chart.remove();
     };
-  }, [data, symbol, isDark]);
+  }, [data, symbol, isDark, chartHeight]);
 
   return (
-    <Card className="dashboard-card bg-white p-5">
-      <h2 className="dashboard-card-heading mb-4 font-display text-xl font-bold">{symbol}</h2>
-      {loading ? <Skeleton className="h-[340px] w-full" /> : <div ref={containerRef} />}
+    <Card className="dashboard-card bg-white p-4 sm:p-5">
+      <h2 className="dashboard-card-heading mb-3 font-display text-lg font-bold sm:mb-4 sm:text-xl">{symbol}</h2>
+      {loading ? <Skeleton className="w-full" style={{ height: `${chartHeight}px` }} /> : <div ref={containerRef} />}
     </Card>
   );
 }

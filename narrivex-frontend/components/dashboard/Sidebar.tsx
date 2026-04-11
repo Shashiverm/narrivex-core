@@ -13,11 +13,16 @@ const navigation = [
   { name: 'Settings', href: '/settings', icon: Settings },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  className?: string;
+  onNavigate?: () => void;
+}
+
+export function Sidebar({ className, onNavigate }: SidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="dashboard-sidebar w-64 border-r border-slate-200 bg-white">
+    <aside className={cn('dashboard-sidebar w-64 border-r border-slate-200 bg-white', className)}>
       <div className="space-y-6 p-4">
         {navigation.map((item) => {
           const Icon = item.icon;
@@ -26,7 +31,10 @@ export function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
-              onClick={() => trackEvent('sidebar_nav_click', { destination: item.href, label: item.name })}
+              onClick={() => {
+                onNavigate?.();
+                trackEvent('sidebar_nav_click', { destination: item.href, label: item.name });
+              }}
               className={cn(
                 'dashboard-nav-link flex items-center gap-3 rounded-lg px-4 py-3 font-semibold transition',
                 isActive ? 'dashboard-nav-active bg-sea/10 text-sea' : 'dashboard-nav-idle text-slate-700 hover:bg-slate-100'
