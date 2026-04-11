@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcryptjs from 'bcryptjs';
 import crypto from 'crypto';
-import Redis from 'ioredis';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -17,7 +16,34 @@ if (isProduction && JWT_SECRET.length < 32) {
 
 const signingSecret = JWT_SECRET;
 const redisUrl = process.env.REDIS_URL;
-const redisClient = redisUrl ? new Redis(redisUrl, { lazyConnect: true, maxRetriesPerRequest: 1 }) : null;
+
+type RedisLikeClient = {
+  status: string;
+  connect: () => Promise<unknown>;
+  set: (key: string, value: string, mode: 'EX', seconds: number) => Promise<unknown>;
+  get: (key: string) => Promise<string | null>;
+  del: (key: string) => Promise<number>;
+};
+
+function createRedisClient(url: string | undefined): RedisLikeClient | null {
+  if (!url) {
+    return null;
+  }
+
+  try {
+    const dynamicRequire = eval('require') as NodeRequire;
+    const RedisCtor = dynamicRequire('ioredis') as new (
+      redisUrl: string,
+      options: { lazyConnect: boolean; maxRetriesPerRequest: number }
+    ) => RedisLikeClient;
+
+    return new RedisCtor(url, { lazyConnect: true, maxRetriesPerRequest: 1 });
+  } catch {
+    return null;
+  }
+}
+
+const redisClient = createRedisClient(redisUrl);
 
 if (redisClient) {
   redisClient.connect().catch(() => {
