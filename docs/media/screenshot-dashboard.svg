@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Narrivex Dashboard Placeholder</title>
+  <desc id="desc">Placeholder for the main dashboard screenshot.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <rect x="48" y="40" width="1184" height="80" rx="14" fill="#111827" stroke="#334155"/>
+  <rect x="48" y="152" width="740" height="520" rx="14" fill="#111827" stroke="#334155"/>
+  <rect x="820" y="152" width="412" height="250" rx="14" fill="#111827" stroke="#334155"/>
+  <rect x="820" y="422" width="412" height="250" rx="14" fill="#111827" stroke="#334155"/>
+  <text x="80" y="90" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="28" font-weight="700">Narrivex Dashboard</text>
+  <text x="80" y="210" fill="#94a3b8" font-family="Arial, sans-serif" font-size="24">Replace this with a real product screenshot</text>
+</svg>

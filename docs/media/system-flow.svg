@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Narrivex System Flow</title>
+  <desc id="desc">High-level system flow from market data ingestion to frontend delivery.</desc>
+  <rect width="1280" height="720" fill="#0b1324"/>
+  <g font-family="Arial, sans-serif">
+    <rect x="80" y="280" width="230" height="120" rx="14" fill="#111827" stroke="#334155"/>
+    <text x="195" y="340" fill="#e2e8f0" text-anchor="middle" font-size="22" font-weight="700">Data Sources</text>
+
+    <rect x="390" y="280" width="260" height="120" rx="14" fill="#111827" stroke="#334155"/>
+    <text x="520" y="330" fill="#e2e8f0" text-anchor="middle" font-size="22" font-weight="700">Ingestion Service</text>
+    <text x="520" y="360" fill="#93c5fd" text-anchor="middle" font-size="16">Normalize + Validate</text>
+
+    <rect x="730" y="280" width="220" height="120" rx="14" fill="#111827" stroke="#334155"/>
+    <text x="840" y="330" fill="#e2e8f0" text-anchor="middle" font-size="22" font-weight="700">Narrative Engine</text>
+    <text x="840" y="360" fill="#93c5fd" text-anchor="middle" font-size="16">Generate insights</text>
+
+    <rect x="1030" y="220" width="190" height="100" rx="14" fill="#111827" stroke="#334155"/>
+    <text x="1125" y="278" fill="#e2e8f0" text-anchor="middle" font-size="18" font-weight="700">PostgreSQL</text>
+
+    <rect x="1030" y="360" width="190" height="100" rx="14" fill="#111827" stroke="#334155"/>
+    <text x="1125" y="420" fill="#e2e8f0" text-anchor="middle" font-size="18" font-weight="700">WebSocket</text>
+
+    <rect x="1030" y="500" width="190" height="100" rx="14" fill="#111827" stroke="#334155"/>
+    <text x="1125" y="560" fill="#e2e8f0" text-anchor="middle" font-size="18" font-weight="700">Next.js UI</text>
+  </g>
+
+  <g stroke="#60a5fa" stroke-width="4" fill="none" marker-end="url(#arrow)">
+    <path d="M310 340 H390"/>
+    <path d="M650 340 H730"/>
+    <path d="M950 340 H1030"/>
+    <path d="M950 340 C1000 340 980 270 1030 270"/>
+    <path d="M1125 460 V500"/>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#60a5fa" />
+    </marker>
+  </defs>
+</svg>
