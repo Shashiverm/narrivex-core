@@ -49,23 +49,43 @@ const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider === 'github' || account?.provider === 'google') {
-        const response = await fetch(`${apiBase}/auth/oauth`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
+        try {
+          const url = `${apiBase}/auth/oauth`;
+          console.log('[OAuth] Calling backend:', url);
+          console.log('[OAuth] Payload:', {
             provider: account.provider,
-            providerId: account.providerAccountId,
             email: user.email,
-            name: user.name || user.email?.split('@')[0] || account.providerAccountId,
-            image: user.image,
-          }),
-        });
+            name: user.name,
+          });
 
-        if (!response.ok) return false;
-        const data = await response.json();
-        user.accessToken = data.accessToken;
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              provider: account.provider,
+              providerId: account.providerAccountId,
+              email: user.email,
+              name: user.name || user.email?.split('@')[0] || 'user',
+              image: user.image,
+            }),
+          });
+
+          console.log('[OAuth] Backend response status:', response.status);
+
+          if (!response.ok) {
+            const errBody = await response.text();
+            console.error('[OAuth] Backend error:', errBody);
+            return false;
+          }
+
+          const data = await response.json();
+          user.accessToken = data.accessToken;
+          return true;
+        } catch (err) {
+          console.error('[OAuth] Fetch threw:', err);
+          return false;
+        }
       }
-
       return true;
     },
     async jwt({ token, user }) {
