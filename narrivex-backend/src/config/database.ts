@@ -5,6 +5,7 @@ import { Alert } from '../entities/Alert';
 import { Narrative } from '../entities/Narrative';
 
 const isProduction = process.env.NODE_ENV === 'production';
+const isTsRuntime = __filename.endsWith('.ts');
 const dbPort = Number.parseInt(process.env.DB_PORT || '5432', 10);
 const dbPassword = process.env.DB_PASSWORD || (isProduction ? '' : 'password');
 
@@ -22,7 +23,7 @@ export const AppDataSource = new DataSource({
   synchronize: process.env.DB_SYNC === 'true' && process.env.NODE_ENV !== 'production',
   logging: process.env.NODE_ENV === 'development',
   entities: [User, Asset, Alert, Narrative],
-  migrations: ['src/migrations/*.ts', 'dist/migrations/*.js'],
+  migrations: [isTsRuntime ? 'src/migrations/*.ts' : 'dist/migrations/*.js'],
 });
 
 export async function initializeDatabase() {
