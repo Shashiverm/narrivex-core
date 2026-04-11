@@ -20,9 +20,39 @@ const authOptions: NextAuthOptions = {
       credentials: {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
+        otp: { label: 'OTP', type: 'text' },
+        mode: { label: 'Mode', type: 'text' },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
+        if (!credentials?.email) return null;
+
+        const mode = credentials.mode === 'otp' ? 'otp' : 'password';
+
+        if (mode === 'otp') {
+          if (!credentials?.otp || credentials.otp.length !== 6) return null;
+
+          const otpResponse = await fetch(`${apiBase}/auth/verify-otp`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: credentials.email,
+              otp: credentials.otp,
+            }),
+          });
+
+          if (!otpResponse.ok) return null;
+
+          const otpUser = await otpResponse.json();
+          return {
+            id: otpUser.id,
+            email: otpUser.email,
+            name: otpUser.name,
+            image: otpUser.image,
+            accessToken: otpUser.accessToken,
+          };
+        }
+
+        if (!credentials?.password) return null;
 
         const response = await fetch(`${apiBase}/auth/login`, {
           method: 'POST',

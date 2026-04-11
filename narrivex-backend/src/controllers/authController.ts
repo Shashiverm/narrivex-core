@@ -121,17 +121,31 @@ export const authController = {
       }
 
       const otp = authService.generateOTP();
-      authService.storeOTP(email, otp, 5); // 5-minute expiration
+      await authService.storeOTP(email, otp, 5); // 5-minute expiration
+      const isDevFallback = process.env.NODE_ENV !== 'production' && !process.env.SENDGRID_API_KEY;
+      let emailDelivered = true;
 
       // Send OTP via email (using notificationService)
       try {
         await notificationService.sendOTPEmail(email, otp);
       } catch (emailError) {
         console.error('Failed to send OTP email:', emailError);
-        // Still return success so user can proceed (in production, this should fail)
+        emailDelivered = false;
+
+        if (process.env.NODE_ENV === 'production') {
+          return res.status(502).json({
+            error: 'Unable to deliver OTP email right now. Please try again shortly.',
+          });
+        }
       }
 
-      return res.json({ message: 'OTP sent successfully', success: true });
+      return res.json({
+        message: emailDelivered
+          ? 'OTP sent successfully'
+          : 'OTP generation succeeded, but email delivery failed. Use the development fallback code.',
+        success: true,
+        ...(!emailDelivered || isDevFallback ? { devOtp: otp } : {}),
+      });
     } catch (error) {
       console.error('Send OTP error:', error);
       return res.status(500).json({ error: 'Failed to send OTP' });
@@ -146,7 +160,7 @@ export const authController = {
         return res.status(400).json({ error: 'Email and OTP are required' });
       }
 
-      const isValidOTP = authService.verifyOTP(email, otp);
+      const isValidOTP = await authService.verifyOTP(email, otp);
 
       if (!isValidOTP) {
         return res.status(401).json({ error: 'Invalid or expired OTP' });

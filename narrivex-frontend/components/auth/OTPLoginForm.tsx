@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 import { Mail, Lock, ArrowRight, RotateCcw } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
@@ -43,8 +44,11 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
         throw new Error('Failed to send OTP');
       }
 
+      const payload = (await response.json()) as { devOtp?: string };
+
       trackEvent('otp_send_success');
-      const message = 'If this email is registered, we have sent a 6-digit code to your inbox.';
+      const devHint = payload.devOtp ? ` Dev code: ${payload.devOtp}` : '';
+      const message = `If this email is registered, we have sent a 6-digit code to your inbox.${devHint}`;
       setNotice({ tone: 'success', message });
       toast.success(message);
       setStep('otp');
@@ -82,22 +86,20 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
     setNotice(null);
     trackEvent('otp_verify_attempt');
     try {
-      const response = await fetch(`${apiBase}/auth/verify-otp`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, otp }),
+      const result = await signIn('credentials', {
+        email,
+        otp,
+        mode: 'otp',
+        redirect: false,
       });
 
-      if (!response.ok) {
+      if (!result?.ok) {
         throw new Error('Invalid OTP');
       }
 
-      const data = await response.json();
       trackEvent('otp_verify_success');
       toast.success('Signed in successfully! 🎉');
-      
-      // Store token and redirect
-      localStorage.setItem('authToken', data.accessToken);
+
       router.push('/dashboard');
     } catch {
       trackEvent('otp_verify_failed');

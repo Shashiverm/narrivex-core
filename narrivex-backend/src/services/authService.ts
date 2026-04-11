@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcryptjs from 'bcryptjs';
 import crypto from 'crypto';
+import Redis from 'ioredis';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -15,9 +16,25 @@ if (isProduction && JWT_SECRET.length < 32) {
 }
 
 const signingSecret = JWT_SECRET;
+const redisUrl = process.env.REDIS_URL;
+const redisClient = redisUrl ? new Redis(redisUrl, { lazyConnect: true, maxRetriesPerRequest: 1 }) : null;
+
+if (redisClient) {
+  redisClient.connect().catch(() => {
+    // Fallback to in-memory OTP if Redis is temporarily unavailable.
+  });
+}
 
 // In-memory OTP storage (use Redis in production)
 const otpStore: Record<string, { code: string; expiresAt: number }> = {};
+
+function normalizeEmail(email: string): string {
+  return email.trim().toLowerCase();
+}
+
+function otpKey(email: string): string {
+  return `otp:${normalizeEmail(email)}`;
+}
 
 export const authService = {
   async hashPassword(password: string): Promise<string> {
@@ -43,33 +60,73 @@ export const authService = {
     return Math.floor(100000 + Math.random() * 900000).toString();
   },
 
-  storeOTP(email: string, otp: string, expirationMinutes: number = 5): void {
+  async storeOTP(email: string, otp: string, expirationMinutes: number = 5): Promise<void> {
+    const normalizedEmail = normalizeEmail(email);
+
+    if (redisClient && redisClient.status === 'ready') {
+      try {
+        await redisClient.set(otpKey(normalizedEmail), otp, 'EX', expirationMinutes * 60);
+        return;
+      } catch {
+        // Continue with in-memory fallback if Redis write fails.
+      }
+    }
+
     const expiresAt = Date.now() + expirationMinutes * 60 * 1000;
-    otpStore[email] = { code: otp, expiresAt };
+    otpStore[normalizedEmail] = { code: otp, expiresAt };
   },
 
-  verifyOTP(email: string, otp: string): boolean {
-    const stored = otpStore[email];
+  async verifyOTP(email: string, otp: string): Promise<boolean> {
+    const normalizedEmail = normalizeEmail(email);
+
+    if (redisClient && redisClient.status === 'ready') {
+      try {
+        const storedOtp = await redisClient.get(otpKey(normalizedEmail));
+        if (!storedOtp) {
+          return false;
+        }
+
+        const isValidRedisOtp = storedOtp === otp;
+        if (isValidRedisOtp) {
+          await redisClient.del(otpKey(normalizedEmail));
+        }
+        return isValidRedisOtp;
+      } catch {
+        // Continue with in-memory fallback if Redis read fails.
+      }
+    }
+
+    const stored = otpStore[normalizedEmail];
 
     if (!stored) {
       return false;
     }
 
     if (Date.now() > stored.expiresAt) {
-      delete otpStore[email];
+      delete otpStore[normalizedEmail];
       return false;
     }
 
     const isValid = stored.code === otp;
     if (isValid) {
-      delete otpStore[email];
+      delete otpStore[normalizedEmail];
     }
 
     return isValid;
   },
 
-  clearOTP(email: string): void {
-    delete otpStore[email];
+  async clearOTP(email: string): Promise<void> {
+    const normalizedEmail = normalizeEmail(email);
+
+    if (redisClient && redisClient.status === 'ready') {
+      try {
+        await redisClient.del(otpKey(normalizedEmail));
+      } catch {
+        // Ignore Redis clear errors and continue with local clear.
+      }
+    }
+
+    delete otpStore[normalizedEmail];
   },
 
   generatePasswordResetToken(): string {

@@ -5,6 +5,7 @@ import { User } from '../entities/User';
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
 const EMAIL_FROM = process.env.EMAIL_FROM || 'no-reply@narrivex.tech';
 const APP_URL = process.env.APP_URL || 'https://narrivex.tech';
+const isProduction = process.env.NODE_ENV === 'production';
 
 if (SENDGRID_API_KEY) {
   sendgridMail.setApiKey(SENDGRID_API_KEY);
@@ -69,14 +70,23 @@ export const notificationService = {
     `;
 
     if (SENDGRID_API_KEY) {
-      await sendgridMail.send({
-        to: email,
-        from: EMAIL_FROM,
-        subject,
-        text,
-        html,
-      });
-      return;
+      try {
+        await sendgridMail.send({
+          to: email,
+          from: EMAIL_FROM,
+          subject,
+          text,
+          html,
+        });
+        return;
+      } catch (error) {
+        if (isProduction) {
+          throw error;
+        }
+
+        // Development fallback when SendGrid key/sender permissions are not valid.
+        console.warn('[OTP-EMAIL-FALLBACK] SendGrid send failed, using console fallback.', error);
+      }
     }
 
     // Fallback for environments without SendGrid configured
