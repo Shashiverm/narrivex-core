@@ -52,6 +52,11 @@ export const authController = {
     try {
       const { provider, providerId, email, name, image } = req.body;
       const repo = AppDataSource.getRepository(User);
+      const fallbackName = (typeof name === 'string' && name.trim()) || email?.split('@')[0] || providerId;
+
+      if (!email) {
+        return res.status(400).json({ error: 'Email is required for OAuth login' });
+      }
 
       let user = await repo.findOne({
         where: provider === 'github' ? { githubId: providerId } : { googleId: providerId },
@@ -60,13 +65,13 @@ export const authController = {
       if (!user) {
         user = repo.create({
           email,
-          name,
+          name: fallbackName,
           image,
           ...(provider === 'github' ? { githubId: providerId } : { googleId: providerId }),
         });
       } else {
         user.email = email;
-        user.name = name;
+        user.name = fallbackName;
         user.image = image;
       }
 

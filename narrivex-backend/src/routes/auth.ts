@@ -20,7 +20,7 @@ const oauthSchema = z.object({
   provider: z.enum(['github', 'google']),
   providerId: z.string(),
   email: z.string().email(),
-  name: z.string().min(2),
+  name: z.string().min(2).optional(),
   image: z.string().optional(),
 });
 

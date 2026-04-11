@@ -56,7 +56,7 @@ const authOptions: NextAuthOptions = {
             provider: account.provider,
             providerId: account.providerAccountId,
             email: user.email,
-            name: user.name,
+            name: user.name || user.email?.split('@')[0] || account.providerAccountId,
             image: user.image,
           }),
         });
