@@ -4,7 +4,7 @@ import { Sparkles } from 'lucide-react';
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex min-h-screen bg-grain">
+    <div className="auth-page flex min-h-screen bg-grain">
       {/* Left Sidebar - Branding & Benefits */}
       <div className="hidden lg:flex w-1/2 flex-col justify-between bg-gradient-to-br from-sea/10 to-coral/10 px-12 py-12 backdrop-blur">
         <div>
@@ -71,7 +71,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
       </div>
 
       {/* Right Side - Auth Form */}
-      <div className="flex w-full lg:w-1/2 items-center justify-center px-6 py-12">
+      <div className="flex w-full items-center justify-center px-4 py-10 sm:px-6 lg:w-1/2 lg:px-10 lg:py-12">
         {children}
       </div>
     </div>

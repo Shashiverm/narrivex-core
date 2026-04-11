@@ -157,3 +157,92 @@ html.theme-dark .landing-page button.border-slate-300:hover {
 html.theme-dark .landing-page button.text-slate-700 {
   color: #dbeafe;
 }
+
+html.theme-dark .auth-page {
+  color: #e5e7eb;
+}
+
+html.theme-dark .auth-page .text-ink {
+  color: #f8fafc !important;
+}
+
+html.theme-dark .auth-page .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+html.theme-dark .auth-page .text-slate-600 {
+  color: #cbd5e1 !important;
+}
+
+html.theme-dark .auth-page .text-slate-700 {
+  color: #e2e8f0 !important;
+}
+
+html.theme-dark .auth-page .border-slate-200,
+html.theme-dark .auth-page .border-slate-300 {
+  border-color: rgba(148, 163, 184, 0.28) !important;
+}
+
+html.theme-dark .auth-page .bg-white {
+  background-color: rgba(15, 23, 42, 0.9) !important;
+}
+
+html.theme-dark .auth-page .bg-white\/40 {
+  background-color: rgba(15, 23, 42, 0.62) !important;
+}
+
+html.theme-dark .auth-page .bg-white\/50 {
+  background-color: rgba(15, 23, 42, 0.68) !important;
+}
+
+html.theme-dark .auth-page .bg-white\/70 {
+  background-color: rgba(30, 41, 59, 0.82) !important;
+}
+
+html.theme-dark .auth-page .bg-white\/80 {
+  background-color: rgba(30, 41, 59, 0.88) !important;
+}
+
+html.theme-dark .auth-page .bg-slate-50,
+html.theme-dark .auth-page .bg-slate-50\/90 {
+  background-color: rgba(15, 23, 42, 0.78) !important;
+}
+
+html.theme-dark .auth-page .hover\:bg-slate-50:hover {
+  background-color: rgba(30, 41, 59, 0.8) !important;
+}
+
+html.theme-dark .auth-page .hover\:bg-white\/70:hover {
+  background-color: rgba(30, 41, 59, 0.82) !important;
+}
+
+html.theme-dark .auth-page .bg-sea\/5,
+html.theme-dark .auth-page .hover\:bg-sea\/5:hover {
+  background-color: rgba(15, 118, 110, 0.18) !important;
+}
+
+html.theme-dark .auth-page .bg-blue-50,
+html.theme-dark .auth-page .hover\:bg-blue-50:hover {
+  background-color: rgba(30, 64, 175, 0.24) !important;
+}
+
+html.theme-dark .auth-page .border-sea\/20,
+html.theme-dark .auth-page .border-sea\/50,
+html.theme-dark .auth-page .hover\:border-sea:hover {
+  border-color: rgba(45, 212, 191, 0.35) !important;
+}
+
+html.theme-dark .auth-page input {
+  background-color: rgba(15, 23, 42, 0.9);
+  border-color: rgba(148, 163, 184, 0.3);
+  color: #f8fafc;
+}
+
+html.theme-dark .auth-page input::placeholder {
+  color: #94a3b8;
+}
+
+html.theme-dark .auth-page button.text-slate-600,
+html.theme-dark .auth-page button.text-slate-700 {
+  color: #dbeafe;
+}

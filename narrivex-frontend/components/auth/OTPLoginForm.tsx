@@ -16,17 +16,21 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
   const [otp, setOtp] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [resendCountdown, setResendCountdown] = useState(0);
+  const [notice, setNotice] = useState<{ tone: 'info' | 'success' | 'error'; message: string } | null>(null);
   const router = useRouter();
 
   const handleSendOTP = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!email) {
-      toast.error('Please enter your email');
+      const message = 'Please enter your email address first.';
+      setNotice({ tone: 'error', message });
+      toast.error(message);
       return;
     }
 
     setIsLoading(true);
+    setNotice(null);
     trackEvent('otp_send_attempt');
     try {
       const response = await fetch(`${apiBase}/auth/send-otp`, {
@@ -40,7 +44,9 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
       }
 
       trackEvent('otp_send_success');
-      toast.success('OTP sent to your email!');
+      const message = 'If this email is registered, we have sent a 6-digit code to your inbox.';
+      setNotice({ tone: 'success', message });
+      toast.success(message);
       setStep('otp');
       setResendCountdown(60);
       const interval = setInterval(() => {
@@ -54,7 +60,9 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
       }, 1000);
     } catch {
       trackEvent('otp_send_failed');
-      toast.error('Failed to send OTP. Please try again.');
+      const message = 'Failed to send the code. Please try again.';
+      setNotice({ tone: 'error', message });
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }
@@ -64,11 +72,14 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
     e.preventDefault();
 
     if (!otp || otp.length !== 6) {
-      toast.error('Please enter a valid 6-digit OTP');
+      const message = 'Please enter the 6-digit code from your email.';
+      setNotice({ tone: 'error', message });
+      toast.error(message);
       return;
     }
 
     setIsLoading(true);
+    setNotice(null);
     trackEvent('otp_verify_attempt');
     try {
       const response = await fetch(`${apiBase}/auth/verify-otp`, {
@@ -90,11 +101,20 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
       router.push('/dashboard');
     } catch {
       trackEvent('otp_verify_failed');
-      toast.error('Invalid OTP. Please try again.');
+      const message = 'The code is invalid or expired. Please try again.';
+      setNotice({ tone: 'error', message });
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }
   };
+
+  const noticeClassName =
+    notice?.tone === 'error'
+      ? 'border-red-200 bg-red-50 text-red-700'
+      : notice?.tone === 'success'
+        ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
+        : 'border-sea/20 bg-sea/5 text-slate-700';
 
   return (
     <div className="w-full space-y-6">
@@ -110,6 +130,8 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
         <h2 className="font-display text-3xl font-bold text-ink">Sign in with OTP</h2>
         <p className="text-slate-600">We&apos;ll send a code to your email for verification.</p>
       </div>
+
+      {notice && <div className={`rounded-xl border px-4 py-3 text-sm leading-6 ${noticeClassName}`}>{notice.message}</div>}
 
       {step === 'email' ? (
         <form className="space-y-5" onSubmit={handleSendOTP}>

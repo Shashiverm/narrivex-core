@@ -15,6 +15,8 @@ import { OAuthButtons } from './OAuthButtons';
 import { OTPLoginForm } from './OTPLoginForm';
 import { trackEvent } from '@/lib/analytics';
 
+const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
   password: z.string().min(1, 'Password is required'),
@@ -23,11 +25,13 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 type AuthMethod = 'options' | 'password' | 'otp';
+type FeedbackTone = 'info' | 'success' | 'error';
 
 export function LoginForm() {
   const [authMethod, setAuthMethod] = useState<AuthMethod>('options');
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [feedback, setFeedback] = useState<{ tone: FeedbackTone; message: string } | null>(null);
   const router = useRouter();
   const {
     register,
@@ -37,27 +41,86 @@ export function LoginForm() {
     resolver: zodResolver(loginSchema),
   });
 
+  const feedbackClassName =
+    feedback?.tone === 'error'
+      ? 'border-red-200 bg-red-50 text-red-700'
+      : feedback?.tone === 'success'
+        ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
+        : 'border-sea/20 bg-sea/5 text-slate-700';
+
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
+    setFeedback(null);
     trackEvent('login_attempt', { method: 'credentials' });
-    const result = await signIn('credentials', {
-      email: data.email,
-      password: data.password,
-      redirect: false,
-    });
 
-    if (result?.ok) {
-      trackEvent('login_success', { method: 'credentials' });
-      toast.success('Welcome back! 🎉');
-      router.push('/dashboard');
-    } else {
+    try {
+      const response = await fetch(`${apiBase}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorPayload = await response.json().catch(() => null);
+        const errorMessage = typeof errorPayload?.error === 'string' ? errorPayload.error : '';
+
+        if (response.status === 404 || /not registered|not found/i.test(errorMessage)) {
+          const message = 'No account found for this email. Create a new account or use OTP if you already registered.';
+          setFeedback({ tone: 'error', message });
+          toast.error(message);
+        } else if (response.status === 401 || /invalid credentials|incorrect password/i.test(errorMessage)) {
+          const message = 'Account found, but the password is incorrect. Try again or use OTP from your registered email.';
+          setFeedback({ tone: 'error', message });
+          toast.error(message);
+        } else {
+          const message = 'Unable to sign in right now. Please check your details and try again.';
+          setFeedback({ tone: 'error', message });
+          toast.error(message);
+        }
+
+        trackEvent('login_failed', {
+          method: 'credentials',
+          error: errorMessage || `http_${response.status}`,
+        });
+        return;
+      }
+
+      setFeedback({ tone: 'success', message: 'Account verified. Signing you in now.' });
+
+      const result = await signIn('credentials', {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      });
+
+      if (result?.ok) {
+        trackEvent('login_success', { method: 'credentials' });
+        toast.success('Welcome back! 🎉');
+        router.push('/dashboard');
+        return;
+      }
+
       trackEvent('login_failed', {
         method: 'credentials',
-        error: result?.error || 'invalid_credentials',
+        error: result?.error || 'nextauth_signin_failed',
       });
-      toast.error('Invalid email or password. Please try again.');
+      const message = 'We verified the account, but could not finish the sign-in. Please try again.';
+      setFeedback({ tone: 'error', message });
+      toast.error(message);
+    } catch {
+      trackEvent('login_failed', {
+        method: 'credentials',
+        error: 'network_error',
+      });
+      const message = 'Network error. Please try again in a moment.';
+      setFeedback({ tone: 'error', message });
+      toast.error(message);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   if (authMethod === 'otp') {
@@ -79,6 +142,12 @@ export function LoginForm() {
           <h2 className="font-display text-3xl font-bold text-ink">Sign in with password</h2>
           <p className="text-slate-600">Enter your email and password to continue.</p>
         </div>
+
+        {feedback && (
+          <div className={`rounded-xl border px-4 py-3 text-sm leading-6 ${feedbackClassName}`}>
+            {feedback.message}
+          </div>
+        )}
 
         {/* Form */}
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
@@ -173,6 +242,10 @@ export function LoginForm() {
       <div className="space-y-2">
         <h1 className="font-display text-4xl font-bold text-ink">Welcome back</h1>
         <p className="text-slate-600">Choose how you&apos;d like to sign in to your account.</p>
+      </div>
+
+      <div className="rounded-xl border border-sea/20 bg-sea/5 px-4 py-3 text-sm text-slate-700">
+        Password sign-in is for existing accounts. OTP works best when the email is already registered.
       </div>
 
       {/* OAuth Buttons */}

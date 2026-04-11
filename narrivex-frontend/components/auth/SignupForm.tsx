@@ -19,6 +19,10 @@ export function SignupForm() {
         <p className="text-slate-600">Join thousands of traders getting smarter market insights with Narrivex.</p>
       </div>
 
+      <div className="rounded-xl border border-sea/20 bg-sea/5 px-4 py-3 text-sm text-slate-700">
+        Continue with GitHub or Google to create your account instantly. If you already registered, use the login page instead.
+      </div>
+
       {/* Benefits */}
       <div className="rounded-lg bg-gradient-to-br from-sea/5 to-coral/5 p-4 space-y-3">
         <div className="flex gap-2">
@@ -66,7 +70,7 @@ export function SignupForm() {
       <div className="rounded-lg bg-slate-50 border border-slate-200 p-4 space-y-2">
         <p className="text-xs font-semibold text-slate-700 uppercase tracking-wide">One-click setup</p>
         <p className="text-sm text-slate-600">
-          Sign up instantly with your GitHub or Google account. No password needed—your account is set up immediately with secure OAuth authentication.
+          Sign up instantly with your GitHub or Google account. Your account is created automatically the first time you continue, and you can sign in with the same provider after that.
         </p>
       </div>
 

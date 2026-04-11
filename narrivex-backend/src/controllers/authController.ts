@@ -12,12 +12,12 @@ export const authController = {
 
       const user = await repo.findOne({ where: { email } });
       if (!user || !user.password) {
-        return res.status(401).json({ error: 'Invalid credentials' });
+        return res.status(404).json({ error: 'User not registered' });
       }
 
       const isValidPassword = await authService.verifyPassword(password, user.password);
       if (!isValidPassword) {
-        return res.status(401).json({ error: 'Invalid credentials' });
+        return res.status(401).json({ error: 'Incorrect password' });
       }
 
       const accessToken = authService.generateToken(user.id);

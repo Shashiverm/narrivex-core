@@ -100,11 +100,11 @@ export function Footer() {
       )}
 
       <footer
-        className={`footer-shell fixed bottom-0 left-0 right-0 border-t border-black/10 bg-white/85 backdrop-blur transition-all duration-300 ${
+        className={`footer-shell fixed inset-x-0 bottom-0 z-[60] border-t border-black/10 bg-white/85 shadow-[0_-12px_40px_rgba(15,23,42,0.08)] backdrop-blur transition-all duration-300 supports-[backdrop-filter]:bg-white/80 ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-[calc(100%+8px)] opacity-0'
         }`}
       >
-        <div className="footer-content mx-auto max-w-6xl px-4 py-3 text-xs text-slate-600 sm:px-6">
+        <div className="footer-content mx-auto flex max-w-6xl flex-col gap-3 px-4 py-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] text-xs text-slate-600 sm:px-6">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
               <span>Narrivex</span>
@@ -128,7 +128,7 @@ export function Footer() {
               </span>
             </button>
           </div>
-          <div className="footer-meta mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-slate-500">
+          <div className="footer-meta flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-slate-500">
             <span>Contact: info@narrivex.tech</span>
             <span>New Delhi, India</span>
             <a
