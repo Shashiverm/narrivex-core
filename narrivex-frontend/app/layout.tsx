@@ -66,6 +66,9 @@ export const metadata: Metadata = {
       'max-video-preview': -1,
     },
   },
+  verification: {
+    google: 'cxw_hkCCcBAfAsMAcfE2M9Ymt2inofGjnntJ9Okea7A',
+  },
   category: 'finance',
 };
 
