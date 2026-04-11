@@ -1,6 +1,6 @@
 export default function RiskDisclosurePage() {
   return (
-    <main className="min-h-screen bg-grain pb-24">
+    <main className="compliance-page min-h-screen bg-grain pb-24">
       <div className="mx-auto max-w-4xl px-6 py-12">
         <p className="mb-3 inline-block rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs font-semibold text-slate-700 backdrop-blur">
           Legal & Compliance

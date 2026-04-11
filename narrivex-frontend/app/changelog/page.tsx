@@ -2,8 +2,8 @@ import { CHANGELOG } from '@/lib/changelog';
 
 export default function ChangelogPage() {
   return (
-    <main className="mx-auto max-w-3xl px-6 py-10 pb-20">
-      <h1 className="font-display text-4xl font-bold">Version History</h1>
+    <main className="compliance-page mx-auto max-w-3xl px-6 py-10 pb-20">
+      <h1 className="font-display text-4xl font-bold text-ink">Version History</h1>
       <p className="mt-2 text-slate-600">Click app version in the footer anytime to view updates.</p>
 
       <div className="mt-8 space-y-6">

@@ -17,7 +17,7 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 border-r border-slate-200 bg-white">
+    <aside className="dashboard-sidebar w-64 border-r border-slate-200 bg-white">
       <div className="space-y-6 p-4">
         {navigation.map((item) => {
           const Icon = item.icon;
@@ -28,8 +28,8 @@ export function Sidebar() {
               href={item.href}
               onClick={() => trackEvent('sidebar_nav_click', { destination: item.href, label: item.name })}
               className={cn(
-                'flex items-center gap-3 rounded-lg px-4 py-3 font-semibold transition',
-                isActive ? 'bg-sea/10 text-sea' : 'text-slate-700 hover:bg-slate-100'
+                'dashboard-nav-link flex items-center gap-3 rounded-lg px-4 py-3 font-semibold transition',
+                isActive ? 'dashboard-nav-active bg-sea/10 text-sea' : 'dashboard-nav-idle text-slate-700 hover:bg-slate-100'
               )}
             >
               <Icon className="h-5 w-5" />
