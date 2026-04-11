@@ -102,7 +102,13 @@ export function Chart({ symbol }: { symbol: string }) {
   return (
     <Card className="dashboard-card bg-white p-4 sm:p-5">
       <h2 className="dashboard-card-heading mb-3 font-display text-lg font-bold sm:mb-4 sm:text-xl">{symbol}</h2>
-      {loading ? <Skeleton className="w-full" style={{ height: `${chartHeight}px` }} /> : <div ref={containerRef} />}
+      {loading ? (
+        <div style={{ height: `${chartHeight}px` }} className="w-full">
+          <Skeleton className="h-full w-full" />
+        </div>
+      ) : (
+        <div ref={containerRef} />
+      )}
     </Card>
   );
 }
