@@ -1,4 +1,5 @@
-import { MigrationInterface, QueryRunner } from 'typeorm';
+import type { MigrationInterface } from 'typeorm';
+import { QueryRunner } from 'typeorm';
 
 export class AddAlertLastTriggeredAt1712313900000 implements MigrationInterface {
   name = 'AddAlertLastTriggeredAt1712313900000';
