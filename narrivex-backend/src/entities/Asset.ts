@@ -26,7 +26,7 @@ export class Asset {
   @Column({ type: 'numeric', precision: 18, scale: 8, nullable: true })
   lastPrice!: number | null;
 
-  @Column({ nullable: true })
+  @Column({ type: 'timestamptz', nullable: true })
   lastUpdate!: Date | null;
 
   @CreateDateColumn()

@@ -27,7 +27,7 @@ export class Alert {
   @Column({ default: true })
   enabled!: boolean;
 
-  @Column({ nullable: true })
+  @Column({ type: 'timestamptz', nullable: true })
   lastTriggeredAt!: Date | null;
 
   @CreateDateColumn()
