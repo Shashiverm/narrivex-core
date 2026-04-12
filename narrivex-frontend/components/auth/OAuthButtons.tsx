@@ -22,7 +22,7 @@ export function OAuthButtons({ disabled }: { disabled?: boolean }) {
       </Button>
       <Button
         type="button"
-        className="w-full h-11 font-medium border-2 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+        className="w-full h-11 font-medium border-2 border-slate-300 text-slate-700 hover:border-slate-400 hover:bg-slate-50"
         variant="outline"
         disabled={disabled}
         onClick={() => {

@@ -514,8 +514,7 @@ function PricingCard({
   highlighted?: boolean;
 }) {
   return (
-    <Card className={`relative border-black/10 p-8 backdrop-blur transition-all ${highlighted ? 'scale-105 border-sea bg-white/90 shadow-lg' : 'bg-white/70'}`}>
-      {highlighted && <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sea to-coral rounded-t-2xl" />}
+    <Card className={`relative border-black/10 p-8 backdrop-blur transition-all ${highlighted ? 'scale-105 border-sea/40 bg-white/90 shadow-lg ring-1 ring-sea/20' : 'bg-white/70'}`}>
       <h3 className="font-display text-2xl font-bold">{title}</h3>
       <p className="text-slate-600">{description}</p>
       <div className="my-6">
