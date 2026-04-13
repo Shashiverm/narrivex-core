@@ -8,16 +8,6 @@ const nextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'www.narrivex.tech' }],
-        destination: 'https://narrivex.tech/:path*',
-        permanent: true,
-      },
-    ];
-  },
   async headers() {
     const csp = [
       "default-src 'self'",
