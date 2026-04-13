@@ -245,20 +245,36 @@ export default function LandingPage() {
         </section>
 
         {/* Product Preview */}
-        <section id="product-preview" className="mb-20 rounded-3xl border border-black/10 bg-white/65 px-6 py-10 backdrop-blur sm:px-8">
+        <section id="product-preview" className="mb-20 rounded-3xl border border-black/10 bg-white/60 px-6 py-10 backdrop-blur sm:px-8">
           <div className="mb-8 text-center">
             <h2 className="font-display text-4xl font-bold md:text-5xl">See the Narrivex Dashboard Before You Sign Up</h2>
             <p className="mt-3 text-lg text-slate-600">Preview how real-time narratives, alerts, and watchlists appear in a live trading workflow.</p>
           </div>
-          <div className="overflow-hidden rounded-2xl border border-black/10 bg-white/80 shadow-sm">
+          <div className="relative overflow-hidden rounded-2xl border border-black/10 bg-white/80 shadow-sm">
             <Image
-              src="/opengraph-image"
+              src="/dashoard_image.png"
               alt="Narrivex dashboard preview showing AI market narratives, real-time trading alerts, and watchlist context"
               width={1200}
               height={630}
               className="h-auto w-full"
+              unoptimized
               priority
             />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-950/40" />
+            <div className="pointer-events-none absolute bottom-4 left-4 right-4 grid gap-3 md:grid-cols-3">
+              <div className="rounded-lg border border-white/20 bg-slate-900/65 px-3 py-2 text-left backdrop-blur">
+                <p className="text-xs uppercase tracking-[0.12em] text-slate-300">Latency</p>
+                <p className="mt-1 text-sm font-semibold text-white">50ms avg feed updates</p>
+              </div>
+              <div className="rounded-lg border border-white/20 bg-slate-900/65 px-3 py-2 text-left backdrop-blur">
+                <p className="text-xs uppercase tracking-[0.12em] text-slate-300">Narratives</p>
+                <p className="mt-1 text-sm font-semibold text-white">Context + trigger summary</p>
+              </div>
+              <div className="rounded-lg border border-white/20 bg-slate-900/65 px-3 py-2 text-left backdrop-blur">
+                <p className="text-xs uppercase tracking-[0.12em] text-slate-300">Coverage</p>
+                <p className="mt-1 text-sm font-semibold text-white">Crypto, equities, forex</p>
+              </div>
+            </div>
           </div>
         </section>
 
