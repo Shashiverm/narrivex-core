@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Script from 'next/script';
+import Image from 'next/image';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import {
@@ -21,9 +22,9 @@ const siteUrl = 'https://narrivex.tech';
 const xUrl = 'https://x.com/narrivex';
 
 export const metadata: Metadata = {
-  title: 'AI Market Narratives, Alerts, and Trading Intelligence',
+  title: 'Real-Time AI Trading Alerts for Crypto, Equities, and Forex',
   description:
-    'Use Narrivex to monitor crypto, equities, and forex with real-time alerts and AI-generated market narratives built for modern traders.',
+    'Narrivex gives traders real-time AI trading alerts, market narratives, and cross-asset intelligence across crypto, equities, and forex with a 7-day free trial.',
   alternates: {
     canonical: '/',
   },
@@ -100,44 +101,53 @@ const faqData = [
 export default function LandingPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name: 'Narrivex',
-    applicationCategory: 'FinanceApplication',
-    operatingSystem: 'Web',
-    url: siteUrl,
-    description:
-      'Narrivex is an AI market intelligence platform with real-time narratives and alerts across crypto, equities, and forex.',
-    offers: [
+    '@graph': [
       {
-        '@type': 'Offer',
-        name: 'Starter',
-        price: '29',
-        priceCurrency: 'USD',
+        '@type': 'Organization',
+        name: 'Narrivex',
+        url: siteUrl,
+        sameAs: [xUrl],
       },
       {
-        '@type': 'Offer',
-        name: 'Professional',
-        price: '99',
-        priceCurrency: 'USD',
+        '@type': 'SoftwareApplication',
+        name: 'Narrivex',
+        applicationCategory: 'FinanceApplication',
+        operatingSystem: 'Web',
+        url: siteUrl,
+        description:
+          'Narrivex is an AI market intelligence platform with real-time narratives and alerts across crypto, equities, and forex.',
+        offers: [
+          {
+            '@type': 'Offer',
+            name: 'Starter',
+            price: '29',
+            priceCurrency: 'USD',
+          },
+          {
+            '@type': 'Offer',
+            name: 'Professional',
+            price: '99',
+            priceCurrency: 'USD',
+          },
+        ],
+        publisher: {
+          '@type': 'Organization',
+          name: 'Narrivex',
+          url: siteUrl,
+        },
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: faqData.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.answer,
+          },
+        })),
       },
     ],
-    publisher: {
-      '@type': 'Organization',
-      name: 'Narrivex',
-      url: siteUrl,
-      sameAs: [xUrl],
-    },
-    mainEntity: {
-      '@type': 'FAQPage',
-      mainEntity: faqData.map((item) => ({
-        '@type': 'Question',
-        name: item.question,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: item.answer,
-        },
-      })),
-    },
   };
 
   return (
@@ -174,13 +184,15 @@ export default function LandingPage() {
             <div className="mt-8 flex flex-wrap gap-4">
               <Link href="/signup">
                 <Button size="lg">
-                  Launch Dashboard
+                  Start Free
                   <ChevronRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Button variant="outline" size="lg">
-                Watch Demo
-              </Button>
+              <Link href="#product-preview">
+                <Button variant="outline" size="lg">
+                  See Product Preview
+                </Button>
+              </Link>
             </div>
           </div>
 
@@ -194,7 +206,7 @@ export default function LandingPage() {
         {/* Core Features Section */}
         <section className="mb-20">
           <div className="mb-12 text-center">
-            <h2 className="font-display text-4xl font-bold md:text-5xl">Powerful features for traders</h2>
+            <h2 className="font-display text-4xl font-bold md:text-5xl">Real-Time AI Trading Alerts for Crypto and Equities</h2>
             <p className="mt-4 text-lg text-slate-600">Everything you need to make informed decisions faster</p>
           </div>
 
@@ -228,6 +240,24 @@ export default function LandingPage() {
               icon={<Sparkles className="h-6 w-6 text-sea" />}
               title="API-first design"
               description="Build custom dashboards and integrations with our powerful REST API."
+            />
+          </div>
+        </section>
+
+        {/* Product Preview */}
+        <section id="product-preview" className="mb-20 rounded-3xl border border-black/10 bg-white/65 px-6 py-10 backdrop-blur sm:px-8">
+          <div className="mb-8 text-center">
+            <h2 className="font-display text-4xl font-bold md:text-5xl">See the Narrivex Dashboard Before You Sign Up</h2>
+            <p className="mt-3 text-lg text-slate-600">Preview how real-time narratives, alerts, and watchlists appear in a live trading workflow.</p>
+          </div>
+          <div className="overflow-hidden rounded-2xl border border-black/10 bg-white/80 shadow-sm">
+            <Image
+              src="/opengraph-image"
+              alt="Narrivex dashboard preview showing AI market narratives, real-time trading alerts, and watchlist context"
+              width={1200}
+              height={630}
+              className="h-auto w-full"
+              priority
             />
           </div>
         </section>
@@ -346,16 +376,19 @@ export default function LandingPage() {
         <section className="mb-20 rounded-3xl bg-gradient-to-br from-sea/5 to-coral/5 px-8 py-16">
           <div className="mb-12 text-center">
             <h2 className="font-display text-4xl font-bold">Simple, transparent pricing</h2>
-            <p className="mt-4 text-lg text-slate-600">No setup fees. No hidden charges. Cancel anytime.</p>
+            <p className="mt-4 text-lg text-slate-600">Start with a 7-day free trial. No setup fees. No hidden charges. Cancel anytime.</p>
+            <p className="mt-3 inline-flex rounded-full border border-sea/20 bg-sea/10 px-4 py-2 text-sm font-semibold text-sea">
+              New users get full feature access during the trial period.
+            </p>
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
-            <PricingCard title="Starter" price="$29" description="Perfect for learning" features={['Real-time alerts', 'Basic narratives', '10 watchlist items', 'Email support']} />
+            <PricingCard title="Starter" price="$29" description="Perfect for learning" features={['7-day free trial', 'Real-time alerts', 'Basic narratives', '10 watchlist items', 'Email support']} />
             <PricingCard
               title="Professional"
               price="$99"
               description="For active traders"
-              features={['Everything in Starter', 'Advanced filtering', 'Unlimited watchlists', 'Priority support', 'API access']}
+              features={['Everything in Starter', 'Advanced filtering', 'Unlimited watchlists', 'Priority support', 'API access', 'Team-ready workflows']}
               highlighted
             />
             <PricingCard
@@ -364,6 +397,23 @@ export default function LandingPage() {
               description="For institutions"
               features={['Everything in Professional', 'Custom integrations', 'Dedicated account manager', 'SLA guarantee', 'On-premise option']}
             />
+          </div>
+
+          <div className="mt-8 grid gap-4 rounded-2xl border border-amber-200 bg-amber-50/80 p-5 text-sm text-amber-900 md:grid-cols-2">
+            <p>
+              Narrivex provides informational analytics and AI-generated market summaries. It does not provide investment advice, portfolio management, or execution.
+            </p>
+            <p>
+              Regulatory note for India: Narrivex is presented as an analytics platform. Review our legal terms for disclosure context before subscribing.
+            </p>
+            <div className="md:col-span-2 flex flex-wrap gap-4 font-semibold">
+              <Link href="/financial-disclaimer" className="hover:underline">
+                Financial disclaimer
+              </Link>
+              <Link href="/risk-disclosure" className="hover:underline">
+                Risk disclosure
+              </Link>
+            </div>
           </div>
         </section>
 
@@ -403,7 +453,7 @@ export default function LandingPage() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
               <Link href="/signup">
                 <Button size="lg">
-                  Get Started Free
+                  Start Free Trial
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
@@ -432,8 +482,11 @@ export default function LandingPage() {
         {/* Internal SEO Links */}
         <section className="mb-16 rounded-2xl border border-black/10 bg-white/60 p-6 backdrop-blur">
           <h2 className="font-display text-2xl font-bold">Explore Narrivex resources</h2>
-          <p className="mt-2 text-slate-600">Learn about product updates, compliance, platform policies, and follow live updates on X.</p>
+          <p className="mt-2 text-slate-600">Learn with practical market guides, product updates, compliance pages, and live updates on X.</p>
           <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm font-semibold text-sea">
+            <Link href="/insights" className="hover:underline">
+              Market insights
+            </Link>
             <Link href="/changelog" className="hover:underline">
               Product changelog
             </Link>
