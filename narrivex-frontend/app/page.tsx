@@ -20,6 +20,7 @@ import { Card } from '@/components/ui/card';
 
 const siteUrl = 'https://narrivex.tech';
 const xUrl = 'https://x.com/narrivex';
+const statusUrl = 'https://status.narrivex.tech';
 
 export const metadata: Metadata = {
   title: 'Real-Time AI Trading Alerts for Crypto, Equities, and Forex',
@@ -178,7 +179,7 @@ export default function LandingPage() {
             <h1 className="font-display text-5xl font-bold leading-tight md:text-7xl">
               See the market story before everyone else.
             </h1>
-            <p className="mt-6 max-w-xl text-xl text-slate-700">
+            <p className="mt-6 max-w-xl text-xl text-slate-700 dark:text-slate-300">
               Narrivex transforms noisy market data into clear, actionable narratives and alerts. Perfect for traders and analysts who need real-time insights without the noise.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
@@ -190,10 +191,11 @@ export default function LandingPage() {
               </Link>
               <Link href="#product-preview">
                 <Button variant="outline" size="lg">
-                  See Product Preview
+                  Watch Demo
                 </Button>
               </Link>
             </div>
+            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">Demo opens the live product preview section below.</p>
           </div>
 
           <div className="grid gap-4">
@@ -245,18 +247,21 @@ export default function LandingPage() {
         </section>
 
         {/* Product Preview */}
-        <section id="product-preview" className="mb-20 rounded-3xl border border-black/10 bg-white/60 px-6 py-10 backdrop-blur sm:px-8">
+        <section
+          id="product-preview"
+          className="mb-20 scroll-mt-28 rounded-3xl border border-black/10 bg-white/60 px-6 py-10 backdrop-blur sm:px-8 dark:border-white/10 dark:bg-slate-900/50"
+        >
           <div className="mb-8 text-center">
             <h2 className="font-display text-4xl font-bold md:text-5xl">See the Narrivex Dashboard Before You Sign Up</h2>
-            <p className="mt-3 text-lg text-slate-600">Preview how real-time narratives, alerts, and watchlists appear in a live trading workflow.</p>
+            <p className="mt-3 text-lg text-slate-600 dark:text-slate-300">Preview how real-time narratives, alerts, and watchlists appear in a live trading workflow.</p>
           </div>
-          <div className="relative overflow-hidden rounded-2xl border border-black/10 bg-white/80 shadow-sm">
+          <div className="relative overflow-hidden rounded-2xl border border-black/10 bg-white/80 shadow-sm dark:border-white/10 dark:bg-slate-900/80">
             <Image
-              src="/dashoard_image.png"
+              src="/dashboard_image.png"
               alt="Narrivex dashboard preview showing AI market narratives, real-time trading alerts, and watchlist context"
               width={1200}
               height={630}
-              className="h-auto w-full"
+              className="h-auto w-full object-cover"
               unoptimized
               priority
             />
@@ -291,11 +296,11 @@ export default function LandingPage() {
         </section>
 
         {/* Benefits Section */}
-        <section className="mb-20 rounded-3xl border border-black/10 bg-white/50 px-8 py-16 backdrop-blur">
+        <section className="mb-20 rounded-3xl border border-black/10 bg-white/50 px-8 py-16 backdrop-blur dark:border-white/10 dark:bg-slate-900/40">
           <div className="grid gap-16 lg:grid-cols-2">
             <div>
               <h2 className="font-display text-4xl font-bold">Why traders choose Narrivex</h2>
-              <p className="mt-4 text-lg text-slate-600">Stop drowning in data. Start making informed trades.</p>
+              <p className="mt-4 text-lg text-slate-600 dark:text-slate-300">Stop drowning in data. Start making informed trades.</p>
 
               <div className="mt-10 space-y-4">
                 {['Catch trends in real-time', 'Reduce research time by 80%', 'Eliminate information overload', 'Make data-driven decisions', 'Scale your trading strategy'].map(
@@ -309,54 +314,67 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="rounded-2xl bg-gradient-to-br from-sea/10 to-coral/10 p-8">
+            <div className="rounded-2xl bg-gradient-to-br from-sea/10 to-coral/10 p-8 dark:from-sea/20 dark:to-coral/20">
               <div className="space-y-6">
-                <div className="rounded-lg bg-white/60 p-4">
+                <div className="rounded-lg bg-white/60 p-4 dark:bg-slate-900/60">
                   <div className="flex items-center gap-2 font-semibold">
                     <Zap className="h-4 w-4 text-coral" />
-                    50ms average latency
+                    Real-time stream delivery
                   </div>
-                  <p className="mt-1 text-sm text-slate-600">On WebSocket connections worldwide</p>
+                  <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Built for low-latency routing across market feeds</p>
                 </div>
-                <div className="rounded-lg bg-white/60 p-4">
+                <div className="rounded-lg bg-white/60 p-4 dark:bg-slate-900/60">
                   <div className="flex items-center gap-2 font-semibold">
                     <TrendingUp className="h-4 w-4 text-sea" />
-                    10,000+ traders
+                    Team-ready workflows
                   </div>
-                  <p className="mt-1 text-sm text-slate-600">Using Narrivex daily for market analysis</p>
+                  <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Shared watchlists, alert rules, and API integrations</p>
                 </div>
-                <div className="rounded-lg bg-white/60 p-4">
+                <div className="rounded-lg bg-white/60 p-4 dark:bg-slate-900/60">
                   <div className="flex items-center gap-2 font-semibold">
                     <AlertCircle className="h-4 w-4 text-coral" />
-                    99.9% uptime
+                    Operational transparency
                   </div>
-                  <p className="mt-1 text-sm text-slate-600">Enterprise-grade infrastructure</p>
+                  <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
+                    Reliability details and incident history are published on our public status page.
+                  </p>
+                  <a
+                    href={statusUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-3 inline-flex text-sm font-semibold text-sea hover:underline"
+                  >
+                    View system status
+                  </a>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Testimonials Section */}
+        {/* Validation Section */}
         <section className="mb-20">
           <div className="mb-12 text-center">
-            <h2 className="font-display text-4xl font-bold md:text-5xl">Loved by traders worldwide</h2>
+            <h2 className="font-display text-4xl font-bold md:text-5xl">Built for transparent evaluation</h2>
+            <p className="mt-4 text-lg text-slate-600 dark:text-slate-300">Validate platform behavior with a live preview, status visibility, and documented policies.</p>
           </div>
 
           <div className="grid gap-6 md:grid-cols-3">
-            <TestimonialCard
-              quote="Narrivex cut my research time in half. The AI narratives are spot-on."
-              author="Alex Chen"
-              role="Crypto Trader"
-              rating={5}
-            />
-            <TestimonialCard
-              quote="Finally a tool that makes sense of all the market noise. Best platform I've used."
-              author="Jordan Smith"
-              role="Day Trader"
-              rating={5}
-            />
-            <TestimonialCard quote="The alerts are incredibly reliable. I've increased my win rate by 40%." author="Sam Rodriguez" role="Equity Analyst" rating={5} />
+            <Card className="border-black/10 bg-white/70 p-6 backdrop-blur dark:border-white/10 dark:bg-slate-900/60">
+              <h3 className="font-display text-2xl font-semibold">Watch the product first</h3>
+              <p className="mt-3 text-slate-600 dark:text-slate-300">Use the live dashboard preview to assess signal context, UI clarity, and workflow fit before signing up.</p>
+            </Card>
+            <Card className="border-black/10 bg-white/70 p-6 backdrop-blur dark:border-white/10 dark:bg-slate-900/60">
+              <h3 className="font-display text-2xl font-semibold">Track platform health</h3>
+              <p className="mt-3 text-slate-600 dark:text-slate-300">Monitor incidents and uptime events directly via the public status page for operational transparency.</p>
+              <a href={statusUrl} target="_blank" rel="noreferrer" className="mt-4 inline-flex font-semibold text-sea hover:underline">
+                Open status page
+              </a>
+            </Card>
+            <Card className="border-black/10 bg-white/70 p-6 backdrop-blur dark:border-white/10 dark:bg-slate-900/60">
+              <h3 className="font-display text-2xl font-semibold">Review legal disclosures</h3>
+              <p className="mt-3 text-slate-600 dark:text-slate-300">Before subscribing, review the risk and financial disclaimers to evaluate fit for your jurisdiction and strategy.</p>
+            </Card>
           </div>
         </section>
 
