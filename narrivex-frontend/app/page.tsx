@@ -13,7 +13,6 @@ import {
   AlertCircle,
   Check,
   ArrowRight,
-  Star,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -568,21 +567,6 @@ function FeatureCard({ icon, title, description }: { icon: ReactNode; title: str
       <div className="mb-4">{icon}</div>
       <h3 className="font-display text-xl font-semibold">{title}</h3>
       <p className="mt-2 text-slate-600">{description}</p>
-    </Card>
-  );
-}
-
-function TestimonialCard({ quote, author, role, rating }: { quote: string; author: string; role: string; rating: number }) {
-  return (
-    <Card className="border-black/10 bg-white/70 p-6 backdrop-blur">
-      <div className="mb-4 flex gap-1">
-        {Array.from({ length: rating }).map((_, i) => (
-          <Star key={i} className="h-4 w-4 fill-coral text-coral" />
-        ))}
-      </div>
-      <p className="italic text-slate-700">&ldquo;{quote}&rdquo;</p>
-      <p className="mt-4 font-semibold">{author}</p>
-      <p className="text-sm text-slate-600">{role}</p>
     </Card>
   );
 }
