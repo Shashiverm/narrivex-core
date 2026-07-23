@@ -32,7 +32,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="dashboard-page min-h-screen bg-[#f5f7fa] lg:flex">
+    <div className="dashboard-page min-h-screen bg-[#f0f2f5] lg:flex">
       <div className="hidden lg:block lg:shrink-0">
         <Sidebar />
       </div>

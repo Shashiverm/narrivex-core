@@ -245,7 +245,7 @@ export function LoginForm() {
       </div>
 
       <div className="rounded-xl border border-sea/20 bg-sea/5 px-4 py-3 text-sm text-slate-700">
-        Password sign-in is for existing accounts. OTP works best when the email is already registered.
+        Sign in with your Google or GitHub account. Email and password login will be available soon.
       </div>
 
       {/* OAuth Buttons */}
@@ -261,40 +261,36 @@ export function LoginForm() {
         </div>
       </div>
 
-      {/* Email Auth Options */}
+      {/* Email Auth Options (temporarily disabled) */}
       <div className="grid gap-3">
-        {/* Email + Password Button */}
+        {/* Email + Password Button — disabled */}
         <button
-          onClick={() => {
-            trackEvent('login_method_selected', { method: 'password' });
-            setAuthMethod('password');
-          }}
-          className="flex items-center gap-3 w-full px-4 py-4 rounded-lg border-2 border-slate-200 hover:border-sea hover:bg-sea/5 transition-all text-left font-medium text-ink"
+          disabled
+          className="flex items-center gap-3 w-full px-4 py-4 rounded-lg border-2 border-slate-200 text-left font-medium text-ink opacity-50 cursor-not-allowed"
         >
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-sea/10 text-sea flex-shrink-0">
             <Lock className="h-5 w-5" />
           </div>
-          <div>
+          <div className="flex-1">
             <p className="font-semibold">Email & Password</p>
             <p className="text-xs text-slate-600">Sign in with your email and password</p>
           </div>
+          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-500 uppercase tracking-wide">Coming soon</span>
         </button>
 
-        {/* Email + OTP Button */}
+        {/* Email + OTP Button — disabled */}
         <button
-          onClick={() => {
-            trackEvent('login_method_selected', { method: 'otp' });
-            setAuthMethod('otp');
-          }}
-          className="flex items-center gap-3 w-full px-4 py-4 rounded-lg border-2 border-slate-200 hover:border-coral hover:bg-coral/5 transition-all text-left font-medium text-ink"
+          disabled
+          className="flex items-center gap-3 w-full px-4 py-4 rounded-lg border-2 border-slate-200 text-left font-medium text-ink opacity-50 cursor-not-allowed"
         >
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-coral/10 text-coral flex-shrink-0">
             <MailOpen className="h-5 w-5" />
           </div>
-          <div>
+          <div className="flex-1">
             <p className="font-semibold">Email & OTP</p>
             <p className="text-xs text-slate-600">Get a one-time code sent to your email</p>
           </div>
+          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-500 uppercase tracking-wide">Coming soon</span>
         </button>
       </div>
 
