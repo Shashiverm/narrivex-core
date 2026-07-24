@@ -627,17 +627,7 @@ export default function LandingPage() {
   );
 }
 
-function Feature({ icon, title, text }: { icon: ReactNode; title: string; text: string }) {
-  return (
-    <Card className="flex items-start gap-4 border-black/10 bg-white/70 p-6 backdrop-blur">
-      <div className="rounded-lg bg-sea/10 p-2 text-sea">{icon}</div>
-      <div>
-        <h3 className="font-display text-xl font-semibold">{title}</h3>
-        <p className="mt-1 text-slate-600">{text}</p>
-      </div>
-    </Card>
-  );
-}
+
 
 function FeatureCard({ icon, title, description }: { icon: ReactNode; title: string; description: string }) {
   return (
