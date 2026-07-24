@@ -57,24 +57,29 @@ const trustSignals = ['Crypto Traders', 'Equities Analysts', 'Forex Desks', 'Qua
 
 const comparisonRows = [
   {
-    label: 'Signal context',
-    narrivex: 'AI narrative explains why the move is happening',
-    generic: 'Raw alert with no interpretable reasoning',
+    label: 'Signal context & reasoning',
+    narrivex: 'Instant AI narrative explaining WHY the move happened (order flow, liquidations, catalyst news)',
+    generic: 'Raw price or indicator alert with zero context—leaves you searching news manually',
   },
   {
-    label: 'Cross-asset view',
-    narrivex: 'Crypto, equities, and forex in one stream',
-    generic: 'Single market focus with fragmented tooling',
+    label: 'Target user efficiency',
+    narrivex: 'Cuts research time by 80% for day traders, analysts, and trading desks',
+    generic: 'Requires jumping across TradingView, X/Twitter, news sites, and chat channels',
   },
   {
-    label: 'Reaction speed',
-    narrivex: 'Low-latency delivery via real-time feeds',
-    generic: 'Batch refresh intervals and delayed notifications',
+    label: 'Cross-asset coverage',
+    narrivex: 'Unified real-time feed across Crypto, Equities, and Forex in one dashboard',
+    generic: 'Fragmented single-market tools requiring multiple separate tools and feeds',
+  },
+  {
+    label: 'Reaction speed & latency',
+    narrivex: 'Low-latency WebSocket streaming (<50ms) with actionable alert triggers',
+    generic: 'Delayed batch notifications and delayed email digests',
   },
   {
     label: 'Workflow fit',
-    narrivex: 'Dashboard plus API integrations for teams',
-    generic: 'Limited customization and manual handoffs',
+    narrivex: 'Interactive dashboard + custom alert rules + REST & WebSocket APIs',
+    generic: 'Rigid pre-baked alerts with minimal customization or API access',
   },
 ];
 
@@ -169,22 +174,23 @@ export default function LandingPage() {
         </nav>
 
         {/* Hero Section */}
-        <section className="mb-20 grid gap-10 lg:grid-cols-2 lg:items-center">
-          <div>
-            {/* <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-coral/30 bg-coral/10 px-4 py-2 text-sm font-semibold text-coral">
+        <section className="mb-20 grid gap-12 lg:grid-cols-12 lg:items-center">
+          <div className="lg:col-span-7">
+            <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-sea/30 bg-sea/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-sea">
               <Sparkles className="h-4 w-4" />
-              AI-Powered Market Intelligence
-            </p> */}
-            <h1 className="font-display text-5xl font-bold leading-tight md:text-7xl">
-              See the market story before everyone else.
-            </h1>
-            <p className="mt-6 max-w-xl text-xl text-slate-700 dark:text-slate-300">
-              Narrivex transforms noisy market data into clear, actionable narratives and alerts. Perfect for traders and analysts who need real-time insights without the noise.
+              Real-Time Market Intelligence • AI Explanations for Every Move
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
+            <h1 className="font-display text-4xl font-bold leading-[1.1] sm:text-6xl md:text-7xl">
+              Real-time trading alerts with AI explanations for every market move.
+            </h1>
+            <p className="mt-6 max-w-xl text-lg text-slate-700 dark:text-slate-300 sm:text-xl">
+              Stop guessing why prices move. Narrivex pairs low-latency signals with instant AI narrative breakdowns across Crypto, Equities, and Forex—cutting research time by 80%.
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link href="/signup">
-                <Button size="lg">
-                  Start Free
+                <Button size="lg" className="bg-sea text-white hover:bg-sea/90 shadow-md">
+                  Start Free Trial
                   <ChevronRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
@@ -194,13 +200,85 @@ export default function LandingPage() {
                 </Button>
               </Link>
             </div>
-            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">Demo opens the live product preview section below.</p>
+
+            {/* Target Audience Badges */}
+            <div className="mt-8 pt-6 border-t border-black/10 dark:border-white/10">
+              <p className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-3">Built specifically for</p>
+              <div className="flex flex-wrap gap-2 text-xs font-semibold">
+                <span className="rounded-full bg-white/80 px-3 py-1.5 text-slate-800 dark:bg-slate-800 dark:text-slate-200 border border-black/10 dark:border-white/10 shadow-xs">⚡ Crypto Traders</span>
+                <span className="rounded-full bg-white/80 px-3 py-1.5 text-slate-800 dark:bg-slate-800 dark:text-slate-200 border border-black/10 dark:border-white/10 shadow-xs">📈 Stock & ETF Analysts</span>
+                <span className="rounded-full bg-white/80 px-3 py-1.5 text-slate-800 dark:bg-slate-800 dark:text-slate-200 border border-black/10 dark:border-white/10 shadow-xs">💱 Forex Desks</span>
+                <span className="rounded-full bg-white/80 px-3 py-1.5 text-slate-800 dark:bg-slate-800 dark:text-slate-200 border border-black/10 dark:border-white/10 shadow-xs">🤖 Quant Teams</span>
+              </div>
+            </div>
           </div>
 
-          <div className="grid gap-4">
-            <Feature icon={<Radar className="h-5 w-5" />} title="Real-time feeds" text="Low-latency WebSocket updates across your watchlist." />
-            <Feature icon={<Sparkles className="h-5 w-5" />} title="AI narratives" text="Human-readable explanations generated from indicators." />
-            <Feature icon={<ShieldCheck className="h-5 w-5" />} title="Secure & reliable" text="OAuth + JWT-backed API with enterprise-grade security." />
+          {/* Right Column: Simulated Live AI-Explained Alert Preview */}
+          <div className="lg:col-span-5">
+            <div className="relative rounded-2xl border border-black/10 bg-white/80 p-6 shadow-xl backdrop-blur dark:border-white/10 dark:bg-slate-900/90">
+              <div className="flex items-center justify-between border-b border-black/10 pb-4 dark:border-white/10">
+                <div className="flex items-center gap-2">
+                  <span className="relative flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                  </span>
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">Live AI Alert Stream</span>
+                </div>
+                <span className="rounded bg-emerald-500/10 px-2 py-0.5 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">WebSocket • 42ms</span>
+              </div>
+
+              {/* Primary Alert Preview Box */}
+              <div className="mt-4 space-y-3">
+                <div className="rounded-xl border border-sea/30 bg-sea/5 p-4 dark:bg-sea/10">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-display font-bold text-base text-slate-900 dark:text-white">BTC / USD</span>
+                        <span className="rounded bg-emerald-500/15 px-2 py-0.5 text-xs font-bold text-emerald-600 dark:text-emerald-400">+4.2% (5m)</span>
+                      </div>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Trigger: Volume Outlier & Resistance Breakout</p>
+                    </div>
+                    <Zap className="h-5 w-5 text-coral animate-pulse" />
+                  </div>
+
+                  {/* AI Narrative Breakdown */}
+                  <div className="mt-3 rounded-lg border border-black/10 bg-white/90 p-3.5 shadow-xs dark:border-white/10 dark:bg-slate-900">
+                    <div className="flex items-center gap-1.5 text-xs font-semibold text-sea mb-1.5">
+                      <Sparkles className="h-3.5 w-3.5" />
+                      <span>Instant AI Explanation</span>
+                    </div>
+                    <p className="text-xs leading-relaxed text-slate-700 dark:text-slate-300">
+                      &quot;Breakout driven by a <strong>$42M short liquidation cascade</strong> on Binance after clearing $64,200 resistance. Spot volume surges 310% above 20-period moving average.&quot;
+                    </p>
+                  </div>
+
+                  <div className="mt-3 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 pt-2 border-t border-black/5 dark:border-white/5">
+                    <span>Confidence: <strong className="text-slate-800 dark:text-slate-200">94%</strong></span>
+                    <span>Impact: <strong className="text-coral">High Volatility</strong></span>
+                    <span>Status: <strong className="text-emerald-600 dark:text-emerald-400">Actionable</strong></span>
+                  </div>
+                </div>
+
+                {/* Secondary Alert Preview Box */}
+                <div className="rounded-xl border border-black/10 bg-slate-50/80 p-3 dark:border-white/10 dark:bg-slate-800/50">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="font-display font-semibold text-xs text-slate-900 dark:text-white">NVDA (NVIDIA)</span>
+                      <span className="rounded bg-rose-500/15 px-1.5 py-0.5 text-[10px] font-bold text-rose-600 dark:text-rose-400">-2.1% (15m)</span>
+                    </div>
+                    <span className="text-[10px] text-slate-500">2m ago</span>
+                  </div>
+                  <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-400 truncate">
+                    AI Summary: Tech pull-back following semiconductor supply chain update...
+                  </p>
+                </div>
+              </div>
+
+              {/* Value Proposition Callout */}
+              <div className="mt-4 rounded-lg bg-slate-100/90 p-3 text-center text-xs text-slate-600 dark:bg-slate-800/80 dark:text-slate-300 border border-black/5 dark:border-white/5">
+                💡 <strong>Why Narrivex?</strong> Generic tools alert you that price moved. Narrivex explains <i>why</i> it moved so you can trade with conviction.
+              </div>
+            </div>
           </div>
         </section>
 
