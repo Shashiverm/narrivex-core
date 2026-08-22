@@ -51,30 +51,32 @@ export function CookieConsentBanner() {
 
   return (
     <aside
-      className="fixed inset-x-4 bottom-16 z-50 mx-auto w-auto max-w-3xl rounded-2xl border border-black/10 bg-white/95 p-5 shadow-xl backdrop-blur sm:bottom-20"
+      className="fixed inset-x-4 bottom-16 z-50 mx-auto w-auto max-w-3xl rounded-2xl border border-slate-200/80 bg-white/95 p-5 shadow-2xl backdrop-blur dark:border-slate-800 dark:bg-slate-900/95 sm:bottom-20"
       role="dialog"
       aria-live="polite"
       aria-label="Cookie consent"
     >
-      <h2 className="font-display text-xl font-bold text-ink">Cookie Consent</h2>
-      <p className="mt-2 text-sm leading-relaxed text-slate-700">
-        We use essential cookies to keep Narrivex secure and working. Optional cookies help with real-time feed performance and analytical tools.
+      <h2 className="font-display text-lg font-bold text-slate-900 dark:text-white">Cookie & Privacy Preferences</h2>
+      <p className="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+        We use essential cookies to maintain secure sessions and WebSocket connection authorization. Optional telemetry helps us monitor real-time feed performance and latency metrics.
       </p>
-      <ul className="mt-2 list-disc space-y-1 pl-5 text-xs text-slate-600">
-        <li>Essential: authentication and secure session handling.</li>
-        <li>Optional analytics: product analysis and performance insights.</li>
+      <ul className="mt-2 list-disc space-y-1 pl-5 text-xs text-slate-500 dark:text-slate-400">
+        <li>Essential: authentication and cryptographic session tokens.</li>
+        <li>Optional telemetry: feed delivery speed and latency diagnostics.</li>
       </ul>
-      <p className="mt-2 text-xs text-slate-500">
+      <p className="mt-2 text-[11px] text-slate-400">
         Last updated: {COOKIE_POLICY_UPDATED_AT}. Read our{' '}
         <Link href="/cookie-policy" className="font-semibold text-sea hover:underline">
           Cookie Policy
         </Link>
         .
       </p>
-      <div className="mt-4 flex flex-wrap gap-3">
-        <Button onClick={() => saveConsent(true)}>Accept</Button>
-        <Button variant="outline" onClick={() => saveConsent(false)}>
-          Reject optional
+      <div className="mt-4 flex flex-wrap gap-2.5">
+        <Button size="sm" onClick={() => saveConsent(true)} className="font-bold">
+          Accept All
+        </Button>
+        <Button variant="outline" size="sm" onClick={() => saveConsent(false)}>
+          Essential Only
         </Button>
       </div>
     </aside>

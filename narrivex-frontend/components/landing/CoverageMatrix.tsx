@@ -1,23 +1,26 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import {
   Coins,
   TrendingUp,
   Globe2,
   Gem,
+  Search,
   Zap,
 } from 'lucide-react';
 
 interface AssetCategory {
   id: string;
   name: string;
+  shortName: string;
   icon: typeof Coins;
   totalMonitored: string;
   sampleAssets: {
     symbol: string;
     name: string;
     volatility24h: string;
+    volatilityLevel: 'high' | 'moderate' | 'low';
     primaryTriggers: string;
     latency: string;
   }[];
@@ -27,52 +30,56 @@ interface AssetCategory {
 const assetCategories: AssetCategory[] = [
   {
     id: 'crypto',
-    name: 'Digital Assets & On-Chain',
+    name: 'Digital Assets & On-Chain DEX',
+    shortName: 'Crypto & DEX',
     icon: Coins,
-    totalMonitored: '540+ Pairs & DEX Pools',
+    totalMonitored: '540+ Pairs & Pools',
     sampleAssets: [
-      { symbol: 'BTC/USD', name: 'Bitcoin', volatility24h: 'High (4.8%)', primaryTriggers: 'Whale CVD Drift, Perp Squeeze, ETF Net Flow', latency: '12ms' },
-      { symbol: 'ETH/USD', name: 'Ethereum', volatility24h: 'High (6.1%)', primaryTriggers: 'L2 Liquidity Rotations, Staking Outflows, Gas Spikes', latency: '14ms' },
-      { symbol: 'SOL/USD', name: 'Solana', volatility24h: 'Extreme (9.2%)', primaryTriggers: 'DEX Pool Velocity, Token Mint Vol, Validator Flow', latency: '9ms' },
-      { symbol: 'AVAX/USD', name: 'Avalanche', volatility24h: 'Moderate (3.4%)', primaryTriggers: 'Subnet Activity & Institutional RWA Volume', latency: '16ms' },
+      { symbol: 'BTC/USDT', name: 'Bitcoin Perp', volatility24h: '4.8% Vol', volatilityLevel: 'high', primaryTriggers: 'Whale CVD Drift, Perp Liquidation Cascade, ETF Net Flow', latency: '12ms' },
+      { symbol: 'ETH/USDT', name: 'Ethereum Perp', volatility24h: '6.1% Vol', volatilityLevel: 'high', primaryTriggers: 'L2 Liquidity Rotation, Validator Staking Outflows', latency: '14ms' },
+      { symbol: 'SOL/USDT', name: 'Solana Spot', volatility24h: '9.2% Vol', volatilityLevel: 'high', primaryTriggers: 'DEX Pool Velocity, Token Mint Vol, Mempool Outliers', latency: '9ms' },
+      { symbol: 'AVAX/USDT', name: 'Avalanche Spot', volatility24h: '3.4% Vol', volatilityLevel: 'moderate', primaryTriggers: 'Subnet Activity & Institutional RWA Volume', latency: '16ms' },
     ],
     keySources: ['Binance', 'Coinbase Pro', 'OKX', 'Bybit', 'Raydium', 'Uniswap v3', 'Hyperliquid'],
   },
   {
     id: 'equities',
-    name: 'Global Equities & Options',
+    name: 'Global Equities & Options Flow',
+    shortName: 'Equities & Options',
     icon: TrendingUp,
-    totalMonitored: '2,800+ US & Global Stocks',
+    totalMonitored: '2,800+ US & Global Equities',
     sampleAssets: [
-      { symbol: 'NVDA', name: 'NVIDIA Corp', volatility24h: 'High (3.5%)', primaryTriggers: 'Dark Pool Block Absorption, Supply Chain Catalysts', latency: '18ms' },
-      { symbol: 'AAPL', name: 'Apple Inc', volatility24h: 'Low (0.8%)', primaryTriggers: 'Option Gamma Imbalance, Institutional Rebalancing', latency: '16ms' },
-      { symbol: 'TSLA', name: 'Tesla Inc', volatility24h: 'High (4.2%)', primaryTriggers: '0DTE Option Flow, Retail Sentiment Surge, Delivery Stats', latency: '15ms' },
-      { symbol: 'SPY', name: 'S&P 500 ETF', volatility24h: 'Moderate (1.1%)', primaryTriggers: 'VIX Volatility Expansion, Fed Macro Speeches', latency: '12ms' },
+      { symbol: 'NVDA', name: 'NVIDIA Corp', volatility24h: '3.5% Vol', volatilityLevel: 'high', primaryTriggers: 'Dark Pool Block Absorption, Supply Chain Catalysts', latency: '18ms' },
+      { symbol: 'AAPL', name: 'Apple Inc', volatility24h: '0.8% Vol', volatilityLevel: 'low', primaryTriggers: 'Option Gamma Imbalance, Institutional Rebalancing', latency: '16ms' },
+      { symbol: 'TSLA', name: 'Tesla Inc', volatility24h: '4.2% Vol', volatilityLevel: 'high', primaryTriggers: '0DTE Option Flow, Retail Sentiment Surge', latency: '15ms' },
+      { symbol: 'SPY', name: 'S&P 500 ETF', volatility24h: '1.1% Vol', volatilityLevel: 'moderate', primaryTriggers: 'VIX Volatility Expansion, Fed Macro Speeches', latency: '12ms' },
     ],
-    keySources: ['NYSE Arca', 'NASDAQ', 'Cboe Options', 'FINRA Dark Pool ADF', 'SEC EDGAR'],
+    keySources: ['NYSE Arca', 'NASDAQ', 'Cboe Options', 'FINRA ADF Dark Pools', 'SEC EDGAR'],
   },
   {
     id: 'forex',
-    name: 'Interbank Forex & Macro',
+    name: 'Interbank Forex & Sovereign Debt',
+    shortName: 'Interbank FX',
     icon: Globe2,
     totalMonitored: '48 Currency Pairs',
     sampleAssets: [
-      { symbol: 'EUR/USD', name: 'Euro / US Dollar', volatility24h: 'Moderate (0.4%)', primaryTriggers: 'ECB vs Fed Rate Expectations, Sovereign Yield Spreads', latency: '21ms' },
-      { symbol: 'USD/JPY', name: 'US Dollar / Yen', volatility24h: 'High (1.2%)', primaryTriggers: 'BoJ Yield Curve Control & Carry Trade Unwinds', latency: '24ms' },
-      { symbol: 'GBP/USD', name: 'British Pound / USD', volatility24h: 'Moderate (0.6%)', primaryTriggers: 'BoE Policy Statements & UK Inflation Prints', latency: '19ms' },
-      { symbol: 'AUD/USD', name: 'Aussie Dollar', volatility24h: 'Moderate (0.7%)', primaryTriggers: 'China Commodity Demand & RBA Rate Pivots', latency: '22ms' },
+      { symbol: 'EUR/USD', name: 'Euro / US Dollar', volatility24h: '0.4% Vol', volatilityLevel: 'low', primaryTriggers: 'ECB vs Fed Rate Expectations, Sovereign Yield Spreads', latency: '21ms' },
+      { symbol: 'USD/JPY', name: 'US Dollar / Yen', volatility24h: '1.2% Vol', volatilityLevel: 'moderate', primaryTriggers: 'BoJ Yield Curve Control & Carry Trade Unwinds', latency: '24ms' },
+      { symbol: 'GBP/USD', name: 'British Pound / USD', volatility24h: '0.6% Vol', volatilityLevel: 'moderate', primaryTriggers: 'BoE Policy Statements & UK Inflation Prints', latency: '19ms' },
+      { symbol: 'AUD/USD', name: 'Aussie Dollar', volatility24h: '0.7% Vol', volatilityLevel: 'moderate', primaryTriggers: 'China Commodity Demand & RBA Rate Pivots', latency: '22ms' },
     ],
-    keySources: ['EBS Interbank', 'Reuters Dealing', 'Bloomberg B-PIPE', 'ECB/Fed Data Feeds'],
+    keySources: ['EBS Interbank', 'Reuters Dealing', 'Bloomberg B-PIPE', 'ECB & Fed FastFeeds'],
   },
   {
     id: 'commodities',
-    name: 'Commodities & Metals',
+    name: 'Commodities & Precious Metals',
+    shortName: 'Commodities',
     icon: Gem,
     totalMonitored: '32 Futures & Spot Feeds',
     sampleAssets: [
-      { symbol: 'XAU/USD', name: 'Gold Spot', volatility24h: 'Moderate (1.2%)', primaryTriggers: 'Central Bank Accumulation, Real Rate Inversions', latency: '18ms' },
-      { symbol: 'XAG/USD', name: 'Silver Spot', volatility24h: 'High (2.8%)', primaryTriggers: 'Industrial Demand Surges & COMEX Vault Deliveries', latency: '20ms' },
-      { symbol: 'CL.1', name: 'WTI Crude Oil', volatility24h: 'High (3.1%)', primaryTriggers: 'OPEC+ Supply Quotas, EIA Inventory Drawdowns', latency: '22ms' },
+      { symbol: 'XAU/USD', name: 'Gold Spot', volatility24h: '1.2% Vol', volatilityLevel: 'moderate', primaryTriggers: 'Central Bank Accumulation, Real Rate Inversions', latency: '18ms' },
+      { symbol: 'XAG/USD', name: 'Silver Spot', volatility24h: '2.8% Vol', volatilityLevel: 'high', primaryTriggers: 'Industrial Demand Surges & COMEX Deliveries', latency: '20ms' },
+      { symbol: 'CL.1', name: 'WTI Crude Oil', volatility24h: '3.1% Vol', volatilityLevel: 'high', primaryTriggers: 'OPEC+ Supply Quotas, EIA Inventory Drawdowns', latency: '22ms' },
     ],
     keySources: ['CME NYMEX', 'COMEX', 'London Bullion Market (LBMA)', 'ICE Futures'],
   },
@@ -80,112 +87,156 @@ const assetCategories: AssetCategory[] = [
 
 export function CoverageMatrix() {
   const [activeCategory, setActiveCategory] = useState<string>('crypto');
-  const activeData = assetCategories.find((c) => c.id === activeCategory) || assetCategories[0];
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  const activeData = useMemo(() => {
+    return assetCategories.find((c) => c.id === activeCategory) || assetCategories[0];
+  }, [activeCategory]);
+
+  const filteredAssets = useMemo(() => {
+    if (!searchQuery.trim()) return activeData.sampleAssets;
+    const query = searchQuery.toLowerCase();
+    return activeData.sampleAssets.filter(
+      (a) =>
+        a.symbol.toLowerCase().includes(query) ||
+        a.name.toLowerCase().includes(query) ||
+        a.primaryTriggers.toLowerCase().includes(query)
+    );
+  }, [activeData, searchQuery]);
 
   return (
-    <section className="mb-20 rounded-3xl border border-black/10 bg-white/70 p-6 backdrop-blur sm:p-10 dark:border-white/10 dark:bg-slate-900/60">
-      <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-black/10 pb-6 dark:border-white/10">
+    <section className="mb-24 rounded-3xl border border-slate-200/80 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-slate-800/80 dark:bg-slate-900/60 sm:p-10">
+      {/* Header with Title and Search / Tabs */}
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/80 pb-6 dark:border-slate-800/80">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-sea/30 bg-sea/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-sea">
+          <div className="inline-flex items-center gap-2 rounded-full border border-sea/30 bg-sea/10 px-3 py-1 font-mono text-xs font-semibold text-sea">
             <Globe2 className="h-3.5 w-3.5" />
-            Cross-Asset Unified Matrix
+            Cross-Asset Unified Ingestion
           </div>
           <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl text-slate-900 dark:text-white">
-            14,800+ Instruments across All Major Venues
+            14,800+ Instruments Monitored in Real Time
           </h2>
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
-            Never switch between disjointed dashboards again. Monitor crypto, stocks, FX, and commodities simultaneously.
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 max-w-xl">
+            Stream unified intelligence across crypto mempools, equities dark pools, FX interbank, and futures from a single endpoint.
           </p>
         </div>
 
-        {/* Category Switcher Tabs */}
-        <div className="flex flex-wrap gap-1.5 rounded-2xl border border-black/10 bg-slate-100/80 p-1.5 dark:border-slate-800 dark:bg-slate-800/80">
-          {assetCategories.map((cat) => {
-            const Icon = cat.icon;
-            const isSelected = activeCategory === cat.id;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition ${
-                  isSelected
-                    ? 'bg-white text-slate-900 shadow-sm dark:bg-slate-900 dark:text-white'
-                    : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
-                }`}
-              >
-                <Icon className="h-4 w-4 text-sea" />
-                <span>{cat.name.split('&')[0]}</span>
-              </button>
-            );
-          })}
+        {/* Search & Category Pills */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">
+          {/* Quick Search */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Search ticker or trigger..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full sm:w-56 rounded-xl border border-slate-200 bg-white py-1.5 pl-8 pr-3 text-xs text-slate-800 placeholder-slate-400 focus:border-sea focus:outline-none dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-200"
+            />
+          </div>
+
+          {/* Category Switcher Tabs */}
+          <div className="flex flex-wrap gap-1 rounded-xl border border-slate-200 bg-slate-100/80 p-1 dark:border-slate-800 dark:bg-slate-950/60">
+            {assetCategories.map((cat) => {
+              const isSelected = activeCategory === cat.id;
+              const Icon = cat.icon;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 font-mono text-xs font-semibold transition ${
+                    isSelected
+                      ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-800 dark:text-white font-bold'
+                      : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                  }`}
+                >
+                  <Icon className="h-3.5 w-3.5 text-sea" />
+                  <span>{cat.shortName}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
       {/* Asset Table Preview */}
-      <div className="overflow-x-auto rounded-2xl border border-black/10 bg-white/90 shadow-sm dark:border-white/10 dark:bg-slate-950/80">
-        <table className="w-full min-w-[700px] text-left text-xs">
-          <thead className="bg-slate-50/80 border-b border-black/5 dark:bg-slate-900/80 dark:border-white/5">
+      <div className="overflow-x-auto rounded-xl border border-slate-200/80 bg-white/90 shadow-xs dark:border-slate-800/80 dark:bg-slate-950/80">
+        <table className="w-full min-w-[720px] text-left text-xs">
+          <thead className="bg-slate-50/80 border-b border-slate-200/80 font-mono text-[11px] font-semibold text-slate-500 uppercase dark:bg-slate-900/70 dark:border-slate-800/80 dark:text-slate-400">
             <tr>
-              <th className="px-5 py-3.5 font-display text-xs font-bold uppercase tracking-wider text-slate-500">
-                Instrument
-              </th>
-              <th className="px-5 py-3.5 font-display text-xs font-bold uppercase tracking-wider text-slate-500">
-                24h Volatility State
-              </th>
-              <th className="px-5 py-3.5 font-display text-xs font-bold uppercase tracking-wider text-slate-500">
-                Primary AI Trigger Rules
-              </th>
-              <th className="px-5 py-3.5 font-display text-xs font-bold uppercase tracking-wider text-slate-500 text-right">
-                Feed Ingestion Speed
-              </th>
+              <th className="px-5 py-3.5">Instrument / Pair</th>
+              <th className="px-5 py-3.5">24h Volatility State</th>
+              <th className="px-5 py-3.5">Primary Quantitative Trigger Rules</th>
+              <th className="px-5 py-3.5 text-right">Ingestion Latency</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-black/5 dark:divide-white/5">
-            {activeData.sampleAssets.map((asset) => (
-              <tr
-                key={asset.symbol}
-                className="hover:bg-slate-50/60 dark:hover:bg-slate-900/50 transition-colors"
-              >
-                <td className="px-5 py-4 font-medium">
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono font-bold text-slate-900 dark:text-white">
-                      {asset.symbol}
-                    </span>
-                    <span className="text-slate-400 text-[11px]">({asset.name})</span>
-                  </div>
-                </td>
-                <td className="px-5 py-4 font-semibold text-slate-700 dark:text-slate-300">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-800 dark:bg-slate-800 dark:text-slate-200">
-                    <Zap className="h-3 w-3 text-amber-500" />
-                    {asset.volatility24h}
-                  </span>
-                </td>
-                <td className="px-5 py-4 text-slate-600 dark:text-slate-300">
-                  {asset.primaryTriggers}
-                </td>
-                <td className="px-5 py-4 text-right font-mono font-bold text-emerald-600 dark:text-emerald-400">
-                  ⚡ {asset.latency}
+          <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
+            {filteredAssets.length === 0 ? (
+              <tr>
+                <td colSpan={4} className="py-8 text-center text-slate-400">
+                  No instruments matching &quot;{searchQuery}&quot; in this category.
                 </td>
               </tr>
-            ))}
+            ) : (
+              filteredAssets.map((asset) => (
+                <tr
+                  key={asset.symbol}
+                  className="hover:bg-slate-50/80 dark:hover:bg-slate-900/50 transition-colors"
+                >
+                  <td className="px-5 py-3.5 font-medium">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-xs font-bold text-slate-900 dark:text-white">
+                        {asset.symbol}
+                      </span>
+                      <span className="text-slate-400 text-[11px]">({asset.name})</span>
+                    </div>
+                  </td>
+
+                  <td className="px-5 py-3.5 font-mono">
+                    <span
+                      className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[10px] font-bold ${
+                        asset.volatilityLevel === 'high'
+                          ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20'
+                          : asset.volatilityLevel === 'moderate'
+                          ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'
+                          : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
+                      }`}
+                    >
+                      <Zap className="h-2.5 w-2.5" />
+                      {asset.volatility24h}
+                    </span>
+                  </td>
+
+                  <td className="px-5 py-3.5 text-slate-600 dark:text-slate-300 font-sans text-xs">
+                    {asset.primaryTriggers}
+                  </td>
+
+                  <td className="px-5 py-3.5 text-right font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                    ⚡ {asset.latency}
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
 
-      {/* Venues Strip */}
-      <div className="mt-5 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400 px-2">
+      {/* Venues connected footer bar */}
+      <div className="mt-5 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400 px-1">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="font-semibold text-slate-700 dark:text-slate-300">Directly Connected Feeds:</span>
+          <span className="font-mono text-[11px] font-semibold text-slate-700 dark:text-slate-300">
+            Directly Ingested Venues:
+          </span>
           {activeData.keySources.map((source) => (
             <span
               key={source}
-              className="rounded-md border border-black/10 bg-white/80 px-2 py-0.5 text-[11px] font-mono text-slate-700 dark:border-white/10 dark:bg-slate-800 dark:text-slate-300"
+              className="rounded-md border border-slate-200/80 bg-slate-50 px-2 py-0.5 font-mono text-[10px] text-slate-700 dark:border-slate-800 dark:bg-slate-800/80 dark:text-slate-300"
             >
               {source}
             </span>
           ))}
         </div>
-        <span className="font-mono font-semibold text-sea">{activeData.totalMonitored} active</span>
+        <span className="font-mono text-xs font-semibold text-sea">{activeData.totalMonitored} monitored</span>
       </div>
     </section>
   );

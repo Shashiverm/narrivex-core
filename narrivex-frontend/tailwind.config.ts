@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
+  darkMode: ['class', '.theme-dark'],
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -10,14 +11,16 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        display: ['Space Grotesk', 'sans-serif'],
-        body: ['Source Sans 3', 'sans-serif'],
+        display: ['Space Grotesk', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        body: ['Source Sans 3', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
       },
       colors: {
-        ink: '#111827',
+        ink: '#0b0f17',
         sea: '#00a0a0',
+        'sea-dark': '#008080',
         coral: '#f97316',
-        mint: '#34d399',
+        mint: '#10b981',
         electric: '#6366f1',
         sunset: '#f59e0b',
       },
@@ -27,7 +30,7 @@ const config: Config = {
       },
       keyframes: {
         fadeInUp: {
-          '0%': { opacity: '0', transform: 'translateY(16px)' },
+          '0%': { opacity: '0', transform: 'translateY(12px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         shimmer: {
@@ -36,7 +39,7 @@ const config: Config = {
         },
         pulseGlow: {
           '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.5' },
+          '50%': { opacity: '0.4' },
         },
         slideInRight: {
           '0%': { opacity: '0', transform: 'translateX(12px)' },
@@ -48,11 +51,11 @@ const config: Config = {
         },
       },
       animation: {
-        'fade-in-up': 'fadeInUp 0.5s ease-out both',
+        'fade-in-up': 'fadeInUp 0.4s ease-out both',
         shimmer: 'shimmer 2s ease-in-out infinite',
         'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
-        'slide-in-right': 'slideInRight 0.4s ease-out both',
-        'ticker-scroll': 'tickerScroll 30s linear infinite',
+        'slide-in-right': 'slideInRight 0.3s ease-out both',
+        'ticker-scroll': 'tickerScroll 32s linear infinite',
       },
     },
   },

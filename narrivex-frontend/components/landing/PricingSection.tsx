@@ -63,13 +63,13 @@ const plans: Plan[] = [
     name: 'Enterprise / Funds',
     monthlyPrice: 'Custom',
     annualPrice: 'Custom',
-    description: 'Dedicated low-latency node co-location, custom quant models, and SLA.',
+    description: 'Dedicated low-latency node co-location, custom quant models, and guaranteed SLA.',
     features: [
       'Everything in Professional, plus:',
       'Dedicated Private Co-located Ingestion Node',
       'Custom LLM Fine-Tuning on Proprietary Indicators',
-      'Sub-10ms Direct FIX & WebSocket Protocol Feeds',
-      'Unlimited Team Seats & Audit Logging',
+      'Sub-10ms Direct FIX & Binary WebSocket Protocol',
+      'Unlimited Team Seats & Granular Audit Logging',
       '99.999% Guaranteed SLA Uptime',
       'Dedicated Quant Engineer & Account Manager',
     ],
@@ -82,27 +82,27 @@ export function PricingSection() {
   const [isAnnual, setIsAnnual] = useState<boolean>(true);
 
   return (
-    <section id="pricing" className="mb-20 rounded-3xl bg-gradient-to-br from-sea/5 via-slate-900/5 to-coral/5 px-6 py-16 sm:px-10 dark:from-slate-900/40 dark:to-slate-950/60 border border-black/10 dark:border-white/10">
+    <section id="pricing" className="mb-24 scroll-mt-20">
       <div className="mb-12 text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-sea/30 bg-sea/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-sea">
+        <div className="inline-flex items-center gap-2 rounded-full border border-sea/30 bg-sea/10 px-3 py-1 font-mono text-xs font-semibold text-sea">
           <Zap className="h-3.5 w-3.5" />
           Transparent Institutional Pricing
         </div>
         <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl text-slate-900 dark:text-white">
           Invest in Asymmetric Market Conviction
         </h2>
-        <p className="mt-4 text-lg text-slate-600 dark:text-slate-300">
-          7-day full access trial on all plans. No lock-in contracts. Cancel anytime.
+        <p className="mt-3 text-base text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+          7-day full access trial on all tiers. No lock-in contracts. Cancel with one click anytime.
         </p>
 
         {/* Billing Switcher Toggle */}
-        <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-black/10 bg-white/80 p-1.5 shadow-sm backdrop-blur dark:border-white/10 dark:bg-slate-900/80">
+        <div className="mt-8 inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/80 p-1 shadow-xs dark:border-slate-800 dark:bg-slate-900">
           <button
             type="button"
             onClick={() => setIsAnnual(false)}
-            className={`rounded-full px-5 py-2 text-sm font-semibold transition ${
+            className={`rounded-full px-4 py-1.5 font-mono text-xs font-semibold transition ${
               !isAnnual
-                ? 'bg-slate-900 text-white shadow-xs dark:bg-white dark:text-slate-900'
+                ? 'bg-slate-900 text-white shadow-xs dark:bg-slate-100 dark:text-slate-900'
                 : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
             }`}
           >
@@ -111,14 +111,14 @@ export function PricingSection() {
           <button
             type="button"
             onClick={() => setIsAnnual(true)}
-            className={`inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition ${
+            className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 font-mono text-xs font-semibold transition ${
               isAnnual
                 ? 'bg-sea text-white shadow-xs font-bold'
                 : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
             }`}
           >
             <span>Annual Billing</span>
-            <span className="rounded-full bg-emerald-400/20 px-2 py-0.5 text-[10px] font-bold text-emerald-600 dark:text-emerald-300">
+            <span className="rounded-full bg-emerald-400/20 px-2 py-0.2 text-[10px] font-bold text-emerald-600 dark:text-emerald-300">
               SAVE 20%
             </span>
           </button>
@@ -126,7 +126,7 @@ export function PricingSection() {
       </div>
 
       {/* Plan Cards Grid */}
-      <div className="grid gap-8 lg:grid-cols-3 items-stretch">
+      <div className="grid gap-6 lg:grid-cols-3 items-stretch">
         {plans.map((plan) => {
           const isHighlighted = plan.highlighted;
           const displayPrice =
@@ -139,55 +139,53 @@ export function PricingSection() {
           return (
             <div
               key={plan.id}
-              className={`relative flex flex-col justify-between rounded-2xl p-7 transition-all duration-300 ${
+              className={`relative flex flex-col justify-between rounded-2xl p-7 transition-all duration-200 ${
                 isHighlighted
-                  ? 'border-2 border-sea bg-white shadow-2xl ring-4 ring-sea/20 dark:bg-slate-900 dark:ring-sea/30 lg:-translate-y-2'
-                  : 'border border-black/10 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-slate-900/60 hover:border-black/20 dark:hover:border-white/20'
+                  ? 'border-2 border-sea bg-white shadow-xl ring-2 ring-sea/20 dark:bg-slate-900 dark:ring-sea/30'
+                  : 'border border-slate-200/80 bg-white/80 shadow-xs dark:border-slate-800 dark:bg-slate-900/60'
               }`}
             >
               {plan.badge && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-sea to-emerald-500 px-3.5 py-1 text-[11px] font-bold tracking-wider text-white shadow-md">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-sea px-3 py-0.5 font-mono text-[10px] font-bold tracking-wider text-white shadow-sm">
                   {plan.badge}
                 </div>
               )}
 
               <div>
-                <div className="flex items-center justify-between">
-                  <h3 className="font-display text-2xl font-bold text-slate-900 dark:text-white">
-                    {plan.name}
-                  </h3>
-                </div>
+                <h3 className="font-display text-xl font-bold text-slate-900 dark:text-white">
+                  {plan.name}
+                </h3>
 
-                <p className="mt-2 text-xs text-slate-600 dark:text-slate-300 min-h-[36px]">
+                <p className="mt-2 text-xs text-slate-600 dark:text-slate-400 min-h-[32px]">
                   {plan.description}
                 </p>
 
-                <div className="mt-6 border-y border-black/5 py-4 dark:border-white/5">
+                <div className="mt-5 border-y border-slate-100 py-4 dark:border-slate-800">
                   <div className="flex items-baseline gap-1">
                     <span className="font-mono text-4xl font-bold text-slate-900 dark:text-white">
                       {displayPrice}
                     </span>
                     {typeof plan.monthlyPrice === 'number' && (
-                      <span className="text-xs text-slate-500">
-                        / month {isAnnual ? '(billed annually)' : ''}
+                      <span className="font-mono text-xs text-slate-500">
+                        / month {isAnnual ? '(annual)' : ''}
                       </span>
                     )}
                   </div>
                   {isAnnual && typeof plan.monthlyPrice === 'number' && (
-                    <span className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
-                      Billed as ${(plan.annualPrice as number) * 12}/year • Save ${(plan.monthlyPrice - (plan.annualPrice as number)) * 12}/yr
+                    <span className="text-[11px] font-mono font-semibold text-emerald-600 dark:text-emerald-400 block mt-1">
+                      ${(plan.annualPrice as number) * 12}/yr • Save ${(plan.monthlyPrice - (plan.annualPrice as number)) * 12}/yr
                     </span>
                   )}
                 </div>
 
                 {/* Features List */}
-                <div className="mt-6 space-y-3">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <div className="mt-6 space-y-2.5">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-slate-400">
                     Included Capabilities
                   </span>
                   {plan.features.map((feature, fIdx) => (
-                    <div key={fIdx} className="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-200">
-                      <Check className="h-4 w-4 shrink-0 text-sea mt-0.5" />
+                    <div key={fIdx} className="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-300">
+                      <Check className="h-3.5 w-3.5 shrink-0 text-sea mt-0.5" />
                       <span>{feature}</span>
                     </div>
                   ))}
@@ -200,7 +198,7 @@ export function PricingSection() {
                     size="lg"
                     className={`w-full font-bold ${
                       isHighlighted
-                        ? 'bg-sea text-white hover:bg-sea/90 shadow-md'
+                        ? 'bg-sea text-white hover:bg-sea/90'
                         : 'bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700'
                     }`}
                   >
@@ -214,21 +212,21 @@ export function PricingSection() {
         })}
       </div>
 
-      {/* Legal and Compliance Disclaimers */}
-      <div className="mt-12 rounded-2xl border border-amber-200/80 bg-amber-50/70 p-5 text-xs text-amber-900 backdrop-blur dark:border-amber-900/40 dark:bg-amber-950/30 dark:text-amber-200">
-        <div className="flex items-center gap-2 font-bold mb-2">
+      {/* Compliance Disclaimers */}
+      <div className="mt-10 rounded-2xl border border-amber-200/80 bg-amber-50/60 p-5 text-xs text-amber-900 dark:border-amber-900/40 dark:bg-amber-950/20 dark:text-amber-300">
+        <div className="flex items-center gap-2 font-bold mb-1.5">
           <Shield className="h-4 w-4 text-amber-600 dark:text-amber-400" />
-          <span>Regulatory Transparency & Compliance Disclosures</span>
+          <span>Informational Analytics & Compliance Disclosures</span>
         </div>
-        <p className="leading-relaxed">
-          Narrivex operates purely as a high-frequency informational analytics engine and market intelligence software provider. We do not provide financial, investment, or brokerage advice, nor do we execute trades on behalf of users. Market participants must assess risks independently.
+        <p className="leading-relaxed font-sans text-xs">
+          Narrivex operates strictly as a high-frequency market intelligence and data analytics software provider. We do not provide financial, investment, or brokerage advice. Market participants must assess risks independently.
         </p>
-        <div className="mt-3 flex flex-wrap gap-4 font-semibold text-sea dark:text-emerald-400">
+        <div className="mt-2.5 flex flex-wrap gap-4 font-mono text-[11px] font-semibold text-sea dark:text-emerald-400">
           <Link href="/financial-disclaimer" className="hover:underline">
-            Full Financial Disclaimer →
+            Financial Disclaimer →
           </Link>
           <Link href="/risk-disclosure" className="hover:underline">
-            Risk Disclosure Terms →
+            Risk Disclosure →
           </Link>
           <Link href="/subscription-policy" className="hover:underline">
             Subscription & Refund Policy →

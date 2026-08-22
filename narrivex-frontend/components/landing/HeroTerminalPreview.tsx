@@ -1,11 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import {
-  Sparkles,
-  Shield,
-  Radio,
+  Terminal,
+  Activity,
   CheckCircle2,
+  Code2,
+  Sliders,
+  Layers,
+  Pause,
+  Play,
+  Copy,
+  Check,
 } from 'lucide-react';
 
 interface SignalItem {
@@ -13,19 +19,35 @@ interface SignalItem {
   category: 'Crypto' | 'Equities' | 'Forex' | 'Macro';
   symbol: string;
   name: string;
+  price: string;
   change: string;
   isPositive: boolean;
   trigger: string;
   timeAgo: string;
   confidence: number;
-  impact: 'Critical' | 'High Volatility' | 'Medium';
+  impact: 'Critical' | 'High Volatility' | 'Standard';
   venue: string;
   aiExplanation: string;
+  catalystSummary: string;
   metrics: {
     volumeSurge: string;
     orderImbalance: string;
     catalystType: string;
-    actionableState: string;
+    invalidationLevel: string;
+    takerBuyRatio: number; // percentage 0-100
+  };
+  jsonPayload: {
+    event_id: string;
+    timestamp_utc: string;
+    latency_ingestion_ms: number;
+    feed_venue: string;
+    instrument: string;
+    anomaly_detection: {
+      type: string;
+      z_score: number;
+      volume_multiplier: number;
+    };
+    nlp_reasoning_synthesis: string;
   };
 }
 
@@ -33,22 +55,39 @@ const mockSignals: SignalItem[] = [
   {
     id: 'sig-1',
     category: 'Crypto',
-    symbol: 'BTC / USD',
+    symbol: 'BTC/USDT',
     name: 'Bitcoin',
+    price: '$96,420.50',
     change: '+4.82%',
     isPositive: true,
-    trigger: 'Whale Liquidation Cluster & $96.5K Breakout',
-    timeAgo: 'Just now',
+    trigger: '$54M Short Liquidation Cascade & Ask Sweep',
+    timeAgo: '12s ago',
     confidence: 96,
     impact: 'High Volatility',
-    venue: 'Binance / Coinbase Pro',
+    venue: 'Binance Perpetual L3',
+    catalystSummary: 'Derivatives Squeeze + Spot CVD Aggression',
     aiExplanation:
-      'Spot aggregate volume surged 340% above 20-period baseline following an abrupt $54M short liquidation cascade. Cumulative Volume Delta (CVD) shows aggressive taker buy dominance.',
+      'Spot aggregate volume surged 340% above the 20-period baseline following an abrupt $54M short liquidation cluster across Binance and OKX. Cumulative Volume Delta (CVD) shows aggressive taker buy dominance absorbing all ask-side resistance up to $96,800.',
     metrics: {
-      volumeSurge: '+340% 15m',
+      volumeSurge: '+340% (15m)',
       orderImbalance: '82% Buy / 18% Sell',
-      catalystType: 'Derivatives Squeeze',
-      actionableState: 'Bullish Momentum Expansion',
+      catalystType: 'Derivatives Short Cascade',
+      invalidationLevel: '$94,200 (vwap support)',
+      takerBuyRatio: 82,
+    },
+    jsonPayload: {
+      event_id: 'evt_btc_96k_cascade_01',
+      timestamp_utc: '2026-08-22T17:42:19.402Z',
+      latency_ingestion_ms: 12.4,
+      feed_venue: 'BINANCE_FUTURES_L3',
+      instrument: 'BTCUSDT.P',
+      anomaly_detection: {
+        type: 'LIQUIDATION_CASCADE_OUTLIER',
+        z_score: 3.84,
+        volume_multiplier: 3.4,
+      },
+      nlp_reasoning_synthesis:
+        'Ask wall absorption initiated by 54.2M USD short liquidation cascade. Spot buyer delta confirmed.',
     },
   },
   {
@@ -56,266 +95,409 @@ const mockSignals: SignalItem[] = [
     category: 'Equities',
     symbol: 'NVDA',
     name: 'NVIDIA Corp',
+    price: '$138.65',
     change: '+3.45%',
     isPositive: true,
-    trigger: 'Dark Pool Block Trade + Supply Chain Catalyst',
-    timeAgo: '42s ago',
+    trigger: 'Dark Pool Block Absorption (480K shares)',
+    timeAgo: '45s ago',
     confidence: 93,
     impact: 'Critical',
-    venue: 'NASDAQ / Dark Pools',
+    venue: 'FINRA ADF / NASDAQ',
+    catalystSummary: 'Dark Pool Print + Supplier Node Expansion',
     aiExplanation:
-      'Aggregated institutional print of 480k shares filled above the ask in dark pools. Correlates with pre-market Taiwan semiconductor fabrication node expansion announcement.',
+      'Aggregated institutional print of 480k shares printed above the ask across dark pools. Correlates with pre-market Taiwan semiconductor fabrication packaging capacity announcement.',
     metrics: {
       volumeSurge: '+210% vs 5d avg',
-      orderImbalance: '74% Institutional Block',
-      catalystType: 'Supply Chain News & Block Flow',
-      actionableState: 'Resistance Absorption Confirmed',
+      orderImbalance: '74% Buy Block',
+      catalystType: 'Institutional Block Accumulation',
+      invalidationLevel: '$135.20 (dark pool base)',
+      takerBuyRatio: 74,
+    },
+    jsonPayload: {
+      event_id: 'evt_nvda_darkpool_02',
+      timestamp_utc: '2026-08-22T17:41:45.118Z',
+      latency_ingestion_ms: 18.2,
+      feed_venue: 'FINRA_ADF_DARK_POOL',
+      instrument: 'NVDA.US',
+      anomaly_detection: {
+        type: 'DARK_POOL_PRINT_SURGE',
+        z_score: 3.12,
+        volume_multiplier: 2.1,
+      },
+      nlp_reasoning_synthesis:
+        '480K share institutional block execution above prevailing ask. Strong absorption dynamics.',
     },
   },
   {
     id: 'sig-3',
     category: 'Forex',
-    symbol: 'EUR / USD',
+    symbol: 'EUR/USD',
     name: 'Euro / US Dollar',
+    price: '1.0842',
     change: '-0.38%',
     isPositive: false,
-    trigger: 'ECB Policy Divergence & Yield Curve Shift',
+    trigger: 'US 10Y Yield Rebound & ECB Policy Divergence',
     timeAgo: '2m ago',
     confidence: 91,
-    impact: 'Medium',
-    venue: 'Interbank FX / Reuters',
+    impact: 'Standard',
+    venue: 'EBS Interbank Dealing',
+    catalystSummary: 'Macro Yield Spread Expansion',
     aiExplanation:
-      'Hawkish US 10-year Treasury yield rebound (+6bps) triggered rapid cross-currency unwinding against Eurozone sovereign debt. Algorithmic sell wall established at 1.0870.',
+      'Hawkish US 10-year Treasury yield rebound (+6bps) triggered rapid cross-currency unwinding against Eurozone sovereign debt. Algorithmic sell wall established at 1.0870 with heavy order book bid absorption.',
     metrics: {
       volumeSurge: '+185% interbank vol',
-      orderImbalance: '68% Bid Absorption',
-      catalystType: 'Macro Yield Spread',
-      actionableState: 'Downside Mean Reversion',
+      orderImbalance: '68% Sell Volume',
+      catalystType: 'Sovereign Yield Spread',
+      invalidationLevel: '1.0885 (interbank pivot)',
+      takerBuyRatio: 32,
+    },
+    jsonPayload: {
+      event_id: 'evt_eurusd_yield_03',
+      timestamp_utc: '2026-08-22T17:40:12.890Z',
+      latency_ingestion_ms: 21.0,
+      feed_venue: 'EBS_INTERBANK',
+      instrument: 'EURUSD.FX',
+      anomaly_detection: {
+        type: 'MACRO_SPREAD_DIVERGENCE',
+        z_score: 2.76,
+        volume_multiplier: 1.85,
+      },
+      nlp_reasoning_synthesis:
+        '10Y Treasury spread widening vs German Bunds triggered algorithmic spot selling.',
     },
   },
   {
     id: 'sig-4',
     category: 'Crypto',
-    symbol: 'SOL / USD',
+    symbol: 'SOL/USDT',
     name: 'Solana',
+    price: '$194.80',
     change: '+8.95%',
     isPositive: true,
-    trigger: 'DEX Liquidity Surge & Validator Throughput High',
+    trigger: 'DEX Pool Velocity Spike & Mempool Surge',
     timeAgo: '4m ago',
     confidence: 95,
     impact: 'Critical',
     venue: 'Raydium / Binance',
+    catalystSummary: 'On-Chain Liquidity Velocity Spike',
     aiExplanation:
-      'On-chain DEX turnover hit $1.2B in 4 hours driven by meme liquidity rotations. Perp funding rates reset positive with open interest expanding by $180M.',
+      'On-chain DEX turnover hit $1.2B in 4 hours driven by high-velocity liquidity rotations. Perp funding rates reset positive with open interest expanding by $180M within two 15-minute intervals.',
     metrics: {
-      volumeSurge: '+420% On-Chain DEX',
+      volumeSurge: '+420% DEX pool turnover',
       orderImbalance: '89% Taker Volume',
       catalystType: 'On-Chain Velocity Outlier',
-      actionableState: 'Trend Continuation Active',
+      invalidationLevel: '$186.50 (on-chain support)',
+      takerBuyRatio: 89,
+    },
+    jsonPayload: {
+      event_id: 'evt_sol_velocity_04',
+      timestamp_utc: '2026-08-22T17:38:05.654Z',
+      latency_ingestion_ms: 9.8,
+      feed_venue: 'SOLANA_RPC_RAYDIUM',
+      instrument: 'SOLUSDT.P',
+      anomaly_detection: {
+        type: 'ON_CHAIN_DEX_OUTLIER',
+        z_score: 4.15,
+        volume_multiplier: 4.2,
+      },
+      nlp_reasoning_synthesis:
+        'DEX liquidity rotation with $1.2B 4h volume surge. Open interest expanding aggressively.',
     },
   },
 ];
 
 export function HeroTerminalPreview() {
   const [selectedId, setSelectedId] = useState<string>('sig-1');
-  const [activeTab, setActiveTab] = useState<'All' | 'Crypto' | 'Equities' | 'Forex'>('All');
+  const [viewMode, setViewMode] = useState<'narrative' | 'telemetry' | 'json'>('narrative');
+  const [isLive, setIsLive] = useState<boolean>(true);
+  const [copied, setCopied] = useState<boolean>(false);
+  const [activeCategory, setActiveCategory] = useState<'All' | 'Crypto' | 'Equities' | 'Forex'>('All');
 
-  const filteredSignals = activeTab === 'All' ? mockSignals : mockSignals.filter((s) => s.category === activeTab);
-  const activeSignal = mockSignals.find((s) => s.id === selectedId) || mockSignals[0];
+  const filteredSignals = useMemo(() => {
+    return activeCategory === 'All' ? mockSignals : mockSignals.filter((s) => s.category === activeCategory);
+  }, [activeCategory]);
+
+  const activeSignal = useMemo(() => {
+    return mockSignals.find((s) => s.id === selectedId) || mockSignals[0];
+  }, [selectedId]);
+
+  const handleCopyJson = () => {
+    navigator.clipboard.writeText(JSON.stringify(activeSignal.jsonPayload, null, 2));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-black/10 bg-white/90 p-4 shadow-2xl backdrop-blur-xl dark:border-white/15 dark:bg-slate-950/90 sm:p-6">
-      {/* Decorative Glow Ambient Layer */}
-      <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-sea/20 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-coral/15 blur-3xl" />
-
-      {/* Header bar */}
-      <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 border-b border-black/10 pb-4 dark:border-slate-800">
-        <div className="flex items-center gap-2.5">
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-sea/15 text-sea">
-            <Radio className="h-4 w-4 animate-pulse" />
+    <div className="terminal-window relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 text-slate-100 shadow-2xl">
+      {/* Terminal Title Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800/80 bg-slate-900/90 px-4 py-2.5">
+        {/* Left: Window Controls + Stream Identifier */}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5">
+            <span className="h-3 w-3 rounded-full bg-rose-500/80" />
+            <span className="h-3 w-3 rounded-full bg-amber-500/80" />
+            <span className="h-3 w-3 rounded-full bg-emerald-500/80" />
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-display text-sm font-bold text-slate-900 dark:text-white">
-                Live AI Intelligence Terminal
-              </span>
-              <span className="flex items-center gap-1 rounded bg-emerald-500/15 px-2 py-0.5 text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping" />
-                STREAMING
-              </span>
-            </div>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400">
-              Low-latency WebSocket • 24ms Ingestion • NLP Synthesizer
-            </p>
+
+          <div className="h-4 w-[1px] bg-slate-700 mx-1 hidden sm:block" />
+
+          <div className="flex items-center gap-2 font-mono text-xs text-slate-300">
+            <Terminal className="h-3.5 w-3.5 text-sea" />
+            <span className="font-semibold text-slate-200">narrivex-core::telemetry</span>
+            <span className="rounded bg-slate-800 px-1.5 py-0.2 text-[10px] text-slate-400 font-mono">
+              v2.4-stream
+            </span>
           </div>
         </div>
 
-        {/* Tab Filters */}
-        <div className="flex rounded-lg border border-black/10 bg-slate-100/80 p-0.5 text-xs font-semibold dark:border-slate-800 dark:bg-slate-900">
-          {(['All', 'Crypto', 'Equities', 'Forex'] as const).map((tab) => (
+        {/* Right: Live Stream Status + Stream Toggle */}
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setIsLive(!isLive)}
+            className={`inline-flex items-center gap-1.5 rounded-md px-2 py-1 font-mono text-[11px] font-semibold transition ${
+              isLive
+                ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
+                : 'bg-slate-800 text-slate-400 border border-slate-700'
+            }`}
+          >
+            {isLive ? (
+              <>
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
+                <Pause className="h-3 w-3" />
+                <span>LIVE</span>
+              </>
+            ) : (
+              <>
+                <Play className="h-3 w-3" />
+                <span>PAUSED</span>
+              </>
+            )}
+          </button>
+
+          {/* View Mode Switcher */}
+          <div className="flex rounded-md border border-slate-800 bg-slate-900 p-0.5 font-mono text-[11px]">
             <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`rounded-md px-2.5 py-1 transition ${
-                activeTab === tab
-                  ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-800 dark:text-white font-bold'
-                  : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+              onClick={() => setViewMode('narrative')}
+              className={`flex items-center gap-1 rounded px-2 py-0.5 transition ${
+                viewMode === 'narrative' ? 'bg-slate-800 text-white font-bold' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
-              {tab}
+              <Activity className="h-3 w-3 text-sea" />
+              <span>Synthesis</span>
             </button>
-          ))}
+            <button
+              onClick={() => setViewMode('telemetry')}
+              className={`flex items-center gap-1 rounded px-2 py-0.5 transition ${
+                viewMode === 'telemetry' ? 'bg-slate-800 text-white font-bold' : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              <Sliders className="h-3 w-3 text-coral" />
+              <span>Order Flow</span>
+            </button>
+            <button
+              onClick={() => setViewMode('json')}
+              className={`flex items-center gap-1 rounded px-2 py-0.5 transition ${
+                viewMode === 'json' ? 'bg-slate-800 text-white font-bold' : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              <Code2 className="h-3 w-3 text-emerald-400" />
+              <span>JSON</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Main Signal Display Area */}
-      <div className="relative z-10 mt-4 grid gap-4 lg:grid-cols-12">
-        {/* Left Column: Interactive Alert Stream List */}
-        <div className="space-y-2 lg:col-span-5">
-          <div className="flex items-center justify-between text-[11px] font-semibold text-slate-400 px-1">
-            <span>DETECTED ANOMALIES</span>
-            <span>STATUS</span>
+      {/* Main Terminal Workspace */}
+      <div className="grid gap-0 lg:grid-cols-12 min-h-[380px]">
+        {/* Left Column: Stream Event Log */}
+        <div className="border-b border-slate-800/80 p-3 lg:col-span-5 lg:border-b-0 lg:border-r">
+          <div className="mb-2.5 flex items-center justify-between px-1 font-mono text-[11px] text-slate-400">
+            <span>INCOMING ANOMALIES</span>
+            <div className="flex gap-1">
+              {(['All', 'Crypto', 'Equities'] as const).map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-1.5 py-0.2 rounded text-[10px] ${
+                    activeCategory === cat ? 'bg-sea/20 text-sea font-bold' : 'hover:text-slate-300'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {filteredSignals.map((signal) => {
-            const isSelected = signal.id === activeSignal.id;
-            return (
-              <button
-                key={signal.id}
-                onClick={() => setSelectedId(signal.id)}
-                className={`w-full text-left transition-all duration-200 rounded-xl p-3 border ${
-                  isSelected
-                    ? 'border-sea bg-sea/10 shadow-md dark:border-sea/80 dark:bg-sea/15 ring-1 ring-sea/30'
-                    : 'border-black/5 bg-slate-50/70 hover:border-black/15 hover:bg-slate-100/70 dark:border-slate-800/80 dark:bg-slate-900/60 dark:hover:bg-slate-800/60'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="font-display text-xs font-bold text-slate-900 dark:text-white">
-                      {signal.symbol}
-                    </span>
-                    <span
-                      className={`rounded px-1.5 py-0.2 text-[10px] font-bold ${
-                        signal.isPositive
-                          ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
-                          : 'bg-rose-500/15 text-rose-600 dark:text-rose-400'
-                      }`}
-                    >
-                      {signal.change}
-                    </span>
+          <div className="space-y-1.5">
+            {filteredSignals.map((signal) => {
+              const isSelected = signal.id === activeSignal.id;
+              return (
+                <div
+                  key={signal.id}
+                  onClick={() => setSelectedId(signal.id)}
+                  className={`cursor-pointer rounded-lg p-2.5 border transition-all duration-150 ${
+                    isSelected
+                      ? 'border-sea/70 bg-sea/10 shadow-sm ring-1 ring-sea/30'
+                      : 'border-slate-800/80 bg-slate-900/60 hover:border-slate-700 hover:bg-slate-900/90'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-mono text-xs font-bold text-slate-100">{signal.symbol}</span>
+                      <span
+                        className={`font-mono text-[10px] font-semibold px-1 rounded ${
+                          signal.isPositive
+                            ? 'bg-emerald-500/15 text-emerald-400'
+                            : 'bg-rose-500/15 text-rose-400'
+                        }`}
+                      >
+                        {signal.change}
+                      </span>
+                    </div>
+                    <span className="font-mono text-[10px] text-slate-500">{signal.timeAgo}</span>
                   </div>
-                  <span className="text-[10px] text-slate-400">{signal.timeAgo}</span>
-                </div>
 
-                <p className="mt-1 line-clamp-1 text-xs text-slate-600 dark:text-slate-300 font-medium">
-                  {signal.trigger}
-                </p>
+                  <p className="mt-1 text-[11px] text-slate-300 font-medium line-clamp-1">
+                    {signal.trigger}
+                  </p>
 
-                <div className="mt-2 flex items-center justify-between text-[10px] text-slate-500 dark:text-slate-400">
-                  <span className="font-mono text-slate-400">{signal.venue}</span>
-                  <span className="font-semibold text-sea flex items-center gap-0.5">
-                    <Sparkles className="h-2.5 w-2.5" />
-                    {signal.confidence}% Confidence
-                  </span>
+                  <div className="mt-2 flex items-center justify-between font-mono text-[10px] text-slate-400">
+                    <span className="truncate max-w-[140px] text-slate-500">{signal.venue}</span>
+                    <span className="text-emerald-400 font-semibold">{signal.confidence}% conv</span>
+                  </div>
                 </div>
-              </button>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
-        {/* Right Column: Deep AI Reasoning Inspector */}
-        <div className="lg:col-span-7">
-          <div className="h-full rounded-xl border border-sea/30 bg-gradient-to-br from-sea/5 via-transparent to-coral/5 p-4 dark:border-sea/30 dark:bg-slate-900/90 sm:p-5 flex flex-col justify-between">
-            <div>
-              {/* Active Signal Header */}
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h4 className="font-display text-lg font-bold text-slate-900 dark:text-white">
-                      {activeSignal.symbol}
-                    </h4>
-                    <span className="text-xs text-slate-500">({activeSignal.name})</span>
-                    <span
-                      className={`rounded-md px-2 py-0.5 text-xs font-bold ${
-                        activeSignal.isPositive
-                          ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400'
-                          : 'bg-rose-500/20 text-rose-600 dark:text-rose-400'
-                      }`}
-                    >
-                      {activeSignal.change}
+        {/* Right Column: Deep Synthesis / Order Flow / JSON Inspector */}
+        <div className="p-4 lg:col-span-7 flex flex-col justify-between bg-slate-950/80">
+          <div>
+            {/* Active Header */}
+            <div className="flex items-start justify-between border-b border-slate-800/80 pb-3">
+              <div>
+                <div className="flex items-center gap-2 font-mono">
+                  <h4 className="text-base font-bold text-white">{activeSignal.symbol}</h4>
+                  <span className="text-xs text-slate-400">({activeSignal.name})</span>
+                  <span className="text-xs font-bold text-slate-200">{activeSignal.price}</span>
+                  <span
+                    className={`rounded px-1.5 py-0.2 text-[10px] font-bold ${
+                      activeSignal.isPositive ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'
+                    }`}
+                  >
+                    {activeSignal.change}
+                  </span>
+                </div>
+                <div className="mt-1 flex items-center gap-2 font-mono text-[11px] text-coral">
+                  <Layers className="h-3 w-3" />
+                  <span>{activeSignal.catalystSummary}</span>
+                </div>
+              </div>
+
+              <div className="text-right">
+                <span className="inline-flex items-center gap-1 rounded border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[11px] font-bold text-emerald-400">
+                  <CheckCircle2 className="h-3 w-3" />
+                  {activeSignal.confidence}% Conviction
+                </span>
+              </div>
+            </div>
+
+            {/* TAB 1: AI Grounded Narrative Synthesis */}
+            {viewMode === 'narrative' && (
+              <div className="mt-3.5 space-y-3">
+                <div className="rounded-xl border border-sea/30 bg-slate-900/80 p-3.5">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+                    <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-sea">
+                      Instant NLP Contextual Synthesis
+                    </span>
+                    <span className="font-mono text-[10px] text-slate-400">
+                      Engine Latency: {activeSignal.jsonPayload.latency_ingestion_ms}ms
                     </span>
                   </div>
-                  <p className="mt-0.5 text-xs font-medium text-coral dark:text-orange-400">
-                    ⚡ {activeSignal.trigger}
+
+                  <p className="mt-2.5 text-xs text-slate-200 leading-relaxed font-sans">
+                    {activeSignal.aiExplanation}
                   </p>
                 </div>
 
-                <div className="text-right">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-bold text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                    <CheckCircle2 className="h-3 w-3" />
-                    {activeSignal.confidence}% Conviction
-                  </span>
-                </div>
-              </div>
-
-              {/* Instant AI Narrative Box */}
-              <div className="mt-4 rounded-xl border border-sea/20 bg-white/95 p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950/90">
-                <div className="flex items-center justify-between border-b border-black/5 pb-2 dark:border-slate-800/80">
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-sea">
-                    <Sparkles className="h-4 w-4" />
-                    <span>Instant AI Narrative Breakdown</span>
+                {/* Quantitative Metric Badges */}
+                <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+                  <div className="rounded-lg border border-slate-800/80 bg-slate-900/60 p-2.5">
+                    <span className="text-[10px] text-slate-500 uppercase">Volume Anomaly</span>
+                    <p className="mt-0.5 font-bold text-white">{activeSignal.metrics.volumeSurge}</p>
                   </div>
-                  <span className="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[10px] text-slate-600 dark:bg-slate-800 dark:text-slate-300">
-                    LLM Synthesis: 38ms
-                  </span>
-                </div>
-
-                <p className="mt-3 text-xs leading-relaxed text-slate-700 dark:text-slate-200">
-                  &quot;{activeSignal.aiExplanation}&quot;
-                </p>
-              </div>
-
-              {/* Institutional Telemetry Grid */}
-              <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
-                <div className="rounded-lg border border-black/5 bg-white/60 p-2.5 dark:border-slate-800 dark:bg-slate-900/60">
-                  <span className="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">Volume Surge</span>
-                  <p className="mt-0.5 font-mono font-bold text-slate-900 dark:text-white">
-                    {activeSignal.metrics.volumeSurge}
-                  </p>
-                </div>
-
-                <div className="rounded-lg border border-black/5 bg-white/60 p-2.5 dark:border-slate-800 dark:bg-slate-900/60">
-                  <span className="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">Order Flow</span>
-                  <p className="mt-0.5 font-mono font-bold text-slate-900 dark:text-white">
-                    {activeSignal.metrics.orderImbalance}
-                  </p>
-                </div>
-
-                <div className="rounded-lg border border-black/5 bg-white/60 p-2.5 dark:border-slate-800 dark:bg-slate-900/60">
-                  <span className="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">Catalyst Classification</span>
-                  <p className="mt-0.5 font-semibold text-slate-800 dark:text-slate-200">
-                    {activeSignal.metrics.catalystType}
-                  </p>
-                </div>
-
-                <div className="rounded-lg border border-black/5 bg-white/60 p-2.5 dark:border-slate-800 dark:bg-slate-900/60">
-                  <span className="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">Actionable Scenario</span>
-                  <p className="mt-0.5 font-semibold text-emerald-600 dark:text-emerald-400">
-                    {activeSignal.metrics.actionableState}
-                  </p>
+                  <div className="rounded-lg border border-slate-800/80 bg-slate-900/60 p-2.5">
+                    <span className="text-[10px] text-slate-500 uppercase">Invalidation Level</span>
+                    <p className="mt-0.5 font-bold text-amber-400">{activeSignal.metrics.invalidationLevel}</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
-            {/* Bottom Callout */}
-            <div className="mt-4 flex items-center justify-between border-t border-black/5 pt-3 text-[11px] text-slate-500 dark:border-slate-800 dark:text-slate-400">
-              <span className="flex items-center gap-1">
-                <Shield className="h-3.5 w-3.5 text-sea" />
-                Continuous Cross-Exchange Ingestion
-              </span>
-              <span className="font-mono text-sea">WebSocket ID: #NX-LIVE-{activeSignal.id}</span>
-            </div>
+            {/* TAB 2: Order Flow & Microstructure Telemetry */}
+            {viewMode === 'telemetry' && (
+              <div className="mt-3.5 space-y-3 font-mono text-xs">
+                <div className="rounded-xl border border-slate-800 bg-slate-900/80 p-3.5">
+                  <div className="flex justify-between items-center mb-2 text-[11px]">
+                    <span className="text-slate-400">Taker Order Book Imbalance</span>
+                    <span className="text-emerald-400 font-bold">{activeSignal.metrics.orderImbalance}</span>
+                  </div>
+
+                  {/* Visual Buyer / Seller Ratio Bar */}
+                  <div className="h-2 w-full rounded-full bg-slate-800 overflow-hidden flex">
+                    <div
+                      style={{ width: `${activeSignal.metrics.takerBuyRatio}%` }}
+                      className="bg-emerald-500 h-full transition-all duration-500"
+                    />
+                    <div
+                      style={{ width: `${100 - activeSignal.metrics.takerBuyRatio}%` }}
+                      className="bg-rose-500 h-full transition-all duration-500"
+                    />
+                  </div>
+                  <div className="flex justify-between text-[10px] text-slate-500 mt-1">
+                    <span>Taker Buy: {activeSignal.metrics.takerBuyRatio}%</span>
+                    <span>Taker Sell: {100 - activeSignal.metrics.takerBuyRatio}%</span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div className="rounded-lg border border-slate-800 bg-slate-900/60 p-2.5">
+                    <span className="text-[10px] text-slate-500 uppercase">Anomaly Z-Score</span>
+                    <p className="mt-0.5 font-bold text-sea">+{activeSignal.jsonPayload.anomaly_detection.z_score}σ</p>
+                  </div>
+                  <div className="rounded-lg border border-slate-800 bg-slate-900/60 p-2.5">
+                    <span className="text-[10px] text-slate-500 uppercase">Venue Protocol</span>
+                    <p className="mt-0.5 font-bold text-slate-200">{activeSignal.venue}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB 3: Raw JSON Payloads for Developers */}
+            {viewMode === 'json' && (
+              <div className="mt-3.5 relative">
+                <button
+                  type="button"
+                  onClick={handleCopyJson}
+                  className="absolute right-2 top-2 z-10 flex items-center gap-1 rounded border border-slate-700 bg-slate-800/90 px-2 py-1 font-mono text-[10px] text-slate-300 hover:bg-slate-700"
+                >
+                  {copied ? <Check className="h-3 w-3 text-emerald-400" /> : <Copy className="h-3 w-3" />}
+                  <span>{copied ? 'COPIED' : 'COPY JSON'}</span>
+                </button>
+
+                <pre className="max-h-[175px] overflow-auto rounded-xl border border-slate-800 bg-slate-900/90 p-3 font-mono text-[11px] text-emerald-400/90 leading-tight">
+                  {JSON.stringify(activeSignal.jsonPayload, null, 2)}
+                </pre>
+              </div>
+            )}
+          </div>
+
+          {/* Footer Bar */}
+          <div className="mt-4 flex items-center justify-between border-t border-slate-800/80 pt-2.5 font-mono text-[10px] text-slate-500">
+            <span>SOCKET CHANNEL: /v2/stream/alpha-events</span>
+            <span className="text-sea">PACKET ID: #{activeSignal.jsonPayload.event_id}</span>
           </div>
         </div>
       </div>
