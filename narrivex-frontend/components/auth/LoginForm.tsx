@@ -43,10 +43,10 @@ export function LoginForm() {
 
   const feedbackClassName =
     feedback?.tone === 'error'
-      ? 'border-red-200 bg-red-50 text-red-700'
+      ? 'border-red-200 bg-red-50 text-red-700 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-300'
       : feedback?.tone === 'success'
-        ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
-        : 'border-sea/20 bg-sea/5 text-slate-700';
+        ? 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/50 dark:bg-emerald-950/40 dark:text-emerald-300'
+        : 'border-sea/20 bg-sea/5 text-slate-700 dark:border-sea/30 dark:bg-sea/10 dark:text-slate-300';
 
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
@@ -134,13 +134,13 @@ export function LoginForm() {
         <div className="space-y-2">
           <button
             onClick={() => setAuthMethod('options')}
-            className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors mb-4"
+            className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors mb-4"
           >
             <ArrowRight className="h-4 w-4 rotate-180" />
             Back to login options
           </button>
-          <h2 className="font-display text-3xl font-bold text-ink">Sign in with password</h2>
-          <p className="text-slate-600">Enter your email and password to continue.</p>
+          <h2 className="font-display text-3xl font-bold text-slate-900 dark:text-white">Sign in with password</h2>
+          <p className="text-slate-600 dark:text-slate-400">Enter your email and password to continue.</p>
         </div>
 
         {feedback && (
@@ -153,9 +153,9 @@ export function LoginForm() {
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
           {/* Email Field */}
           <div>
-            <label className="mb-2 block text-sm font-medium text-ink">Email address</label>
+            <label className="mb-2 block text-sm font-medium text-slate-900 dark:text-slate-200">Email address</label>
             <div className="relative">
-              <Mail className="absolute left-3.5 top-3 h-5 w-5 text-slate-400" />
+              <Mail className="absolute left-3.5 top-3 h-5 w-5 text-slate-400 dark:text-slate-500" />
               <Input
                 type="email"
                 placeholder="you@example.com"
@@ -165,8 +165,8 @@ export function LoginForm() {
               />
             </div>
             {errors.email && (
-              <p className="mt-1.5 flex items-center gap-1 text-sm text-red-600">
-                <span className="inline-block h-1 w-1 rounded-full bg-red-600" />
+              <p className="mt-1.5 flex items-center gap-1 text-sm text-red-600 dark:text-red-400">
+                <span className="inline-block h-1 w-1 rounded-full bg-red-600 dark:bg-red-400" />
                 {errors.email.message}
               </p>
             )}
@@ -175,13 +175,13 @@ export function LoginForm() {
           {/* Password Field */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="block text-sm font-medium text-ink">Password</label>
+              <label className="block text-sm font-medium text-slate-900 dark:text-slate-200">Password</label>
               <Link href="/forgot-password" className="text-sm text-sea hover:underline">
                 Forgot?
               </Link>
             </div>
             <div className="relative">
-              <Lock className="absolute left-3.5 top-3 h-5 w-5 text-slate-400" />
+              <Lock className="absolute left-3.5 top-3 h-5 w-5 text-slate-400 dark:text-slate-500" />
               <Input
                 type={showPassword ? 'text' : 'password'}
                 placeholder="••••••••"
@@ -192,15 +192,15 @@ export function LoginForm() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 text-slate-400 hover:text-slate-600 transition-colors"
+                className="absolute right-3 top-3 text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors"
                 disabled={isLoading}
               >
                 {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
               </button>
             </div>
             {errors.password && (
-              <p className="mt-1.5 flex items-center gap-1 text-sm text-red-600">
-                <span className="inline-block h-1 w-1 rounded-full bg-red-600" />
+              <p className="mt-1.5 flex items-center gap-1 text-sm text-red-600 dark:text-red-400">
+                <span className="inline-block h-1 w-1 rounded-full bg-red-600 dark:bg-red-400" />
                 {errors.password.message}
               </p>
             )}
@@ -223,8 +223,8 @@ export function LoginForm() {
         </form>
 
         {/* Sign Up Link */}
-        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-center">
-          <p className="text-sm text-slate-600">
+        <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-center dark:border-slate-800 dark:bg-slate-900/50">
+          <p className="text-sm text-slate-600 dark:text-slate-400">
             Don&apos;t have an account?{' '}
             <Link href="/signup" className="font-semibold text-sea hover:text-sea/80 transition-colors">
               Create one in seconds
@@ -240,11 +240,11 @@ export function LoginForm() {
     <div className="w-full max-w-md space-y-8">
       {/* Header */}
       <div className="space-y-2">
-        <h1 className="font-display text-4xl font-bold text-ink">Welcome back</h1>
-        <p className="text-slate-600">Choose how you&apos;d like to sign in to your account.</p>
+        <h1 className="font-display text-4xl font-bold text-slate-900 dark:text-white">Welcome back</h1>
+        <p className="text-slate-600 dark:text-slate-400">Choose how you&apos;d like to sign in to your account.</p>
       </div>
 
-      <div className="rounded-xl border border-sea/20 bg-sea/5 px-4 py-3 text-sm text-slate-700">
+      <div className="rounded-xl border border-sea/20 bg-sea/5 px-4 py-3 text-sm text-slate-700 dark:border-sea/30 dark:bg-sea/10 dark:text-slate-300">
         Sign in with your Google or GitHub account. Email and password login will be available soon.
       </div>
 
@@ -255,9 +255,9 @@ export function LoginForm() {
 
       {/* Divider */}
       <div className="relative">
-        <div className="absolute inset-0 flex items-center border-t border-slate-200" />
+        <div className="absolute inset-0 flex items-center border-t border-slate-200 dark:border-slate-800" />
         <div className="relative flex justify-center text-sm">
-          <span className="bg-white px-2 text-slate-500">or use email</span>
+          <span className="bg-[#f8fafc] dark:bg-[#07090e] px-2 text-slate-500 dark:text-slate-400">or use email</span>
         </div>
       </div>
 
@@ -266,37 +266,37 @@ export function LoginForm() {
         {/* Email + Password Button — disabled */}
         <button
           disabled
-          className="flex items-center gap-3 w-full px-4 py-4 rounded-lg border-2 border-slate-200 text-left font-medium text-ink opacity-50 cursor-not-allowed"
+          className="flex items-center gap-3 w-full px-4 py-4 rounded-xl border-2 border-slate-200 dark:border-slate-800/80 bg-white/40 dark:bg-slate-900/40 text-left font-medium opacity-60 cursor-not-allowed"
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-sea/10 text-sea flex-shrink-0">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-sea/10 text-sea dark:bg-sea/20 flex-shrink-0">
             <Lock className="h-5 w-5" />
           </div>
           <div className="flex-1">
-            <p className="font-semibold">Email & Password</p>
-            <p className="text-xs text-slate-600">Sign in with your email and password</p>
+            <p className="font-semibold text-slate-900 dark:text-white">Email & Password</p>
+            <p className="text-xs text-slate-600 dark:text-slate-400">Sign in with your email and password</p>
           </div>
-          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-500 uppercase tracking-wide">Coming soon</span>
+          <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Coming soon</span>
         </button>
 
         {/* Email + OTP Button — disabled */}
         <button
           disabled
-          className="flex items-center gap-3 w-full px-4 py-4 rounded-lg border-2 border-slate-200 text-left font-medium text-ink opacity-50 cursor-not-allowed"
+          className="flex items-center gap-3 w-full px-4 py-4 rounded-xl border-2 border-slate-200 dark:border-slate-800/80 bg-white/40 dark:bg-slate-900/40 text-left font-medium opacity-60 cursor-not-allowed"
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-coral/10 text-coral flex-shrink-0">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-coral/10 text-coral dark:bg-coral/20 flex-shrink-0">
             <MailOpen className="h-5 w-5" />
           </div>
           <div className="flex-1">
-            <p className="font-semibold">Email & OTP</p>
-            <p className="text-xs text-slate-600">Get a one-time code sent to your email</p>
+            <p className="font-semibold text-slate-900 dark:text-white">Email & OTP</p>
+            <p className="text-xs text-slate-600 dark:text-slate-400">Get a one-time code sent to your email</p>
           </div>
-          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-500 uppercase tracking-wide">Coming soon</span>
+          <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Coming soon</span>
         </button>
       </div>
 
       {/* Sign Up Link */}
-      <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-center">
-        <p className="text-sm text-slate-600">
+      <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-center dark:border-slate-800 dark:bg-slate-900/50">
+        <p className="text-sm text-slate-600 dark:text-slate-400">
           Don&apos;t have an account?{' '}
           <Link href="/signup" className="font-semibold text-sea hover:text-sea/80 transition-colors">
             Create one in seconds

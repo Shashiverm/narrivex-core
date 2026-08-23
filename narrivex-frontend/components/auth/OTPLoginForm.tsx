@@ -113,10 +113,10 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
 
   const noticeClassName =
     notice?.tone === 'error'
-      ? 'border-red-200 bg-red-50 text-red-700'
+      ? 'border-red-200 bg-red-50 text-red-700 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-300'
       : notice?.tone === 'success'
-        ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
-        : 'border-sea/20 bg-sea/5 text-slate-700';
+        ? 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/50 dark:bg-emerald-950/40 dark:text-emerald-300'
+        : 'border-sea/20 bg-sea/5 text-slate-700 dark:border-sea/30 dark:bg-sea/10 dark:text-slate-300';
 
   return (
     <div className="w-full space-y-6">
@@ -124,13 +124,13 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
       <div className="space-y-2">
         <button
           onClick={onBack}
-          className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors mb-4"
+          className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors mb-4"
         >
           <RotateCcw className="h-4 w-4" />
           Back to login options
         </button>
-        <h2 className="font-display text-3xl font-bold text-ink">Sign in with OTP</h2>
-        <p className="text-slate-600">We&apos;ll send a code to your email for verification.</p>
+        <h2 className="font-display text-3xl font-bold text-slate-900 dark:text-white">Sign in with OTP</h2>
+        <p className="text-slate-600 dark:text-slate-400">We&apos;ll send a code to your email for verification.</p>
       </div>
 
       {notice && <div className={`rounded-xl border px-4 py-3 text-sm leading-6 ${noticeClassName}`}>{notice.message}</div>}
@@ -138,9 +138,9 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
       {step === 'email' ? (
         <form className="space-y-5" onSubmit={handleSendOTP}>
           <div>
-            <label className="mb-2 block text-sm font-medium text-ink">Email address</label>
+            <label className="mb-2 block text-sm font-medium text-slate-900 dark:text-slate-200">Email address</label>
             <div className="relative">
-              <Mail className="absolute left-3.5 top-3 h-5 w-5 text-slate-400" />
+              <Mail className="absolute left-3.5 top-3 h-5 w-5 text-slate-400 dark:text-slate-500" />
               <Input
                 type="email"
                 placeholder="you@example.com"
@@ -170,10 +170,10 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
       ) : (
         <form className="space-y-5" onSubmit={handleVerifyOTP}>
           <div>
-            <label className="mb-2 block text-sm font-medium text-ink">Enter OTP</label>
-            <p className="text-sm text-slate-600 mb-3">Check your email for the 6-digit code</p>
+            <label className="mb-2 block text-sm font-medium text-slate-900 dark:text-slate-200">Enter OTP</label>
+            <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">Check your email for the 6-digit code</p>
             <div className="relative">
-              <Lock className="absolute left-3.5 top-3 h-5 w-5 text-slate-400" />
+              <Lock className="absolute left-3.5 top-3 h-5 w-5 text-slate-400 dark:text-slate-500" />
               <Input
                 type="text"
                 placeholder="000000"
@@ -187,7 +187,7 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
             </div>
           </div>
 
-          <div className="text-center text-sm text-slate-600">
+          <div className="text-center text-sm text-slate-600 dark:text-slate-400">
             Didn&apos;t receive the code?{' '}
             <button
               type="button"
@@ -216,7 +216,7 @@ export function OTPLoginForm({ onBack }: { onBack: () => void }) {
           <button
             type="button"
             onClick={() => setStep('email')}
-            className="w-full py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors border border-slate-200 rounded-lg"
+            className="w-full py-2 text-sm font-medium text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800/60 transition-colors border border-slate-200 dark:border-slate-800 rounded-lg"
           >
             Use different email
           </button>

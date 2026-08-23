@@ -7,11 +7,11 @@ export const metadata = {
 
 export default function ForgotPasswordPage() {
   return (
-    <div className="flex min-h-screen bg-grain">
+    <div className="flex min-h-screen bg-grain dark:bg-none dark:bg-[#07090e]">
       {/* Left Sidebar - Branding & Benefits */}
-      <div className="hidden lg:flex w-1/2 flex-col justify-between bg-gradient-to-br from-sea/10 to-coral/10 px-12 py-12 backdrop-blur">
+      <div className="hidden lg:flex w-1/2 flex-col justify-between bg-gradient-to-br from-sea/10 to-coral/10 dark:from-sea/5 dark:to-slate-900/80 px-12 py-12 backdrop-blur border-r border-slate-200/50 dark:border-slate-800/80">
         <div>
-          <a href="/" className="inline-flex items-center gap-2 font-display text-2xl font-bold text-ink hover:opacity-80 transition-opacity">
+          <a href="/" className="inline-flex items-center gap-2 font-display text-2xl font-bold text-slate-900 dark:text-white hover:opacity-80 transition-opacity">
             <svg className="h-6 w-6 text-sea" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" />
             </svg>
@@ -21,10 +21,10 @@ export default function ForgotPasswordPage() {
 
         <div className="space-y-8">
           <div>
-            <h2 className="font-display text-4xl font-bold leading-tight text-ink">
+            <h2 className="font-display text-4xl font-bold leading-tight text-slate-900 dark:text-white">
               Regain access to your account
             </h2>
-            <p className="mt-4 text-lg text-slate-700">
+            <p className="mt-4 text-lg text-slate-700 dark:text-slate-300">
               We&apos;ll send you a secure link to reset your password in just a few minutes.
             </p>
           </div>
@@ -37,8 +37,8 @@ export default function ForgotPasswordPage() {
                 </svg>
               </div>
               <div>
-                <p className="font-semibold text-ink">Secure reset link</p>
-                <p className="text-sm text-slate-600">24-hour expiration for safety</p>
+                <p className="font-semibold text-slate-900 dark:text-white">Secure reset link</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">24-hour expiration for safety</p>
               </div>
             </div>
 
@@ -49,8 +49,8 @@ export default function ForgotPasswordPage() {
                 </svg>
               </div>
               <div>
-                <p className="font-semibold text-ink">Instant email delivery</p>
-                <p className="text-sm text-slate-600">Reset link sent to your inbox immediately</p>
+                <p className="font-semibold text-slate-900 dark:text-white">Instant email delivery</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">Reset link sent to your inbox immediately</p>
               </div>
             </div>
 
@@ -61,16 +61,16 @@ export default function ForgotPasswordPage() {
                 </svg>
               </div>
               <div>
-                <p className="font-semibold text-ink">Full account control</p>
-                <p className="text-sm text-slate-600">Complete control over your security</p>
+                <p className="font-semibold text-slate-900 dark:text-white">Full account control</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">Complete control over your security</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="rounded-lg border border-black/10 bg-white/40 p-4 backdrop-blur">
-          <p className="text-sm text-slate-600">
-            <span className="font-semibold text-ink">Trouble accessing Narrivex?</span> We&apos;re here to help you recover your account quickly and securely.
+        <div className="rounded-xl border border-slate-200/80 bg-white/60 p-4 backdrop-blur dark:border-slate-800 dark:bg-slate-900/60">
+          <p className="text-sm text-slate-600 dark:text-slate-400">
+            <span className="font-semibold text-slate-900 dark:text-white">Trouble accessing Narrivex?</span> We&apos;re here to help you recover your account quickly and securely.
           </p>
         </div>
       </div>

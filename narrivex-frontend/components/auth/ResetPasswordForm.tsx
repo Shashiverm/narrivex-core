@@ -110,7 +110,7 @@ export function ResetPasswordForm() {
       <div className="w-full max-w-md space-y-8">
         <div className="space-y-2 text-center">
           <div className="inline-block h-8 w-8 border-2 border-sea border-t-transparent rounded-full animate-spin" />
-          <p className="text-slate-600 mt-4">Validating reset link...</p>
+          <p className="text-slate-600 dark:text-slate-400 mt-4">Validating reset link...</p>
         </div>
       </div>
     );
@@ -121,21 +121,21 @@ export function ResetPasswordForm() {
       <div className="w-full max-w-md space-y-8">
         {/* Header */}
         <div className="space-y-2">
-          <h1 className="font-display text-3xl font-bold text-ink">Invalid reset link</h1>
-          <p className="text-slate-600">The password reset link is missing or invalid.</p>
+          <h1 className="font-display text-3xl font-bold text-slate-900 dark:text-white">Invalid reset link</h1>
+          <p className="text-slate-600 dark:text-slate-400">The password reset link is missing or invalid.</p>
         </div>
 
         {/* Error Box */}
-        <div className="rounded-lg bg-red-50 border border-red-200 p-6 space-y-4">
+        <div className="rounded-xl bg-red-50/80 border border-red-200 dark:bg-red-950/30 dark:border-red-900/50 p-6 space-y-4">
           <div className="flex gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 text-red-600 flex-shrink-0">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/60 text-red-600 dark:text-red-400 flex-shrink-0">
               <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
               </svg>
             </div>
             <div>
-              <p className="font-semibold text-red-900">Reset link is invalid</p>
-              <p className="text-sm text-red-700 mt-1">
+              <p className="font-semibold text-red-900 dark:text-red-200">Reset link is invalid</p>
+              <p className="text-sm text-red-700 dark:text-red-400 mt-1">
                 Please request a new password reset link and try again. Reset links expire after 24 hours.
               </p>
             </div>
@@ -161,17 +161,17 @@ export function ResetPasswordForm() {
     <div className="w-full max-w-md space-y-8">
       {/* Header */}
       <div className="space-y-2">
-        <h1 className="font-display text-3xl font-bold text-ink">Create new password</h1>
-        <p className="text-slate-600">Enter a new password below. Make sure it&apos;s strong and unique.</p>
+        <h1 className="font-display text-3xl font-bold text-slate-900 dark:text-white">Create new password</h1>
+        <p className="text-slate-600 dark:text-slate-400">Enter a new password below. Make sure it&apos;s strong and unique.</p>
       </div>
 
       {/* Form */}
       <form className="space-y-5" onSubmit={handleSubmit}>
         {/* New Password */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-ink">New password</label>
+          <label className="mb-2 block text-sm font-medium text-slate-900 dark:text-slate-200">New password</label>
           <div className="relative">
-            <Lock className="absolute left-3.5 top-3 h-5 w-5 text-slate-400" />
+            <Lock className="absolute left-3.5 top-3 h-5 w-5 text-slate-400 dark:text-slate-500" />
             <Input
               type={showPassword ? 'text' : 'password'}
               placeholder="Create a strong password"
@@ -184,7 +184,7 @@ export function ResetPasswordForm() {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-3 text-slate-400 hover:text-slate-600 transition-colors"
+              className="absolute right-3 top-3 text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors"
               disabled={isLoading}
             >
               {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
@@ -196,10 +196,10 @@ export function ResetPasswordForm() {
             <div className="mt-3 space-y-3">
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-slate-600">Password strength</span>
-                  <span className={`font-semibold`}>{strengthLabels[strength - 1] || 'Weak'}</span>
+                  <span className="text-slate-600 dark:text-slate-400">Password strength</span>
+                  <span className={`font-semibold dark:text-slate-200`}>{strengthLabels[strength - 1] || 'Weak'}</span>
                 </div>
-                <div className="h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                <div className="h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
                   <div
                     className={`h-full transition-all ${strengthColors[strength - 1] || 'bg-slate-300'}`}
                     style={{ width: `${(strength / 5) * 100}%` }}
@@ -212,12 +212,12 @@ export function ResetPasswordForm() {
                   <div key={idx} className="flex items-center gap-2 text-xs">
                     <div
                       className={`h-4 w-4 rounded-full flex items-center justify-center ${
-                        req.met ? 'bg-green-100 text-green-600' : 'bg-slate-100 text-slate-300'
+                        req.met ? 'bg-green-100 text-green-600 dark:bg-green-950/60 dark:text-green-400' : 'bg-slate-100 text-slate-300 dark:bg-slate-800 dark:text-slate-600'
                       }`}
                     >
                       {req.met && <Check className="h-3 w-3" />}
                     </div>
-                    <span className={req.met ? 'text-slate-700' : 'text-slate-500'}>{req.text}</span>
+                    <span className={req.met ? 'text-slate-700 dark:text-slate-300' : 'text-slate-500 dark:text-slate-500'}>{req.text}</span>
                   </div>
                 ))}
               </div>
@@ -227,9 +227,9 @@ export function ResetPasswordForm() {
 
         {/* Confirm Password */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-ink">Confirm password</label>
+          <label className="mb-2 block text-sm font-medium text-slate-900 dark:text-slate-200">Confirm password</label>
           <div className="relative">
-            <Lock className="absolute left-3.5 top-3 h-5 w-5 text-slate-400" />
+            <Lock className="absolute left-3.5 top-3 h-5 w-5 text-slate-400 dark:text-slate-500" />
             <Input
               type={showConfirmPassword ? 'text' : 'password'}
               placeholder="Confirm your password"
@@ -242,15 +242,15 @@ export function ResetPasswordForm() {
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-3 top-3 text-slate-400 hover:text-slate-600 transition-colors"
+              className="absolute right-3 top-3 text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors"
               disabled={isLoading}
             >
               {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
             </button>
           </div>
           {confirmPassword && newPassword !== confirmPassword && (
-            <p className="mt-1.5 flex items-center gap-1 text-sm text-red-600">
-              <span className="inline-block h-1 w-1 rounded-full bg-red-600" />
+            <p className="mt-1.5 flex items-center gap-1 text-sm text-red-600 dark:text-red-400">
+              <span className="inline-block h-1 w-1 rounded-full bg-red-600 dark:bg-red-400" />
               Passwords do not match
             </p>
           )}
@@ -273,8 +273,8 @@ export function ResetPasswordForm() {
       </form>
 
       {/* Help Text */}
-      <div className="rounded-lg bg-slate-50 border border-slate-200 p-4 text-center">
-        <p className="text-sm text-slate-600">
+      <div className="rounded-xl bg-slate-50 border border-slate-200 p-4 text-center dark:bg-slate-900/50 dark:border-slate-800">
+        <p className="text-sm text-slate-600 dark:text-slate-400">
           Did you not request this?{' '}
           <Link href="/login" className="font-semibold text-sea hover:text-sea/80 transition-colors">
             Sign in to your account

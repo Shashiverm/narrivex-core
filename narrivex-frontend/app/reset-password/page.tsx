@@ -5,11 +5,11 @@ import { ResetPasswordForm } from '@/components/auth/ResetPasswordForm';
 
 export default function ResetPasswordPage() {
   return (
-    <div className="flex min-h-screen bg-grain">
+    <div className="flex min-h-screen bg-grain dark:bg-none dark:bg-[#07090e]">
       {/* Left Sidebar - Branding & Benefits */}
-      <div className="hidden lg:flex w-1/2 flex-col justify-between bg-gradient-to-br from-sea/10 to-coral/10 px-12 py-12 backdrop-blur">
+      <div className="hidden lg:flex w-1/2 flex-col justify-between bg-gradient-to-br from-sea/10 to-coral/10 dark:from-sea/5 dark:to-slate-900/80 px-12 py-12 backdrop-blur border-r border-slate-200/50 dark:border-slate-800/80">
         <div>
-          <a href="/" className="inline-flex items-center gap-2 font-display text-2xl font-bold text-ink hover:opacity-80 transition-opacity">
+          <a href="/" className="inline-flex items-center gap-2 font-display text-2xl font-bold text-slate-900 dark:text-white hover:opacity-80 transition-opacity">
             <svg className="h-6 w-6 text-sea" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
@@ -19,10 +19,10 @@ export default function ResetPasswordPage() {
 
         <div className="space-y-8">
           <div>
-            <h2 className="font-display text-4xl font-bold leading-tight text-ink">
+            <h2 className="font-display text-4xl font-bold leading-tight text-slate-900 dark:text-white">
               Secure your account
             </h2>
-            <p className="mt-4 text-lg text-slate-700">
+            <p className="mt-4 text-lg text-slate-700 dark:text-slate-300">
               Create a strong new password to protect your Narrivex account and all your market data.
             </p>
           </div>
@@ -35,8 +35,8 @@ export default function ResetPasswordPage() {
                 </svg>
               </div>
               <div>
-                <p className="font-semibold text-ink">Strong password requirements</p>
-                <p className="text-sm text-slate-600">We help you create a secure password</p>
+                <p className="font-semibold text-slate-900 dark:text-white">Strong password requirements</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">We help you create a secure password</p>
               </div>
             </div>
 
@@ -47,8 +47,8 @@ export default function ResetPasswordPage() {
                 </svg>
               </div>
               <div>
-                <p className="font-semibold text-ink">Instant activation</p>
-                <p className="text-sm text-slate-600">Your new password takes effect immediately</p>
+                <p className="font-semibold text-slate-900 dark:text-white">Instant activation</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">Your new password takes effect immediately</p>
               </div>
             </div>
 
@@ -59,16 +59,16 @@ export default function ResetPasswordPage() {
                 </svg>
               </div>
               <div>
-                <p className="font-semibold text-ink">Keep your data safe</p>
-                <p className="text-sm text-slate-600">Enterprise-grade encryption protects all alerts</p>
+                <p className="font-semibold text-slate-900 dark:text-white">Keep your data safe</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">Enterprise-grade encryption protects all alerts</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="rounded-lg border border-black/10 bg-white/40 p-4 backdrop-blur">
-          <p className="text-sm text-slate-600">
-            <span className="font-semibold text-ink">Password security tip:</span> Use a unique password you don&apos;t use anywhere else and include uppercase, lowercase, numbers, and symbols.
+        <div className="rounded-xl border border-slate-200/80 bg-white/60 p-4 backdrop-blur dark:border-slate-800 dark:bg-slate-900/60">
+          <p className="text-sm text-slate-600 dark:text-slate-400">
+            <span className="font-semibold text-slate-900 dark:text-white">Password security tip:</span> Use a unique password you don&apos;t use anywhere else and include uppercase, lowercase, numbers, and symbols.
           </p>
         </div>
       </div>

@@ -4,11 +4,11 @@ import { Sparkles } from 'lucide-react';
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="auth-page flex min-h-screen bg-grain">
+    <div className="auth-page flex min-h-screen bg-grain dark:bg-none dark:bg-[#07090e]">
       {/* Left Sidebar - Branding & Benefits */}
-      <div className="hidden lg:flex w-1/2 flex-col justify-between bg-gradient-to-br from-sea/10 to-coral/10 px-12 py-12 backdrop-blur">
+      <div className="hidden lg:flex w-1/2 flex-col justify-between bg-gradient-to-br from-sea/10 to-coral/10 dark:from-sea/5 dark:to-slate-900/80 px-12 py-12 backdrop-blur border-r border-slate-200/50 dark:border-slate-800/80">
         <div>
-          <Link href="/" className="inline-flex items-center gap-2 font-display text-2xl font-bold text-ink hover:opacity-80 transition-opacity">
+          <Link href="/" className="inline-flex items-center gap-2 font-display text-2xl font-bold text-slate-900 dark:text-white hover:opacity-80 transition-opacity">
             <Sparkles className="h-6 w-6 text-sea" />
             Narrivex
           </Link>
@@ -16,10 +16,10 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 
         <div className="space-y-8">
           <div>
-            <h2 className="font-display text-4xl font-bold leading-tight text-ink">
+            <h2 className="font-display text-4xl font-bold leading-tight text-slate-900 dark:text-white">
               Market intelligence, simplified
             </h2>
-            <p className="mt-4 text-lg text-slate-700">
+            <p className="mt-4 text-lg text-slate-700 dark:text-slate-300">
               Join thousands of traders making smarter decisions with real-time alerts and AI-generated market narratives.
             </p>
           </div>
@@ -32,8 +32,8 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                 </svg>
               </div>
               <div>
-                <p className="font-semibold text-ink">Real-time alerts</p>
-                <p className="text-sm text-slate-600">Get notified instantly when markets move</p>
+                <p className="font-semibold text-slate-900 dark:text-white">Real-time alerts</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">Get notified instantly when markets move</p>
               </div>
             </div>
 
@@ -44,8 +44,8 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                 </svg>
               </div>
               <div>
-                <p className="font-semibold text-ink">AI narratives</p>
-                <p className="text-sm text-slate-600">Understand market movements instantly</p>
+                <p className="font-semibold text-slate-900 dark:text-white">AI narratives</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">Understand market movements instantly</p>
               </div>
             </div>
 
@@ -56,16 +56,16 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                 </svg>
               </div>
               <div>
-                <p className="font-semibold text-ink">Enterprise security</p>
-                <p className="text-sm text-slate-600">Your data is encrypted and protected</p>
+                <p className="font-semibold text-slate-900 dark:text-white">Enterprise security</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">Your data is encrypted and protected</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="rounded-lg border border-black/10 bg-white/40 p-4 backdrop-blur">
-          <p className="text-sm text-slate-600">
-            <span className="font-semibold text-ink">1,000+ traders</span> already using Narrivex daily
+        <div className="rounded-xl border border-slate-200/80 bg-white/60 p-4 backdrop-blur dark:border-slate-800 dark:bg-slate-900/60">
+          <p className="text-sm text-slate-600 dark:text-slate-400">
+            <span className="font-semibold text-slate-900 dark:text-white">1,000+ traders</span> already using Narrivex daily
           </p>
         </div>
       </div>
