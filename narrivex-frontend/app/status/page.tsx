@@ -4,17 +4,10 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   CheckCircle2,
-  Activity,
   Server,
-  Zap,
-  Radio,
   Clock,
-  ShieldCheck,
   RefreshCw,
   ArrowLeft,
-  Terminal,
-  Cpu,
-  Database,
   Globe2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
