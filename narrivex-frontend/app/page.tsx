@@ -363,9 +363,9 @@ export default function LandingPage() {
             <a href={xUrl} target="_blank" rel="noreferrer" className="hover:underline">
               X (Twitter): @narrivex
             </a>
-            <a href={statusUrl} target="_blank" rel="noreferrer" className="hover:underline">
+            <Link href="/status" className="hover:underline">
               Public Status Page
-            </a>
+            </Link>
           </div>
         </section>
       </div>

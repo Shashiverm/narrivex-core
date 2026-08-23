@@ -54,6 +54,13 @@ const QUICK_LINKS: QuickLinkItem[] = [
     badge: 'Signals',
   },
   {
+    title: 'System Status & Telemetry',
+    description: 'Real-time ingestion cluster health, API latency & 99.98% uptime.',
+    href: '/status',
+    icon: Activity,
+    badge: '99.98%',
+  },
+  {
     title: 'Trading Insights',
     description: 'Practical guides & methodology for trading market narratives.',
     href: '/insights',
@@ -145,10 +152,14 @@ export function NotFoundView() {
           </Link>
 
           <div className="flex items-center gap-3">
-            <div className="hidden sm:flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 font-mono text-xs text-emerald-600 dark:text-emerald-400">
+            <Link
+              href="/status"
+              className="hidden sm:flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 font-mono text-xs text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 transition"
+              title="View Public System Status"
+            >
               <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
               <span>Core Ingestion 99.98%</span>
-            </div>
+            </Link>
 
             <Link href="/dashboard">
               <Button size="sm" variant="default" className="gap-1.5 font-mono text-xs">
