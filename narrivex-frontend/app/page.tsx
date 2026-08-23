@@ -8,6 +8,7 @@ import {
   BarChart3,
   Terminal,
   Layers,
+  Sparkles,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LiveMarketTicker } from '@/components/landing/LiveMarketTicker';
@@ -26,14 +27,14 @@ const xUrl = 'https://x.com/narrivex';
 const statusUrl = 'https://status.narrivex.tech';
 
 export const metadata: Metadata = {
-  title: 'Real-Time AI Trading Alerts for Crypto, Equities, and Forex',
+  title: 'Narrivex | Real-Time Market Intelligence & Order Flow Synthesizer',
   description:
-    'Narrivex gives traders real-time AI trading alerts, market narratives, and cross-asset intelligence across crypto, equities, and forex with a 7-day free trial.',
+    'Narrivex decodes order book depth, dark pool prints, and liquidation cascades across Crypto, Equities, and Forex into actionable narratives in under 50ms.',
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: 'Narrivex | AI Market Narratives and Alerts',
+    title: 'Narrivex | Real-Time Market Intelligence & Alerts',
     description:
       'Cut research time and detect market-moving patterns with real-time narratives and actionable alerting.',
     url: siteUrl,
@@ -48,9 +49,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Narrivex | AI Market Narratives and Alerts',
+    title: 'Narrivex | Real-Time Market Intelligence & Alerts',
     description:
-      'AI-powered market intelligence for traders and analysts across crypto, equities, and forex.',
+      'Institutional-grade market intelligence for traders and analysts across crypto, equities, and forex.',
     creator: '@narrivex',
     site: '@narrivex',
     images: ['/twitter-image'],
@@ -60,7 +61,7 @@ export const metadata: Metadata = {
 const trustSignals = [
   'Crypto Prop Desks',
   'Equities & Options Analysts',
-  'Interbank Forex Desks',
+  'Interbank FX Desks',
   'Quantitative Research Teams',
   'Macro Fund Managers',
 ];
@@ -82,7 +83,7 @@ export default function LandingPage() {
         operatingSystem: 'Web',
         url: siteUrl,
         description:
-          'Narrivex is an AI market intelligence platform with real-time narratives and alerts across crypto, equities, and forex.',
+          'Narrivex is a real-time market intelligence platform delivering order flow synthesis and actionable alerts across crypto, equities, and forex.',
         offers: [
           {
             '@type': 'Offer',
@@ -107,7 +108,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#07090e] text-slate-900 dark:text-slate-100 transition-colors duration-300">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#080c14] text-slate-900 dark:text-slate-100 transition-colors duration-300">
       <Script id="ld-json-home" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* Top Global Live Ticker Bar */}
@@ -115,24 +116,24 @@ export default function LandingPage() {
 
       {/* Main Container */}
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        {/* Navigation */}
-        <nav className="mb-14 flex items-center justify-between rounded-2xl border border-slate-200/80 bg-white/80 px-5 py-3 shadow-xs backdrop-blur-md dark:border-slate-800/80 dark:bg-slate-900/80">
+        {/* Navigation Bar */}
+        <nav className="mb-14 flex items-center justify-between rounded-2xl border border-slate-200/80 bg-white/80 px-5 py-3 shadow-xs backdrop-blur-md dark:border-white/[0.08] dark:bg-[#0d131f]/80">
           <div className="flex items-center gap-7">
-            <Link href="/" className="font-display text-xl font-bold tracking-tight flex items-center gap-2 text-slate-900 dark:text-white">
-              <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-sea text-white font-mono text-xs font-black">
+            <Link href="/" className="font-display text-xl font-bold tracking-tight flex items-center gap-2 text-slate-900 dark:text-white group">
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-sea text-white font-mono text-xs font-black shadow-sm group-hover:scale-105 transition-transform">
                 NX
               </span>
               <span>Narrivex</span>
             </Link>
-            <div className="hidden md:flex items-center gap-5 text-xs font-semibold text-slate-600 dark:text-slate-300 font-mono">
+            <div className="hidden md:flex items-center gap-6 text-xs font-medium text-slate-600 dark:text-slate-300 font-mono">
               <Link href="#product-preview" className="hover:text-sea transition-colors">
-                Platform Demo
+                Terminal
               </Link>
               <Link href="#matrix" className="hover:text-sea transition-colors">
                 Asset Matrix
               </Link>
               <Link href="#pipeline" className="hover:text-sea transition-colors">
-                Architecture
+                Pipeline
               </Link>
               <Link href="#pricing" className="hover:text-sea transition-colors">
                 Pricing
@@ -148,18 +149,18 @@ export default function LandingPage() {
               href={statusUrl}
               target="_blank"
               rel="noreferrer"
-              className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 font-mono text-[11px] font-semibold text-emerald-600 dark:text-emerald-400"
+              className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 font-mono text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 transition-colors"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping" />
-              All Feeds 99.99%
+              99.99% Feed Uptime
             </a>
             <Link href="/login">
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" className="font-medium">
                 Sign In
               </Button>
             </Link>
             <Link href="/signup">
-              <Button size="sm" className="font-bold">
+              <Button size="sm" className="font-bold bg-sea hover:bg-sea/90 text-white shadow-sm">
                 Start Free Trial
               </Button>
             </Link>
@@ -171,41 +172,42 @@ export default function LandingPage() {
           <div className="lg:col-span-6">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-sea/30 bg-sea/10 px-3.5 py-1 font-mono text-xs font-semibold text-sea">
               <Terminal className="h-3.5 w-3.5" />
-              <span>Sub-50ms Ingestion • Grounded NLP Synthesis</span>
+              <span>Sub-50ms Ingestion • Order Flow Synthesizer</span>
             </div>
 
-            <h1 className="font-display text-4xl font-bold leading-[1.08] sm:text-6xl text-slate-900 dark:text-white">
-              Real-time trading alerts with <span className="text-sea dark:text-teal-400">instant AI reasoning</span>.
+            <h1 className="font-display text-4xl font-bold leading-[1.08] sm:text-6xl text-slate-900 dark:text-white tracking-tight">
+              Real-time trading intelligence with <span className="text-sea dark:text-sky-400">grounded market context</span>.
             </h1>
 
             <p className="mt-6 max-w-xl text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
-              Stop guessing why prices move. Narrivex decodes order book depth, dark pool prints, and liquidation cascades across Crypto, Equities, and Forex into deterministic narratives in <strong>under 50ms</strong>.
+              Stop guessing why prices move. Narrivex decodes order book depth, dark pool prints, and liquidation cascades across Crypto, Equities, and Forex into clear, actionable narratives in <strong>under 50ms</strong>.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3.5">
               <Link href="/signup">
-                <Button size="lg" className="font-bold px-6">
+                <Button size="lg" className="font-bold px-7 bg-sea hover:bg-sea/90 text-white shadow-md">
                   Start 7-Day Free Trial
                   <ChevronRight className="ml-1.5 h-4 w-4" />
                 </Button>
               </Link>
               <Link href="#product-preview">
-                <Button variant="outline" size="lg">
-                  Watch Workspace Demo
+                <Button variant="outline" size="lg" className="dark:border-white/[0.1] dark:hover:bg-white/[0.05]">
+                  Explore Live Workspace
                 </Button>
               </Link>
             </div>
 
             {/* Target Audience Badges */}
-            <div className="mt-10 pt-6 border-t border-slate-200/80 dark:border-slate-800">
-              <p className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400 mb-2.5">
+            <div className="mt-10 pt-6 border-t border-slate-200/80 dark:border-white/[0.08]">
+              <p className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400 mb-2.5 flex items-center gap-1.5">
+                <Sparkles className="h-3 w-3 text-sea" />
                 Engineered for High-Conviction Operators
               </p>
               <div className="flex flex-wrap gap-2 text-xs font-mono">
                 {trustSignals.map((item) => (
                   <span
                     key={item}
-                    className="rounded-lg border border-slate-200/80 bg-white/80 px-2.5 py-1 text-slate-700 dark:border-slate-800 dark:bg-slate-900/80 dark:text-slate-300 shadow-2xs"
+                    className="rounded-lg border border-slate-200/80 bg-white/80 px-2.5 py-1 text-slate-700 dark:border-white/[0.08] dark:bg-[#0d1424] dark:text-slate-300 shadow-2xs"
                   >
                     {item}
                   </span>
@@ -228,7 +230,7 @@ export default function LandingPage() {
           <CoverageMatrix />
         </div>
 
-        {/* 4-Layer AI Architecture Breakdown */}
+        {/* 4-Layer Architecture Breakdown */}
         <div id="pipeline">
           <ArchitecturePipeline />
         </div>
@@ -236,7 +238,7 @@ export default function LandingPage() {
         {/* Product Preview Image & Interactive Telemetry */}
         <section
           id="product-preview"
-          className="mb-24 scroll-mt-24 rounded-3xl border border-slate-200/80 bg-white/80 px-6 py-12 shadow-sm backdrop-blur sm:px-10 dark:border-slate-800/80 dark:bg-slate-900/60"
+          className="mb-24 scroll-mt-24 rounded-3xl border border-slate-200/80 bg-white/80 px-6 py-12 shadow-sm backdrop-blur sm:px-10 dark:border-white/[0.08] dark:bg-[#0d131f]/70"
         >
           <div className="mb-8 text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-sea/30 bg-sea/10 px-3 py-1 font-mono text-xs font-semibold text-sea">
@@ -247,31 +249,31 @@ export default function LandingPage() {
               Institutional Clarity at Your Fingertips
             </h2>
             <p className="mt-3 text-base text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-              Real-time candlestick charts paired side-by-side with continuous AI order flow breakdowns and actionable alert triggers.
+              Real-time candlestick charts paired side-by-side with continuous order flow breakdowns and actionable alert triggers.
             </p>
           </div>
 
-          <div className="relative overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-950 shadow-2xl dark:border-slate-800">
+          <div className="relative overflow-hidden rounded-2xl border border-slate-200/80 bg-[#060910] shadow-2xl dark:border-white/[0.08]">
             <Image
               src="/dashboard_image.png"
-              alt="Narrivex dashboard preview showing AI market narratives, real-time trading alerts, and watchlist context"
+              alt="Narrivex dashboard preview showing real-time trading alerts and watchlist context"
               width={1200}
               height={630}
               className="h-auto w-full object-cover"
               unoptimized
               priority
             />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#060910] via-transparent to-transparent" />
             <div className="pointer-events-none absolute bottom-4 left-4 right-4 grid gap-3 md:grid-cols-3">
-              <div className="rounded-xl border border-slate-800 bg-slate-900/90 px-4 py-3 text-left backdrop-blur shadow-lg font-mono">
+              <div className="rounded-xl border border-white/[0.08] bg-[#0c121e]/90 px-4 py-3 text-left backdrop-blur shadow-lg font-mono">
                 <p className="text-[10px] uppercase tracking-wider text-slate-400">Latency P99</p>
                 <p className="mt-0.5 text-sm font-bold text-emerald-400">&lt;25ms global stream</p>
               </div>
-              <div className="rounded-xl border border-slate-800 bg-slate-900/90 px-4 py-3 text-left backdrop-blur shadow-lg font-mono">
+              <div className="rounded-xl border border-white/[0.08] bg-[#0c121e]/90 px-4 py-3 text-left backdrop-blur shadow-lg font-mono">
                 <p className="text-[10px] uppercase tracking-wider text-slate-400">Narrative Grounding</p>
-                <p className="mt-0.5 text-sm font-bold text-sea">Deterministic Telemetry</p>
+                <p className="mt-0.5 text-sm font-bold text-sea">Grounded Telemetry</p>
               </div>
-              <div className="rounded-xl border border-slate-800 bg-slate-900/90 px-4 py-3 text-left backdrop-blur shadow-lg font-mono">
+              <div className="rounded-xl border border-white/[0.08] bg-[#0c121e]/90 px-4 py-3 text-left backdrop-blur shadow-lg font-mono">
                 <p className="text-[10px] uppercase tracking-wider text-slate-400">Coverage Scope</p>
                 <p className="mt-0.5 text-sm font-bold text-coral">Crypto • Equities • Forex</p>
               </div>
@@ -295,7 +297,7 @@ export default function LandingPage() {
         <FaqAccordion />
 
         {/* Bottom CTA Banner */}
-        <section className="mb-20 rounded-3xl border border-slate-800 bg-slate-950 p-8 text-center text-white shadow-2xl sm:p-14">
+        <section className="mb-20 rounded-3xl border border-white/[0.08] bg-[#090d16] p-8 text-center text-white shadow-2xl sm:p-14">
           <div className="inline-flex items-center gap-1.5 rounded-full border border-sea/40 bg-sea/10 px-3 py-1 font-mono text-xs font-semibold text-sea mb-4">
             <Layers className="h-3.5 w-3.5" />
             7-Day Risk-Free Sandbox Access
@@ -308,13 +310,13 @@ export default function LandingPage() {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5">
             <Link href="/signup">
-              <Button size="lg" className="font-bold px-8">
+              <Button size="lg" className="font-bold px-8 bg-sea hover:bg-sea/90 text-white shadow-md">
                 Start 7-Day Free Trial
                 <ArrowRight className="ml-1.5 h-4 w-4" />
               </Button>
             </Link>
             <a href="mailto:sales@narrivex.tech">
-              <Button size="lg" variant="outline">
+              <Button size="lg" variant="outline" className="dark:border-white/[0.1] dark:hover:bg-white/[0.05]">
                 Contact Institutional Sales
               </Button>
             </a>
@@ -325,7 +327,7 @@ export default function LandingPage() {
         </section>
 
         {/* Comprehensive SEO & Resource Navigation */}
-        <section className="mb-16 rounded-2xl border border-slate-200/80 bg-white/60 p-6 backdrop-blur dark:border-slate-800/80 dark:bg-slate-900/60">
+        <section className="mb-16 rounded-2xl border border-slate-200/80 bg-white/60 p-6 backdrop-blur dark:border-white/[0.08] dark:bg-[#0d131f]/60">
           <h3 className="font-display text-base font-bold text-slate-900 dark:text-white">
             Explore Narrivex Platform Resources
           </h3>
@@ -372,3 +374,4 @@ export default function LandingPage() {
     </div>
   );
 }
+

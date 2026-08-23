@@ -16,9 +16,33 @@ const config: Config = {
         mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
       },
       colors: {
-        ink: '#0b0f17',
-        sea: '#00a0a0',
-        'sea-dark': '#008080',
+        ink: {
+          DEFAULT: '#080c14',
+          50: '#f6f8fb',
+          100: '#eef2f7',
+          200: '#d7e1ed',
+          300: '#b2c4dc',
+          400: '#86a1c5',
+          500: '#6483af',
+          600: '#4e6a94',
+          700: '#3f5578',
+          800: '#374763',
+          900: '#0e1422',
+          950: '#080c14',
+        },
+        obsidian: '#080c14',
+        surface: {
+          DEFAULT: '#0d131f',
+          elevated: '#121a2b',
+          card: '#0f1624',
+          border: 'rgba(255, 255, 255, 0.08)',
+        },
+        sea: {
+          DEFAULT: '#0ea5e9',
+          light: '#38bdf8',
+          dark: '#0284c7',
+        },
+        'sea-dark': '#0284c7',
         coral: '#f97316',
         mint: '#10b981',
         electric: '#6366f1',
@@ -26,7 +50,13 @@ const config: Config = {
       },
       backgroundImage: {
         grain:
-          'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.18), transparent 30%), radial-gradient(circle at 80% 0%, rgba(0,160,160,0.2), transparent 30%)',
+          'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08), transparent 40%), radial-gradient(circle at 80% 0%, rgba(14,165,233,0.12), transparent 35%)',
+        'subtle-radial': 'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(14,165,233,0.15), transparent 70%)',
+      },
+      boxShadow: {
+        'inner-glow': 'inset 0 1px 0 rgba(255, 255, 255, 0.08)',
+        'surface-card': '0 4px 20px -2px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06)',
+        'terminal-elevated': '0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08)',
       },
       keyframes: {
         fadeInUp: {
@@ -55,7 +85,7 @@ const config: Config = {
         shimmer: 'shimmer 2s ease-in-out infinite',
         'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
         'slide-in-right': 'slideInRight 0.3s ease-out both',
-        'ticker-scroll': 'tickerScroll 32s linear infinite',
+        'ticker-scroll': 'tickerScroll 36s linear infinite',
       },
     },
   },

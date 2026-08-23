@@ -1,72 +1,61 @@
 import type { ReactNode } from 'react';
 import Link from 'next/link';
-import { Sparkles } from 'lucide-react';
+import { Activity, ShieldCheck, Zap } from 'lucide-react';
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="auth-page flex min-h-screen bg-grain dark:bg-none dark:bg-[#07090e]">
-      {/* Left Sidebar - Branding & Benefits */}
-      <div className="hidden lg:flex w-1/2 flex-col justify-between bg-gradient-to-br from-sea/10 to-coral/10 dark:from-sea/5 dark:to-slate-900/80 px-12 py-12 backdrop-blur border-r border-slate-200/50 dark:border-slate-800/80">
+    <div className="auth-page flex min-h-screen bg-slate-50 dark:bg-[#080c14]">
+      {/* Left Sidebar - High Conviction Desk Branding */}
+      <div className="hidden lg:flex w-1/2 flex-col justify-between bg-gradient-to-br from-[#0c121e] to-[#080c14] px-12 py-12 backdrop-blur border-r border-slate-200/80 dark:border-white/[0.08] text-slate-100">
         <div>
-          <Link href="/" className="inline-flex items-center gap-2 font-display text-2xl font-bold text-slate-900 dark:text-white hover:opacity-80 transition-opacity">
-            <Sparkles className="h-6 w-6 text-sea" />
-            Narrivex
+          <Link href="/" className="inline-flex items-center gap-2.5 font-display text-2xl font-bold text-white hover:opacity-90 transition-opacity">
+            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-sea text-white font-mono text-xs font-black shadow-sm">
+              NX
+            </span>
+            <span>Narrivex</span>
           </Link>
         </div>
 
         <div className="space-y-8">
           <div>
-            <h2 className="font-display text-4xl font-bold leading-tight text-slate-900 dark:text-white">
-              Market intelligence, simplified
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-sea/30 bg-sea/10 px-3 py-1 font-mono text-xs font-semibold text-sea mb-4">
+              <Activity className="h-3.5 w-3.5" />
+              Sub-50ms Market Intelligence
+            </div>
+            <h2 className="font-display text-4xl font-bold leading-tight text-white tracking-tight">
+              Institutional clarity for active operators
             </h2>
-            <p className="mt-4 text-lg text-slate-700 dark:text-slate-300">
-              Join thousands of traders making smarter decisions with real-time alerts and AI-generated market narratives.
+            <p className="mt-4 text-base text-slate-300 leading-relaxed font-sans">
+              Join quantitative researchers and prop desks making high-conviction decisions with real-time order flow narratives.
             </p>
           </div>
 
-          <div className="space-y-4">
-            <div className="flex gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-sea/20 text-sea flex-shrink-0">
-                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
+          <div className="space-y-4 font-mono text-xs">
+            <div className="flex items-center gap-3.5 rounded-xl border border-white/[0.06] bg-[#0d1424]/80 p-3.5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-sea/15 text-sea flex-shrink-0">
+                <Zap className="h-4 w-4" />
               </div>
               <div>
-                <p className="font-semibold text-slate-900 dark:text-white">Real-time alerts</p>
-                <p className="text-sm text-slate-600 dark:text-slate-400">Get notified instantly when markets move</p>
+                <p className="font-semibold text-white">Sub-25ms WebSocket Feeds</p>
+                <p className="text-[11px] text-slate-400 font-sans">Direct L3 order book depth & dark pool absorption</p>
               </div>
             </div>
 
-            <div className="flex gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-coral/20 text-coral flex-shrink-0">
-                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
+            <div className="flex items-center gap-3.5 rounded-xl border border-white/[0.06] bg-[#0d1424]/80 p-3.5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/15 text-emerald-400 flex-shrink-0">
+                <ShieldCheck className="h-4 w-4" />
               </div>
               <div>
-                <p className="font-semibold text-slate-900 dark:text-white">AI narratives</p>
-                <p className="text-sm text-slate-600 dark:text-slate-400">Understand market movements instantly</p>
-              </div>
-            </div>
-
-            <div className="flex gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-sea/20 text-sea flex-shrink-0">
-                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <div>
-                <p className="font-semibold text-slate-900 dark:text-white">Enterprise security</p>
-                <p className="text-sm text-slate-600 dark:text-slate-400">Your data is encrypted and protected</p>
+                <p className="font-semibold text-white">Deterministic Grounding</p>
+                <p className="text-[11px] text-slate-400 font-sans">Every narrative tied directly to verifiable mathematical anomalies</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="rounded-xl border border-slate-200/80 bg-white/60 p-4 backdrop-blur dark:border-slate-800 dark:bg-slate-900/60">
-          <p className="text-sm text-slate-600 dark:text-slate-400">
-            <span className="font-semibold text-slate-900 dark:text-white">1,000+ traders</span> already using Narrivex daily
-          </p>
+        <div className="rounded-xl border border-white/[0.06] bg-[#0c121e]/80 p-4 font-mono text-xs text-slate-400 flex items-center justify-between">
+          <span>7-Day Risk-Free Trial</span>
+          <span className="text-emerald-400 font-bold">99.999% SLA</span>
         </div>
       </div>
 
@@ -76,4 +65,4 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
       </div>
     </div>
   );
-}
+}

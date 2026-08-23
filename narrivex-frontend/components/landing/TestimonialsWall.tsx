@@ -23,7 +23,7 @@ const testimonials: Testimonial[] = [
   },
   {
     quote:
-      'The dark pool block absorption alerts on mega-cap equities alone have paid for our annual subscription multiple times over. The contextual AI narrative doesn’t just report the print; it tells you if it’s ask-side absorption with grounded order flow metrics.',
+      'The dark pool block absorption alerts on mega-cap equities alone have paid for our annual subscription multiple times over. The contextual synthesis doesn’t just report the print; it details ask-side absorption with grounded order flow metrics.',
     author: 'Elena Rostova',
     role: 'Senior Equities Analyst',
     firm: 'Vanguard Alpha Research',
@@ -32,7 +32,7 @@ const testimonials: Testimonial[] = [
   },
   {
     quote:
-      'Narrivex is the first intelligence engine that successfully correlates FX sovereign rate shifts with on-chain crypto liquidity rotations. Having ECB and Fed rate expectations synthesized alongside mempool velocity is an asymmetric edge.',
+      'Narrivex is the first platform that successfully correlates FX sovereign rate shifts with on-chain crypto liquidity rotations. Having ECB and Fed rate expectations synthesized alongside mempool velocity is an asymmetric edge.',
     author: 'Kaelen Thorne',
     role: 'Quantitative Strategist',
     firm: 'Meridian Capital Desk',
@@ -61,10 +61,10 @@ export function TestimonialsWall() {
         {testimonials.map((item, idx) => (
           <div
             key={idx}
-            className="flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-xs backdrop-blur transition hover:border-slate-300 dark:border-slate-800/80 dark:bg-slate-900/60 dark:hover:border-slate-700"
+            className="flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-xs backdrop-blur transition hover:border-slate-300 dark:border-white/[0.08] dark:bg-[#0d131f]/70 dark:hover:border-white/[0.14]"
           >
             <div>
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-slate-800/80">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-white/[0.06]">
                 <span className="inline-flex items-center gap-1 rounded-md bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                   <ShieldCheck className="h-3 w-3" />
                   {item.impactMetric}
@@ -74,7 +74,7 @@ export function TestimonialsWall() {
 
               <div className="mt-3 flex gap-1 text-amber-400">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-3.5 w-3.5 fill-amber-400" />
+                  <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
                 ))}
               </div>
 
@@ -83,7 +83,7 @@ export function TestimonialsWall() {
               </p>
             </div>
 
-            <div className="mt-6 border-t border-slate-100 pt-3 dark:border-slate-800/80">
+            <div className="mt-6 border-t border-slate-100 pt-3 dark:border-white/[0.06]">
               <h4 className="font-display text-sm font-bold text-slate-900 dark:text-white">
                 {item.author}
               </h4>
@@ -97,3 +97,4 @@ export function TestimonialsWall() {
     </section>
   );
 }
+

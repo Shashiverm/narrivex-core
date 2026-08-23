@@ -17,19 +17,19 @@ export function Button({ className, variant = 'default', size = 'default', ...pr
         
         // Variant: Default / Primary
         variant === 'default' &&
-          'bg-sea text-white shadow-sm hover:bg-sea/90 border border-sea-dark/20 dark:border-sea/30 font-semibold',
+          'bg-sea text-white shadow-sm hover:bg-sea/90 border border-sea-dark/20 dark:border-white/[0.1] font-semibold [box-shadow:inset_0_1px_0_rgba(255,255,255,0.2)]',
 
         // Variant: Secondary
         variant === 'secondary' &&
-          'bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700/80 border border-slate-200/60 dark:border-slate-700/60',
+          'bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-white/[0.08] dark:text-slate-100 dark:hover:bg-white/[0.12] border border-slate-200/60 dark:border-white/[0.08]',
 
         // Variant: Outline
         variant === 'outline' &&
-          'border border-slate-300/80 bg-white/80 text-slate-800 shadow-xs hover:bg-slate-50 hover:border-slate-400/80 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:bg-slate-800/80 dark:hover:border-slate-700 backdrop-blur-xs',
+          'border border-slate-300/80 bg-white/80 text-slate-800 shadow-xs hover:bg-slate-50 hover:border-slate-400/80 dark:border-white/[0.1] dark:bg-[#0c121e]/80 dark:text-slate-200 dark:hover:bg-white/[0.06] dark:hover:border-white/[0.18] backdrop-blur-xs',
 
         // Variant: Ghost
         variant === 'ghost' &&
-          'text-slate-600 hover:bg-slate-100/80 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/70 dark:hover:text-white',
+          'text-slate-600 hover:bg-slate-100/80 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/[0.06] dark:hover:text-white',
 
         // Variant: Terminal
         variant === 'terminal' &&
@@ -47,3 +47,4 @@ export function Button({ className, variant = 'default', size = 'default', ...pr
     />
   );
 }
+

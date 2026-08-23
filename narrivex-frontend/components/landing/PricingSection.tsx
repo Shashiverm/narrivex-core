@@ -100,22 +100,20 @@ export function PricingSection() {
           <button
             type="button"
             onClick={() => setIsAnnual(false)}
-            className={`rounded-full px-4 py-1.5 font-mono text-xs font-semibold transition ${
-              !isAnnual
+            className={`rounded-full px-4 py-1.5 font-mono text-xs font-semibold transition ${!isAnnual
                 ? 'bg-slate-900 text-white shadow-xs dark:bg-slate-100 dark:text-slate-900'
                 : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
-            }`}
+              }`}
           >
             Monthly Billing
           </button>
           <button
             type="button"
             onClick={() => setIsAnnual(true)}
-            className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 font-mono text-xs font-semibold transition ${
-              isAnnual
+            className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 font-mono text-xs font-semibold transition ${isAnnual
                 ? 'bg-sea text-white shadow-xs font-bold'
                 : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
-            }`}
+              }`}
           >
             <span>Annual Billing</span>
             <span className="rounded-full bg-emerald-400/20 px-2 py-0.2 text-[10px] font-bold text-emerald-600 dark:text-emerald-300">
@@ -139,11 +137,10 @@ export function PricingSection() {
           return (
             <div
               key={plan.id}
-              className={`relative flex flex-col justify-between rounded-2xl p-7 transition-all duration-200 ${
-                isHighlighted
+              className={`relative flex flex-col justify-between rounded-2xl p-7 transition-all duration-200 ${isHighlighted
                   ? 'border-2 border-sea bg-white shadow-xl ring-2 ring-sea/20 dark:bg-slate-900 dark:ring-sea/30'
                   : 'border border-slate-200/80 bg-white/80 shadow-xs dark:border-slate-800 dark:bg-slate-900/60'
-              }`}
+                }`}
             >
               {plan.badge && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-sea px-3 py-0.5 font-mono text-[10px] font-bold tracking-wider text-white shadow-sm">
@@ -196,11 +193,10 @@ export function PricingSection() {
                 <Link href={plan.ctaHref} className="w-full">
                   <Button
                     size="lg"
-                    className={`w-full font-bold ${
-                      isHighlighted
+                    className={`w-full font-bold ${isHighlighted
                         ? 'bg-sea text-white hover:bg-sea/90'
                         : 'bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700'
-                    }`}
+                      }`}
                   >
                     {plan.ctaText}
                     <ArrowRight className="ml-1.5 h-4 w-4" />

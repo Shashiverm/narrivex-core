@@ -6,7 +6,7 @@ import { ChevronDown, Search, HelpCircle, Sparkles } from 'lucide-react';
 interface FaqItem {
   question: string;
   answer: string;
-  category: 'General' | 'AI Engine' | 'Latency & Data' | 'Enterprise & API';
+  category: 'General' | 'Reasoning Engine' | 'Latency & Feeds' | 'API & Integration';
 }
 
 const faqList: FaqItem[] = [
@@ -19,31 +19,31 @@ const faqList: FaqItem[] = [
   {
     question: 'How does Narrivex generate narratives so quickly without hallucinating?',
     answer:
-      'We run a dual-tier quantitative-to-LLM architecture. Statistical outlier engines first isolate mathematical anomalies (volume z-score > 3.2, CVD divergences, liquidation cascades). Only grounded, structured telemetry is passed into our fine-tuned financial models, ensuring deterministic grounding without hallucinations.',
-    category: 'AI Engine',
+      'We run a dual-tier quantitative-to-NLP architecture. Statistical outlier engines first isolate mathematical anomalies (volume z-score > 3.2, CVD divergences, liquidation cascades). Only grounded, structured telemetry is passed into our fine-tuned financial models, ensuring deterministic grounding without hallucinations.',
+    category: 'Reasoning Engine',
   },
   {
     question: 'Which markets and exchanges are natively supported?',
     answer:
       'We monitor 120+ top liquidity venues globally: Major Crypto exchanges (Binance, Coinbase Pro, Bybit, OKX, Hyperliquid, DEX mempools on Solana and Ethereum), US Equities (NYSE, NASDAQ, CME futures, Dark Pools), Forex (G10 interbank pairs), and Commodities (Gold, Silver, Crude Oil).',
-    category: 'Latency & Data',
+    category: 'Latency & Feeds',
   },
   {
     question: 'Can I integrate Narrivex alerts into my automated trading bots or webhooks?',
     answer:
-      'Yes. Professional and Enterprise tiers include full access to our sub-50ms WebSocket streaming API, customizable HTTP Webhooks, and REST endpoints. You can ingest structured JSON alerts with AI narrative payloads directly into your execution pipelines.',
-    category: 'Enterprise & API',
+      'Yes. Professional and Enterprise tiers include full access to our sub-50ms WebSocket streaming API, customizable HTTP Webhooks, and REST endpoints. You can ingest structured JSON alerts with narrative payloads directly into your execution pipelines.',
+    category: 'API & Integration',
   },
   {
     question: 'Does Narrivex execute trades or provide financial advice?',
     answer:
-      'No. Narrivex is strictly an informational analytics platform and AI intelligence software. We do not manage funds, execute trades, or provide investment advice. Traders use our intelligence layer to augment their own research and execution decisions.',
+      'No. Narrivex is strictly an informational analytics platform and market intelligence software. We do not manage funds, execute trades, or provide investment advice. Traders use our intelligence layer to augment their own research and execution decisions.',
     category: 'General',
   },
   {
     question: 'What is the 7-day free trial policy?',
     answer:
-      'Every new account receives unrestricted access to our live real-time feeds and AI synthesis for 7 days. You can cancel with a single click at any time before the trial ends without being charged.',
+      'Every new account receives unrestricted access to our live real-time feeds and market synthesis for 7 days. You can cancel with a single click at any time before the trial ends without being charged.',
     category: 'General',
   },
 ];
@@ -53,7 +53,7 @@ export function FaqAccordion() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
-  const categories = ['All', 'General', 'AI Engine', 'Latency & Data', 'Enterprise & API'];
+  const categories = ['All', 'General', 'Reasoning Engine', 'Latency & Feeds', 'API & Integration'];
 
   const filteredFaqs = useMemo(() => {
     return faqList.filter((item) => {
@@ -76,7 +76,7 @@ export function FaqAccordion() {
           Institutional Clarifications & Architecture
         </h2>
         <p className="mt-3 text-base text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
-          Everything you need to know about our data feeds, AI reasoning model, and latency guarantees.
+          Everything you need to know about our data feeds, reasoning model, and latency guarantees.
         </p>
       </div>
 
@@ -86,21 +86,21 @@ export function FaqAccordion() {
           <Search className="absolute left-3.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
-            placeholder="Search questions (e.g. latency, API, hallucination)..."
+            placeholder="Search questions (e.g. latency, API, reasoning)..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-xl border border-slate-200 bg-white py-2 pl-9 pr-4 text-xs text-slate-800 placeholder-slate-400 focus:border-sea focus:outline-none dark:border-slate-800 dark:bg-slate-900 dark:text-white"
+            className="w-full rounded-xl border border-slate-200 bg-white py-2 pl-9 pr-4 text-xs text-slate-800 placeholder-slate-400 focus:border-sea focus:outline-none dark:border-white/[0.08] dark:bg-[#090d16] dark:text-white"
           />
         </div>
 
-        <div className="flex flex-wrap gap-1 rounded-xl border border-slate-200 bg-slate-100/80 p-1 dark:border-slate-800 dark:bg-slate-950/60">
+        <div className="flex flex-wrap gap-1 rounded-xl border border-slate-200 bg-slate-100/80 p-1 dark:border-white/[0.08] dark:bg-[#070a10]">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
               className={`rounded-lg px-2.5 py-1 font-mono text-xs font-semibold transition ${
                 selectedCategory === cat
-                  ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-800 dark:text-white font-bold'
+                  ? 'bg-white text-slate-900 shadow-xs dark:bg-white/[0.1] dark:text-white font-bold'
                   : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
               }`}
             >
@@ -113,7 +113,7 @@ export function FaqAccordion() {
       {/* Accordion Items */}
       <div className="mx-auto max-w-3xl space-y-3">
         {filteredFaqs.length === 0 ? (
-          <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-xs text-slate-500 dark:border-slate-800 dark:bg-slate-900">
+          <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-xs text-slate-500 dark:border-white/[0.08] dark:bg-[#090d16]">
             No matching questions found for &quot;{searchQuery}&quot;.
           </div>
         ) : (
@@ -122,19 +122,19 @@ export function FaqAccordion() {
             return (
               <div
                 key={item.question}
-                className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xs transition dark:border-slate-800/80 dark:bg-slate-900/60"
+                className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xs transition dark:border-white/[0.08] dark:bg-[#0d131f]/70"
               >
                 <button
                   type="button"
                   onClick={() => setOpenIdx(isOpen ? null : idx)}
-                  className="flex w-full items-center justify-between p-5 text-left transition hover:bg-slate-50/50 dark:hover:bg-slate-800/40"
+                  className="flex w-full items-center justify-between p-5 text-left transition hover:bg-slate-50/50 dark:hover:bg-white/[0.03]"
                 >
                   <span className="font-display text-sm sm:text-base font-bold text-slate-900 dark:text-white pr-4">
                     {item.question}
                   </span>
                   <span
                     className={`rounded-lg p-1 transition-transform duration-200 ${
-                      isOpen ? 'rotate-180 bg-sea/15 text-sea' : 'bg-slate-100 text-slate-500 dark:bg-slate-800'
+                      isOpen ? 'rotate-180 bg-sea/15 text-sea' : 'bg-slate-100 text-slate-500 dark:bg-white/[0.06]'
                     }`}
                   >
                     <ChevronDown className="h-4 w-4" />
@@ -142,7 +142,7 @@ export function FaqAccordion() {
                 </button>
 
                 {isOpen && (
-                  <div className="border-t border-slate-100 px-5 pb-5 pt-3 dark:border-slate-800/60">
+                  <div className="border-t border-slate-100 px-5 pb-5 pt-3 dark:border-white/[0.06]">
                     <p className="text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-300 font-sans">
                       {item.answer}
                     </p>
@@ -160,3 +160,4 @@ export function FaqAccordion() {
     </section>
   );
 }
+

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Server, ShieldCheck, Cpu } from 'lucide-react';
+import { Server, ShieldCheck, Cpu, Radio } from 'lucide-react';
 
 interface EdgeNode {
   id: string;
@@ -117,25 +117,25 @@ export function GlobalInfrastructureMap() {
   }, []);
 
   return (
-    <section className="mb-24 rounded-3xl border border-slate-800/80 bg-slate-950 p-6 text-slate-100 shadow-2xl sm:p-10">
+    <section className="mb-24 rounded-3xl border border-white/[0.08] bg-[#090d16] p-6 text-slate-100 shadow-2xl sm:p-10">
       {/* Header telemetry info */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.06] pb-6">
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-sea/30 bg-sea/10 px-3 py-1 font-mono text-xs font-semibold text-sea">
-            <Cpu className="h-3.5 w-3.5" />
+            <Radio className="h-3.5 w-3.5 animate-pulse" />
             Co-Located High-Frequency Ingestion Mesh
           </div>
           <h2 className="mt-3 font-display text-3xl font-bold tracking-tight sm:text-4xl text-white">
-            Sub-50ms Global Event Synthesis
+            Sub-50ms Global Ingestion Nodes
           </h2>
           <p className="mt-2 text-sm text-slate-400 max-w-2xl font-sans">
-            Narrivex operates proprietary ingestion nodes inside tier-1 financial data centers, enabling real-time NLP reasoning before standard retail alerts trigger.
+            Narrivex operates proprietary ingestion nodes co-located in tier-1 financial data centers, enabling real-time market synthesis before retail feeds update.
           </p>
         </div>
 
         {/* Real-time counters */}
         <div className="flex flex-wrap items-center gap-3">
-          <div className="rounded-xl border border-slate-800 bg-slate-900/80 px-4 py-2.5 text-right font-mono">
+          <div className="rounded-xl border border-white/[0.06] bg-[#0c121e] px-4 py-2.5 text-right font-mono">
             <span className="text-[10px] uppercase tracking-wider text-slate-400">Events Processed (24h)</span>
             <p className="text-base font-bold text-sea tabular-nums">
               {packetsProcessed.toLocaleString()} <span className="text-xs text-slate-500">pkts</span>
@@ -151,24 +151,24 @@ export function GlobalInfrastructureMap() {
       {/* Network Mesh Simulation & Node Details */}
       <div className="mt-8 grid gap-8 lg:grid-cols-12 items-center">
         {/* World Network Canvas Topology */}
-        <div className="relative min-h-[340px] rounded-2xl border border-slate-800 bg-slate-900/40 p-4 lg:col-span-7 flex items-center justify-center overflow-hidden">
+        <div className="relative min-h-[340px] rounded-2xl border border-white/[0.06] bg-[#060910] p-4 lg:col-span-7 flex items-center justify-center overflow-hidden">
           {/* Subtle Grid Pattern */}
-          <div className="absolute inset-0 bg-tech-grid opacity-60 pointer-events-none" />
+          <div className="absolute inset-0 bg-tech-grid opacity-50 pointer-events-none" />
 
           {/* SVG Connection Lines between hubs */}
           <svg className="absolute inset-0 h-full w-full pointer-events-none z-10">
             {/* New York to London */}
-            <line x1="27%" y1="36%" x2="48%" y2="28%" stroke="rgba(0, 160, 160, 0.4)" strokeWidth="1.5" strokeDasharray="4 4" />
+            <line x1="27%" y1="36%" x2="48%" y2="28%" stroke="rgba(14, 165, 233, 0.45)" strokeWidth="1.5" strokeDasharray="4 4" />
             {/* London to Frankfurt */}
-            <line x1="48%" y1="28%" x2="54%" y2="31%" stroke="rgba(0, 160, 160, 0.5)" strokeWidth="1.5" />
+            <line x1="48%" y1="28%" x2="54%" y2="31%" stroke="rgba(14, 165, 233, 0.55)" strokeWidth="1.5" />
             {/* Frankfurt to Zurich */}
-            <line x1="54%" y1="31%" x2="51%" y2="34%" stroke="rgba(0, 160, 160, 0.4)" strokeWidth="1.5" />
+            <line x1="54%" y1="31%" x2="51%" y2="34%" stroke="rgba(14, 165, 233, 0.45)" strokeWidth="1.5" />
             {/* Frankfurt to Singapore */}
-            <line x1="54%" y1="31%" x2="77%" y2="58%" stroke="rgba(0, 160, 160, 0.3)" strokeWidth="1.5" strokeDasharray="3 3" />
+            <line x1="54%" y1="31%" x2="77%" y2="58%" stroke="rgba(14, 165, 233, 0.35)" strokeWidth="1.5" strokeDasharray="3 3" />
             {/* Singapore to Tokyo */}
-            <line x1="77%" y1="58%" x2="84%" y2="38%" stroke="rgba(0, 160, 160, 0.45)" strokeWidth="1.5" />
+            <line x1="77%" y1="58%" x2="84%" y2="38%" stroke="rgba(14, 165, 233, 0.5)" strokeWidth="1.5" />
             {/* Tokyo to New York Transpacific */}
-            <line x1="84%" y1="38%" x2="98%" y2="37%" stroke="rgba(0, 160, 160, 0.25)" strokeWidth="1" strokeDasharray="2 2" />
+            <line x1="84%" y1="38%" x2="98%" y2="37%" stroke="rgba(14, 165, 233, 0.25)" strokeWidth="1" strokeDasharray="2 2" />
           </svg>
 
           {/* Interactive Hub Node Dots */}
@@ -184,12 +184,12 @@ export function GlobalInfrastructureMap() {
                 >
                   <div className="relative flex items-center justify-center">
                     {isSelected && (
-                      <span className="absolute h-8 w-8 animate-ping rounded-full bg-sea/30" />
+                      <span className="absolute h-8 w-8 animate-ping rounded-full bg-sea/25" />
                     )}
                     <span
                       className={`h-3.5 w-3.5 rounded-full border-2 transition-all duration-200 ${
                         isSelected
-                          ? 'border-white bg-sea shadow-[0_0_12px_#00a0a0]'
+                          ? 'border-white bg-sea shadow-[0_0_12px_#0ea5e9]'
                           : 'border-slate-600 bg-slate-800 hover:border-sea hover:bg-sea/60'
                       }`}
                     />
@@ -199,7 +199,7 @@ export function GlobalInfrastructureMap() {
                     className={`mt-1.5 whitespace-nowrap rounded-md px-2 py-0.5 font-mono text-[10px] font-bold shadow-md transition ${
                       isSelected
                         ? 'bg-sea text-white'
-                        : 'bg-slate-950/90 text-slate-300 border border-slate-800 group-hover:border-sea/50'
+                        : 'bg-[#080c14]/95 text-slate-300 border border-white/[0.08] group-hover:border-sea/50'
                     }`}
                   >
                     {node.id.toUpperCase()} • {node.pingMs}ms
@@ -212,8 +212,8 @@ export function GlobalInfrastructureMap() {
 
         {/* Selected Hub Inspector Card */}
         <div className="lg:col-span-5 space-y-3 font-mono text-xs">
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/90 p-5 shadow-xl">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div className="rounded-2xl border border-white/[0.08] bg-[#0c121e]/90 p-5 shadow-xl">
+            <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
               <div className="flex items-center gap-2.5">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sea/15 text-sea">
                   <Server className="h-4 w-4" />
@@ -256,13 +256,13 @@ export function GlobalInfrastructureMap() {
             </div>
 
             {/* Protocol Support Badges */}
-            <div className="mt-4 border-t border-slate-800 pt-3">
+            <div className="mt-4 border-t border-white/[0.06] pt-3">
               <span className="text-[10px] uppercase tracking-wider text-slate-400">Supported Ingestion Protocols:</span>
               <div className="mt-1.5 flex flex-wrap gap-1.5">
                 {selectedNode.protocols.map((proto) => (
                   <span
                     key={proto}
-                    className="rounded border border-slate-700 bg-slate-800/80 px-2 py-0.5 text-[10px] text-slate-200"
+                    className="rounded border border-white/[0.08] bg-white/[0.04] px-2 py-0.5 text-[10px] text-slate-200"
                   >
                     {proto}
                   </span>
@@ -273,15 +273,15 @@ export function GlobalInfrastructureMap() {
 
           {/* Quick Metrics Bar */}
           <div className="grid grid-cols-3 gap-2 text-center">
-            <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-2.5">
+            <div className="rounded-xl border border-white/[0.06] bg-[#0c121e]/70 p-2.5">
               <span className="text-[10px] text-slate-500 uppercase">P99 Latency</span>
               <p className="mt-0.5 text-sm font-bold text-sea">&lt;25ms</p>
             </div>
-            <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-2.5">
+            <div className="rounded-xl border border-white/[0.06] bg-[#0c121e]/70 p-2.5">
               <span className="text-[10px] text-slate-500 uppercase">Direct Venues</span>
               <p className="mt-0.5 text-sm font-bold text-coral">120+ Hubs</p>
             </div>
-            <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-2.5">
+            <div className="rounded-xl border border-white/[0.06] bg-[#0c121e]/70 p-2.5">
               <span className="text-[10px] text-slate-500 uppercase">Failover</span>
               <p className="mt-0.5 text-sm font-bold text-emerald-400">&lt;500μs Auto</p>
             </div>
@@ -291,3 +291,4 @@ export function GlobalInfrastructureMap() {
     </section>
   );
 }
+

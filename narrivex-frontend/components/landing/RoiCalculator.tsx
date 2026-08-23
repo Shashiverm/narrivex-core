@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { Calculator, Clock, DollarSign, ArrowRight } from 'lucide-react';
+import { Calculator, Clock, DollarSign, ArrowRight, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function RoiCalculator() {
@@ -32,7 +32,7 @@ export function RoiCalculator() {
   }, [hoursPerWeek, hourlyRate]);
 
   return (
-    <section className="mb-24 rounded-3xl border border-slate-800/80 bg-slate-950 p-6 text-slate-100 shadow-2xl sm:p-10">
+    <section className="mb-24 rounded-3xl border border-white/[0.08] bg-[#090d16] p-6 text-slate-100 shadow-2xl sm:p-10">
       <div className="mb-8 text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-sea/30 bg-sea/10 px-3 py-1 font-mono text-xs font-semibold text-sea">
           <Calculator className="h-3.5 w-3.5" />
@@ -42,7 +42,7 @@ export function RoiCalculator() {
           Calculate Your Time & Conviction Alpha
         </h2>
         <p className="mx-auto mt-2 max-w-xl text-sm text-slate-400">
-          Replace manual news scraping and fragmented chart staring with instant AI narrative synthesis.
+          Replace manual news scraping and fragmented chart staring with instant market narrative synthesis.
         </p>
 
         {/* Preset profiles */}
@@ -55,7 +55,7 @@ export function RoiCalculator() {
                 setHoursPerWeek(p.hours);
                 setHourlyRate(p.rate);
               }}
-              className="rounded-lg border border-slate-800 bg-slate-900 px-3 py-1 font-mono text-xs text-slate-300 transition hover:border-sea/50 hover:text-white"
+              className="rounded-lg border border-white/[0.08] bg-[#0c121e] px-3 py-1 font-mono text-xs text-slate-300 transition hover:border-sea/50 hover:text-white"
             >
               {p.label}
             </button>
@@ -66,7 +66,7 @@ export function RoiCalculator() {
       <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
         {/* Sliders Area */}
         <div className="space-y-6 lg:col-span-6 font-mono">
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <div className="rounded-2xl border border-white/[0.08] bg-[#0c121e]/90 p-5">
             <div className="flex justify-between items-center mb-2">
               <label className="text-xs font-semibold text-slate-300">
                 Hours spent researching charts & news weekly:
@@ -89,10 +89,10 @@ export function RoiCalculator() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <div className="rounded-2xl border border-white/[0.08] bg-[#0c121e]/90 p-5">
             <div className="flex justify-between items-center mb-2">
               <label className="text-xs font-semibold text-slate-300">
-                Estimated value of your analytical / trading hour:
+                Estimated value of your trading / research hour:
               </label>
               <span className="text-sm font-bold text-coral tabular-nums">${hourlyRate}/hr</span>
             </div>
@@ -115,9 +115,10 @@ export function RoiCalculator() {
 
         {/* Results Card */}
         <div className="lg:col-span-6">
-          <div className="rounded-2xl border border-sea/30 bg-gradient-to-b from-slate-900 to-slate-950 p-6 shadow-xl">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-              <div className="font-mono text-xs font-bold text-slate-300">
+          <div className="rounded-2xl border border-sea/30 bg-gradient-to-b from-[#0e1626] to-[#080c14] p-6 shadow-xl">
+            <div className="flex items-center justify-between border-b border-white/[0.06] pb-4">
+              <div className="font-mono text-xs font-bold text-slate-300 flex items-center gap-1.5">
+                <Zap className="h-3.5 w-3.5 text-sea" />
                 ESTIMATED MONTHLY EFFICIENCY
               </div>
               <span className="rounded-full border border-sea/40 bg-sea/15 px-3 py-1 font-mono text-xs font-bold text-sea">
@@ -126,7 +127,7 @@ export function RoiCalculator() {
             </div>
 
             <div className="mt-6 grid grid-cols-2 gap-4 text-center font-mono">
-              <div className="rounded-xl border border-slate-800 bg-slate-900/90 p-4">
+              <div className="rounded-xl border border-white/[0.06] bg-[#090d16] p-4">
                 <div className="flex items-center justify-center gap-1 text-xs text-slate-400">
                   <Clock className="h-3.5 w-3.5 text-sea" />
                   <span>Time Reclaimed</span>
@@ -137,7 +138,7 @@ export function RoiCalculator() {
                 <span className="text-[10px] text-slate-500">monthly time savings</span>
               </div>
 
-              <div className="rounded-xl border border-slate-800 bg-slate-900/90 p-4">
+              <div className="rounded-xl border border-white/[0.06] bg-[#090d16] p-4">
                 <div className="flex items-center justify-center gap-1 text-xs text-slate-400">
                   <DollarSign className="h-3.5 w-3.5 text-coral" />
                   <span>Productivity Value</span>
@@ -149,7 +150,7 @@ export function RoiCalculator() {
               </div>
             </div>
 
-            <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-800 pt-4">
+            <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/[0.06] pt-4">
               <div className="text-xs text-slate-400 font-mono">
                 <span>Narrivex Pro: </span>
                 <strong className="text-white font-bold">$99/mo</strong>
@@ -157,7 +158,7 @@ export function RoiCalculator() {
               </div>
 
               <Link href="/signup" className="w-full sm:w-auto">
-                <Button className="w-full font-bold">
+                <Button className="w-full font-bold bg-sea hover:bg-sea/90 text-white shadow-sm">
                   Start 7-Day Trial
                   <ArrowRight className="ml-1.5 h-4 w-4" />
                 </Button>
@@ -169,3 +170,4 @@ export function RoiCalculator() {
     </section>
   );
 }
+

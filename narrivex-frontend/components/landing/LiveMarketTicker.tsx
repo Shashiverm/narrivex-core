@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useMemo } from 'react';
-import { Activity, ArrowUpRight, ArrowDownRight, Layers } from 'lucide-react';
+import { Activity, ArrowUpRight, ArrowDownRight, Layers, Pause, Play } from 'lucide-react';
 
 interface TickerItem {
   symbol: string;
@@ -30,12 +30,13 @@ export function LiveMarketTicker() {
   const [tickers, setTickers] = useState<TickerItem[]>(initialTickers);
   const [activeFilter, setActiveFilter] = useState<'All' | 'Crypto' | 'Equities' | 'Forex' | 'Commodities'>('All');
   const [latency] = useState<number>(14);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
 
   useEffect(() => {
+    if (isPaused) return;
     const interval = setInterval(() => {
       setTickers((prev) =>
         prev.map((item) => {
-          // Subtle realistic micro-fluctuation
           const delta = (Math.random() - 0.48) * (item.price * 0.0004);
           const newPrice = Math.max(0.0001, item.price + delta);
           return {
@@ -47,19 +48,19 @@ export function LiveMarketTicker() {
     }, 2800);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isPaused]);
 
   const filteredTickers = useMemo(() => {
     return activeFilter === 'All' ? tickers : tickers.filter((t) => t.category === activeFilter);
   }, [activeFilter, tickers]);
 
-  // Duplicate list to achieve continuous, gapless marquee scrolling
+  // Duplicate list to achieve continuous marquee scrolling
   const displayItems = useMemo(() => [...filteredTickers, ...filteredTickers], [filteredTickers]);
 
   return (
-    <div className="w-full border-b border-slate-200/80 bg-slate-950 text-slate-200 dark:border-slate-800/80 select-none">
+    <div className="w-full border-b border-slate-200/80 bg-[#070b12] text-slate-200 dark:border-white/[0.07] select-none">
       {/* Top Telemetry Header */}
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-1 text-[11px] text-slate-400">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-1.5 text-[11px] text-slate-400">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5 font-mono">
             <span className="relative flex h-2 w-2">
@@ -67,17 +68,26 @@ export function LiveMarketTicker() {
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
             </span>
             <span className="font-semibold text-emerald-400 tracking-wide text-[10px] uppercase">
-              L3 WebSocket Live
+              L3 Order Flow Live
             </span>
           </div>
 
           <span className="text-slate-700 hidden sm:inline">|</span>
 
-          <div className="hidden sm:flex items-center gap-1 text-[11px] text-slate-300 font-mono">
+          <div className="hidden sm:flex items-center gap-1.5 text-[11px] text-slate-300 font-mono">
             <Activity className="h-3 w-3 text-sea" />
-            <span className="text-slate-400">Latency:</span>
-            <span className="text-emerald-400 font-bold">{latency}ms</span>
+            <span className="text-slate-400">Ingestion Ping:</span>
+            <span className="text-emerald-400 font-bold tabular-nums">{latency}ms</span>
           </div>
+
+          <button
+            type="button"
+            onClick={() => setIsPaused(!isPaused)}
+            className="hidden md:inline-flex items-center gap-1 text-[10px] font-mono text-slate-400 hover:text-slate-200 transition-colors"
+          >
+            {isPaused ? <Play className="h-2.5 w-2.5 text-amber-400" /> : <Pause className="h-2.5 w-2.5" />}
+            <span>{isPaused ? 'RESUME STREAM' : 'PAUSE'}</span>
+          </button>
         </div>
 
         {/* Category filters */}
@@ -89,10 +99,10 @@ export function LiveMarketTicker() {
               <button
                 key={filter}
                 onClick={() => setActiveFilter(filter)}
-                className={`rounded px-2 py-0.5 transition-colors ${
+                className={`rounded-md px-2 py-0.5 transition-colors ${
                   isActive
-                    ? 'bg-sea/20 text-sea border border-sea/40 font-bold'
-                    : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'
+                    ? 'bg-sea/15 text-sea border border-sea/30 font-bold'
+                    : 'text-slate-400 hover:bg-white/[0.04] hover:text-slate-200'
                 }`}
               >
                 {filter}
@@ -103,23 +113,27 @@ export function LiveMarketTicker() {
       </div>
 
       {/* Marquee Track with subtle edge fading */}
-      <div className="relative flex overflow-hidden border-t border-slate-900 bg-slate-950/90 py-2">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-slate-950 to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-slate-950 to-transparent" />
+      <div className="relative flex overflow-hidden border-t border-white/[0.05] bg-[#090e18] py-2">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#090e18] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#090e18] to-transparent" />
 
-        <div className="flex shrink-0 animate-ticker-scroll items-center gap-4 whitespace-nowrap pl-4">
+        <div
+          className={`flex shrink-0 items-center gap-3.5 whitespace-nowrap pl-4 ${
+            isPaused ? '' : 'animate-ticker-scroll'
+          }`}
+        >
           {displayItems.map((item, idx) => {
             const isPositive = item.change24h >= 0;
             return (
               <div
                 key={`${item.symbol}-${idx}`}
-                className="group inline-flex items-center gap-2.5 rounded-lg border border-slate-800/80 bg-slate-900/80 px-3 py-1.5 transition hover:border-sea/50 hover:bg-slate-900"
+                className="group inline-flex items-center gap-2.5 rounded-lg border border-white/[0.06] bg-[#0c121e] px-3 py-1.5 shadow-xs transition hover:border-sea/40 hover:bg-[#111928]"
               >
                 <div className="flex items-center gap-1.5">
                   <span className="font-mono text-xs font-bold text-slate-100 group-hover:text-sea transition-colors">
                     {item.symbol}
                   </span>
-                  <span className="rounded bg-slate-800 px-1 py-0.2 font-mono text-[9px] text-slate-400 uppercase">
+                  <span className="rounded bg-white/[0.06] px-1 py-0.2 font-mono text-[9px] text-slate-400 uppercase">
                     {item.category}
                   </span>
                 </div>
@@ -140,7 +154,7 @@ export function LiveMarketTicker() {
                 </div>
 
                 {item.alertType && (
-                  <span className="inline-flex items-center gap-1 rounded border border-amber-500/30 bg-amber-500/10 px-1.5 py-0.2 font-mono text-[9px] font-medium text-amber-300">
+                  <span className="inline-flex items-center gap-1 rounded border border-amber-500/25 bg-amber-500/10 px-1.5 py-0.2 font-mono text-[9px] font-medium text-amber-300">
                     <Layers className="h-2.5 w-2.5 text-amber-400" />
                     {item.alertType}
                   </span>
@@ -153,3 +167,4 @@ export function LiveMarketTicker() {
     </div>
   );
 }
+
