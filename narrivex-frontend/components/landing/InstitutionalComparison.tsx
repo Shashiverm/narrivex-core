@@ -1,6 +1,6 @@
 'use client';
 
-import { Sparkles, Shield, Check, Minus } from 'lucide-react';
+import { Sparkles, Shield } from 'lucide-react';
 
 interface ComparisonRow {
   dimension: string;

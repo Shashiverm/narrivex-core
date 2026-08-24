@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Server, ShieldCheck, Cpu, Radio } from 'lucide-react';
+import { Server, ShieldCheck, Radio } from 'lucide-react';
 
 interface EdgeNode {
   id: string;
