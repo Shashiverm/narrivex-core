@@ -111,12 +111,20 @@
   border-color: rgba(255, 255, 255, 0.07);
 }
 
-/* ─── Range Slider Ergonomics ─── */
+/* ─── Touch & Scroll Utilities for Mobile Responsiveness ─── */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: #0ea5e9;
   cursor: pointer;
@@ -124,14 +132,9 @@ input[type="range"]::-webkit-slider-thumb {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
-  box-shadow: 0 0 0 5px rgba(14, 165, 233, 0.35), 0 3px 8px rgba(0, 0, 0, 0.4);
-}
-
 input[type="range"]::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border: none;
   border-radius: 50%;
   background: #0ea5e9;
@@ -139,3 +142,4 @@ input[type="range"]::-moz-range-thumb {
   box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.25), 0 2px 5px rgba(0, 0, 0, 0.3);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
+

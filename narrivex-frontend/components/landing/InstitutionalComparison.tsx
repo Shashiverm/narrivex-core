@@ -61,33 +61,33 @@ const comparisonData: ComparisonRow[] = [
 
 export function InstitutionalComparison() {
   return (
-    <section className="mb-24 rounded-3xl border border-slate-200/80 bg-white/80 px-6 py-12 shadow-sm backdrop-blur sm:px-10 dark:border-white/[0.08] dark:bg-[#0d131f]/70">
-      <div className="mb-10 text-center">
+    <section className="mb-24 rounded-3xl border border-slate-200/80 bg-white/80 px-4 py-8 sm:px-8 sm:py-12 shadow-sm backdrop-blur dark:border-white/[0.08] dark:bg-[#0d131f]/70">
+      <div className="mb-8 sm:mb-10 text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-sea/30 bg-sea/10 px-3 py-1 font-mono text-xs font-semibold text-sea">
           <Shield className="h-3.5 w-3.5" />
           The Intelligence Advantage
         </div>
-        <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl text-slate-900 dark:text-white">
+        <h2 className="mt-3 font-display text-2xl font-bold md:text-5xl text-slate-900 dark:text-white">
           Narrivex vs. Legacy Terminals & Standard Tools
         </h2>
-        <p className="mx-auto mt-3 max-w-2xl text-base text-slate-600 dark:text-slate-400">
+        <p className="mx-auto mt-3 max-w-2xl text-xs sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed">
           Why quantitative traders and modern market operators are upgrading to Narrivex real-time intelligence.
         </p>
       </div>
 
-      <div className="overflow-x-auto rounded-2xl border border-slate-200/80 bg-white shadow-sm dark:border-white/[0.08] dark:bg-[#090d16]">
-        <table className="w-full min-w-[760px] text-left text-xs sm:text-sm">
+      <div className="relative overflow-x-auto rounded-2xl border border-slate-200/80 bg-white shadow-sm dark:border-white/[0.08] dark:bg-[#090d16]">
+        <table className="w-full min-w-[700px] text-left text-xs sm:text-sm">
           <thead className="bg-slate-50 border-b border-slate-200 font-mono text-xs text-slate-700 dark:bg-[#0c121e] dark:border-white/[0.06] dark:text-slate-300">
             <tr>
-              <th className="px-5 py-4 w-1/4">Capability Specification</th>
-              <th className="px-5 py-4 w-1/3 bg-sea/10 dark:bg-sea/15 border-x border-sea/30 text-sea font-bold">
+              <th className="px-4 sm:px-5 py-3.5 sm:py-4 w-1/4">Capability Specification</th>
+              <th className="px-4 sm:px-5 py-3.5 sm:py-4 w-1/3 bg-sea/10 dark:bg-sea/15 border-x border-sea/30 text-sea font-bold">
                 <div className="flex items-center gap-1.5">
-                  <Sparkles className="h-4 w-4" />
+                  <Sparkles className="h-4 w-4 shrink-0" />
                   <span>Narrivex Intelligence</span>
                 </div>
               </th>
-              <th className="px-5 py-4 w-1/5 text-slate-600 dark:text-slate-400">Bloomberg Terminal</th>
-              <th className="px-5 py-4 w-1/5 text-slate-600 dark:text-slate-400">TradingView Alerts</th>
+              <th className="px-4 sm:px-5 py-3.5 sm:py-4 w-1/5 text-slate-600 dark:text-slate-400">Bloomberg Terminal</th>
+              <th className="px-4 sm:px-5 py-3.5 sm:py-4 w-1/5 text-slate-600 dark:text-slate-400">TradingView Alerts</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 dark:divide-white/[0.04]">
@@ -100,16 +100,16 @@ export function InstitutionalComparison() {
                     : 'hover:bg-slate-50/50 dark:hover:bg-white/[0.02]'
                 }
               >
-                <td className="px-5 py-4 font-semibold text-slate-900 dark:text-white">
+                <td className="px-4 sm:px-5 py-3.5 sm:py-4 font-semibold text-slate-900 dark:text-white">
                   {row.dimension}
                 </td>
-                <td className="px-5 py-4 text-slate-900 dark:text-sky-300 bg-sea/10 dark:bg-sea/15 border-x border-sea/30 font-medium leading-relaxed">
+                <td className="px-4 sm:px-5 py-3.5 sm:py-4 text-slate-900 dark:text-sky-300 bg-sea/10 dark:bg-sea/15 border-x border-sea/30 font-medium leading-relaxed">
                   ✓ {row.narrivex}
                 </td>
-                <td className="px-5 py-4 text-slate-600 dark:text-slate-400 leading-relaxed">
+                <td className="px-4 sm:px-5 py-3.5 sm:py-4 text-slate-600 dark:text-slate-400 leading-relaxed">
                   {row.bloomberg}
                 </td>
-                <td className="px-5 py-4 text-slate-600 dark:text-slate-400 leading-relaxed">
+                <td className="px-4 sm:px-5 py-3.5 sm:py-4 text-slate-600 dark:text-slate-400 leading-relaxed">
                   {row.tradingview}
                 </td>
               </tr>

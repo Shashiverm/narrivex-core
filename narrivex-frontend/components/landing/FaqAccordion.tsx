@@ -67,38 +67,38 @@ export function FaqAccordion() {
 
   return (
     <section className="mb-24">
-      <div className="mb-10 text-center">
+      <div className="mb-8 sm:mb-10 text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-sea/30 bg-sea/10 px-3 py-1 font-mono text-xs font-semibold text-sea">
           <HelpCircle className="h-3.5 w-3.5" />
           Frequently Asked Questions
         </div>
-        <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl text-slate-900 dark:text-white">
+        <h2 className="mt-3 font-display text-2xl font-bold md:text-5xl text-slate-900 dark:text-white">
           Institutional Clarifications & Architecture
         </h2>
-        <p className="mt-3 text-base text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+        <p className="mt-3 text-xs sm:text-base text-slate-600 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
           Everything you need to know about our data feeds, reasoning model, and latency guarantees.
         </p>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="mx-auto mb-8 flex max-w-3xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mx-auto mb-6 sm:mb-8 flex max-w-3xl flex-col gap-2.5 sm:gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative flex-1">
           <Search className="absolute left-3.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
-            placeholder="Search questions (e.g. latency, API, reasoning)..."
+            placeholder="Search questions (e.g. latency, API)..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full rounded-xl border border-slate-200 bg-white py-2 pl-9 pr-4 text-xs text-slate-800 placeholder-slate-400 focus:border-sea focus:outline-none dark:border-white/[0.08] dark:bg-[#090d16] dark:text-white"
           />
         </div>
 
-        <div className="flex flex-wrap gap-1 rounded-xl border border-slate-200 bg-slate-100/80 p-1 dark:border-white/[0.08] dark:bg-[#070a10]">
+        <div className="flex items-center overflow-x-auto no-scrollbar gap-1 rounded-xl border border-slate-200 bg-slate-100/80 p-1 dark:border-white/[0.08] dark:bg-[#070a10]">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`rounded-lg px-2.5 py-1 font-mono text-xs font-semibold transition ${
+              className={`shrink-0 rounded-lg px-2.5 py-1 font-mono text-xs font-semibold transition ${
                 selectedCategory === cat
                   ? 'bg-white text-slate-900 shadow-xs dark:bg-white/[0.1] dark:text-white font-bold'
                   : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
@@ -127,13 +127,13 @@ export function FaqAccordion() {
                 <button
                   type="button"
                   onClick={() => setOpenIdx(isOpen ? null : idx)}
-                  className="flex w-full items-center justify-between p-5 text-left transition hover:bg-slate-50/50 dark:hover:bg-white/[0.03]"
+                  className="flex w-full items-center justify-between p-4 sm:p-5 text-left transition hover:bg-slate-50/50 dark:hover:bg-white/[0.03]"
                 >
-                  <span className="font-display text-sm sm:text-base font-bold text-slate-900 dark:text-white pr-4">
+                  <span className="font-display text-sm sm:text-base font-bold text-slate-900 dark:text-white pr-3 sm:pr-4">
                     {item.question}
                   </span>
                   <span
-                    className={`rounded-lg p-1 transition-transform duration-200 ${
+                    className={`shrink-0 rounded-lg p-1 transition-transform duration-200 ${
                       isOpen ? 'rotate-180 bg-sea/15 text-sea' : 'bg-slate-100 text-slate-500 dark:bg-white/[0.06]'
                     }`}
                   >
@@ -142,7 +142,7 @@ export function FaqAccordion() {
                 </button>
 
                 {isOpen && (
-                  <div className="border-t border-slate-100 px-5 pb-5 pt-3 dark:border-white/[0.06]">
+                  <div className="border-t border-slate-100 px-4 pb-4 pt-2 sm:px-5 sm:pb-5 sm:pt-3 dark:border-white/[0.06]">
                     <p className="text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-300 font-sans">
                       {item.answer}
                     </p>

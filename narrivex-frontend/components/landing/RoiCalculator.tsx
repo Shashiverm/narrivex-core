@@ -32,22 +32,22 @@ export function RoiCalculator() {
   }, [hoursPerWeek, hourlyRate]);
 
   return (
-    <section className="mb-24 rounded-3xl border border-white/[0.08] bg-[#090d16] p-6 text-slate-100 shadow-2xl sm:p-10">
+    <section className="mb-24 rounded-3xl border border-white/[0.08] bg-[#090d16] p-4 sm:p-8 lg:p-10 text-slate-100 shadow-2xl">
       <div className="mb-8 text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-sea/30 bg-sea/10 px-3 py-1 font-mono text-xs font-semibold text-sea">
           <Calculator className="h-3.5 w-3.5" />
           Quantifiable Analytical Efficiency
         </div>
-        <h2 className="mt-3 font-display text-3xl font-bold sm:text-4xl text-white">
+        <h2 className="mt-3 font-display text-2xl font-bold sm:text-4xl text-white">
           Calculate Your Time & Conviction Alpha
         </h2>
-        <p className="mx-auto mt-2 max-w-xl text-sm text-slate-400">
+        <p className="mx-auto mt-2 max-w-xl text-xs sm:text-sm text-slate-400 leading-relaxed">
           Replace manual news scraping and fragmented chart staring with instant market narrative synthesis.
         </p>
 
         {/* Preset profiles */}
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-          <span className="text-xs text-slate-500 font-mono mr-1">Quick Presets:</span>
+        <div className="mt-5 flex items-center justify-start sm:justify-center overflow-x-auto no-scrollbar gap-2 pb-1">
+          <span className="text-xs text-slate-500 font-mono shrink-0 mr-1 hidden sm:inline">Quick Presets:</span>
           {presets.map((p) => (
             <button
               key={p.label}
@@ -55,7 +55,7 @@ export function RoiCalculator() {
                 setHoursPerWeek(p.hours);
                 setHourlyRate(p.rate);
               }}
-              className="rounded-lg border border-white/[0.08] bg-[#0c121e] px-3 py-1 font-mono text-xs text-slate-300 transition hover:border-sea/50 hover:text-white"
+              className="shrink-0 rounded-lg border border-white/[0.08] bg-[#0c121e] px-2.5 sm:px-3 py-1 font-mono text-xs text-slate-300 transition hover:border-sea/50 hover:text-white"
             >
               {p.label}
             </button>
@@ -63,11 +63,11 @@ export function RoiCalculator() {
         </div>
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
+      <div className="grid gap-6 lg:gap-8 lg:grid-cols-12 lg:items-center">
         {/* Sliders Area */}
-        <div className="space-y-6 lg:col-span-6 font-mono">
-          <div className="rounded-2xl border border-white/[0.08] bg-[#0c121e]/90 p-5">
-            <div className="flex justify-between items-center mb-2">
+        <div className="space-y-4 sm:space-y-6 lg:col-span-6 font-mono">
+          <div className="rounded-2xl border border-white/[0.08] bg-[#0c121e]/90 p-4 sm:p-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
               <label className="text-xs font-semibold text-slate-300">
                 Hours spent researching charts & news weekly:
               </label>
@@ -83,14 +83,14 @@ export function RoiCalculator() {
               className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sea"
             />
             <div className="flex justify-between text-[10px] text-slate-500 mt-1.5">
-              <span>5 hrs (Part-time)</span>
+              <span>5 hrs</span>
               <span>25 hrs</span>
-              <span>50 hrs (Full-time Desk)</span>
+              <span>50 hrs (Full-time)</span>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-white/[0.08] bg-[#0c121e]/90 p-5">
-            <div className="flex justify-between items-center mb-2">
+          <div className="rounded-2xl border border-white/[0.08] bg-[#0c121e]/90 p-4 sm:p-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
               <label className="text-xs font-semibold text-slate-300">
                 Estimated value of your trading / research hour:
               </label>
@@ -115,43 +115,43 @@ export function RoiCalculator() {
 
         {/* Results Card */}
         <div className="lg:col-span-6">
-          <div className="rounded-2xl border border-sea/30 bg-gradient-to-b from-[#0e1626] to-[#080c14] p-6 shadow-xl">
-            <div className="flex items-center justify-between border-b border-white/[0.06] pb-4">
+          <div className="rounded-2xl border border-sea/30 bg-gradient-to-b from-[#0e1626] to-[#080c14] p-4 sm:p-6 shadow-xl">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/[0.06] pb-4">
               <div className="font-mono text-xs font-bold text-slate-300 flex items-center gap-1.5">
                 <Zap className="h-3.5 w-3.5 text-sea" />
                 ESTIMATED MONTHLY EFFICIENCY
               </div>
-              <span className="rounded-full border border-sea/40 bg-sea/15 px-3 py-1 font-mono text-xs font-bold text-sea">
+              <span className="self-start sm:self-auto rounded-full border border-sea/40 bg-sea/15 px-3 py-1 font-mono text-xs font-bold text-sea">
                 {calculations.roiMultiplier}x ROI on Pro Plan
               </span>
             </div>
 
-            <div className="mt-6 grid grid-cols-2 gap-4 text-center font-mono">
-              <div className="rounded-xl border border-white/[0.06] bg-[#090d16] p-4">
+            <div className="mt-5 sm:mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-center font-mono">
+              <div className="rounded-xl border border-white/[0.06] bg-[#090d16] p-3.5 sm:p-4">
                 <div className="flex items-center justify-center gap-1 text-xs text-slate-400">
                   <Clock className="h-3.5 w-3.5 text-sea" />
                   <span>Time Reclaimed</span>
                 </div>
-                <p className="mt-2 text-2xl font-bold text-emerald-400 tabular-nums">
+                <p className="mt-2 text-xl sm:text-2xl font-bold text-emerald-400 tabular-nums">
                   ~{calculations.monthlyHoursSaved} hrs
                 </p>
                 <span className="text-[10px] text-slate-500">monthly time savings</span>
               </div>
 
-              <div className="rounded-xl border border-white/[0.06] bg-[#090d16] p-4">
+              <div className="rounded-xl border border-white/[0.06] bg-[#090d16] p-3.5 sm:p-4">
                 <div className="flex items-center justify-center gap-1 text-xs text-slate-400">
                   <DollarSign className="h-3.5 w-3.5 text-coral" />
                   <span>Productivity Value</span>
                 </div>
-                <p className="mt-2 text-2xl font-bold text-coral tabular-nums">
+                <p className="mt-2 text-xl sm:text-2xl font-bold text-coral tabular-nums">
                   ${calculations.monthlyDollarSavings.toLocaleString()}
                 </p>
                 <span className="text-[10px] text-slate-500">monthly alpha equivalent</span>
               </div>
             </div>
 
-            <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/[0.06] pt-4">
-              <div className="text-xs text-slate-400 font-mono">
+            <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 border-t border-white/[0.06] pt-4">
+              <div className="text-xs text-slate-400 font-mono text-center sm:text-left">
                 <span>Narrivex Pro: </span>
                 <strong className="text-white font-bold">$99/mo</strong>
                 <span> • 7-Day Risk-Free Trial</span>

@@ -107,23 +107,23 @@ export function ArchitecturePipeline() {
   const activeStage = stages[activeStageIdx];
 
   return (
-    <section className="mb-24 rounded-3xl border border-slate-200/80 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-white/[0.08] dark:bg-[#0d131f]/70 sm:p-10">
+    <section className="mb-24 rounded-3xl border border-slate-200/80 bg-white/80 p-4 shadow-sm backdrop-blur dark:border-white/[0.08] dark:bg-[#0d131f]/70 sm:p-8 lg:p-10">
       {/* Title & Badge */}
-      <div className="mb-10 text-center">
+      <div className="mb-8 sm:mb-10 text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-sea/30 bg-sea/10 px-3 py-1 font-mono text-xs font-semibold text-sea">
           <Cpu className="h-3.5 w-3.5" />
           The Intelligence Pipeline Architecture
         </div>
-        <h2 className="mt-3 font-display text-3xl font-bold md:text-5xl text-slate-900 dark:text-white">
+        <h2 className="mt-3 font-display text-2xl font-bold md:text-5xl text-slate-900 dark:text-white">
           From Market Noise to Actionable Conviction
         </h2>
-        <p className="mx-auto mt-3 max-w-2xl text-base text-slate-600 dark:text-slate-400">
+        <p className="mx-auto mt-3 max-w-2xl text-xs sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed">
           Deterministic 4-layer quantitative-to-NLP pipeline operating under 50 milliseconds end-to-end.
         </p>
       </div>
 
       {/* Stage Selector Grid */}
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 mb-6 sm:mb-8">
         {stages.map((stage, idx) => {
           const isSelected = activeStageIdx === idx;
           const Icon = stage.icon;
@@ -131,7 +131,7 @@ export function ArchitecturePipeline() {
             <div
               key={stage.id}
               onClick={() => setActiveStageIdx(idx)}
-              className={`cursor-pointer rounded-2xl border p-4 transition-all duration-200 ${
+              className={`cursor-pointer rounded-2xl border p-3.5 sm:p-4 transition-all duration-200 ${
                 isSelected
                   ? 'border-sea/80 bg-sea/10 shadow-sm ring-1 ring-sea/40 dark:bg-sea/15'
                   : 'border-slate-200/80 bg-white/70 hover:border-slate-300 dark:border-white/[0.06] dark:bg-[#090d16]/80 dark:hover:border-white/[0.12]'
@@ -150,14 +150,14 @@ export function ArchitecturePipeline() {
                 </span>
               </div>
 
-              <h4 className="mt-3 font-display text-sm font-bold text-slate-900 dark:text-white">
+              <h4 className="mt-2.5 sm:mt-3 font-display text-sm font-bold text-slate-900 dark:text-white">
                 {stage.name}
               </h4>
               <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">
                 {stage.title}
               </p>
 
-              <div className="mt-3 border-t border-slate-100 pt-2 dark:border-white/[0.06]">
+              <div className="mt-2.5 sm:mt-3 border-t border-slate-100 pt-2 dark:border-white/[0.06]">
                 <span className="font-mono text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
                   ⚡ {stage.latencySpec}
                 </span>
@@ -168,22 +168,22 @@ export function ArchitecturePipeline() {
       </div>
 
       {/* Stage Deep Dive Inspector */}
-      <div className="rounded-2xl border border-slate-200/80 bg-slate-50/80 p-6 dark:border-white/[0.06] dark:bg-[#070b12]">
+      <div className="rounded-2xl border border-slate-200/80 bg-slate-50/80 p-4 sm:p-6 dark:border-white/[0.06] dark:bg-[#070b12]">
         <div className="grid gap-6 lg:grid-cols-12 items-start">
           {/* Stage Details */}
-          <div className="lg:col-span-6 space-y-4">
+          <div className="lg:col-span-6 space-y-3.5 sm:space-y-4">
             <div>
               <span className="font-mono text-xs font-bold text-sea">STAGE {activeStage.step} DEEP DIVE</span>
-              <h3 className="font-display text-2xl font-bold text-slate-900 dark:text-white mt-1">
+              <h3 className="font-display text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1">
                 {activeStage.title}
               </h3>
-              <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              <p className="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                 {activeStage.description}
               </p>
             </div>
 
             {/* In / Out Specs */}
-            <div className="grid grid-cols-2 gap-3 text-xs font-mono">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 text-xs font-mono">
               <div className="rounded-xl border border-slate-200 bg-white p-3 dark:border-white/[0.08] dark:bg-[#0c121e]">
                 <span className="text-[10px] text-slate-400 uppercase">Input Stream</span>
                 <p className="mt-0.5 font-semibold text-slate-800 dark:text-slate-200 truncate">{activeStage.inputFormat}</p>
@@ -207,14 +207,14 @@ export function ArchitecturePipeline() {
 
           {/* Sample Data Transformation Payload */}
           <div className="lg:col-span-6">
-            <div className="rounded-xl border border-white/[0.06] bg-[#090d16] p-4 font-mono text-xs shadow-lg">
-              <div className="flex items-center justify-between border-b border-white/[0.06] pb-2 mb-3">
-                <span className="text-[11px] font-bold text-slate-400">DATA PAYLOAD TRANSFORMATION</span>
+            <div className="rounded-xl border border-white/[0.06] bg-[#090d16] p-3.5 sm:p-4 font-mono text-xs shadow-lg">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.06] pb-2 mb-3">
+                <span className="text-[10px] sm:text-[11px] font-bold text-slate-400">DATA PAYLOAD TRANSFORMATION</span>
                 <span className="rounded bg-white/[0.06] px-1.5 py-0.5 text-[10px] text-emerald-400">
                   {activeStage.latencySpec}
                 </span>
               </div>
-              <pre className="overflow-x-auto text-[11px] leading-relaxed text-slate-300">
+              <pre className="overflow-x-auto text-[10px] sm:text-[11px] leading-relaxed text-slate-300">
                 {activeStage.samplePayload}
               </pre>
             </div>

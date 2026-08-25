@@ -231,32 +231,32 @@ export function HeroTerminalPreview() {
   return (
     <div className="terminal-window relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#090d16] text-slate-100 shadow-terminal-elevated">
       {/* Terminal Title Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] bg-[#0c121e]/95 px-4 py-2.5">
+      <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-white/[0.06] bg-[#0c121e]/95 px-3 py-2 sm:px-4 sm:py-2.5">
         {/* Left: Window Controls + Stream Identifier */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 sm:gap-3">
           <div className="flex items-center gap-1.5">
             <span className="h-2.5 w-2.5 rounded-full bg-rose-500/80" />
             <span className="h-2.5 w-2.5 rounded-full bg-amber-500/80" />
             <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/80" />
           </div>
 
-          <div className="h-4 w-[1px] bg-white/[0.08] mx-1 hidden sm:block" />
+          <div className="h-4 w-[1px] bg-white/[0.08] mx-0.5 hidden sm:block" />
 
-          <div className="flex items-center gap-2 font-mono text-xs text-slate-300">
+          <div className="flex items-center gap-1.5 sm:gap-2 font-mono text-xs text-slate-300">
             <Terminal className="h-3.5 w-3.5 text-sea" />
-            <span className="font-semibold text-slate-200">narrivex-core::telemetry</span>
-            <span className="rounded bg-white/[0.06] px-1.5 py-0.2 text-[10px] text-slate-400 font-mono">
-              v2.4-stream
+            <span className="font-semibold text-slate-200 truncate max-w-[120px] sm:max-w-none">narrivex-core::telemetry</span>
+            <span className="rounded bg-white/[0.06] px-1.5 py-0.2 text-[10px] text-slate-400 font-mono hidden xs:inline">
+              v2.4
             </span>
           </div>
         </div>
 
-        {/* Right: Live Stream Status + Stream Toggle */}
-        <div className="flex items-center gap-2">
+        {/* Right: Live Stream Status + Stream Toggle + Mode Switcher */}
+        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar max-w-full">
           <button
             type="button"
             onClick={() => setIsLive(!isLive)}
-            className={`inline-flex items-center gap-1.5 rounded-md px-2 py-1 font-mono text-[11px] font-semibold transition ${
+            className={`inline-flex shrink-0 items-center gap-1 rounded-md px-1.5 py-0.5 sm:px-2 sm:py-1 font-mono text-[10px] sm:text-[11px] font-semibold transition ${
               isLive
                 ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
                 : 'bg-white/[0.05] text-slate-400 border border-white/[0.08]'
@@ -265,22 +265,22 @@ export function HeroTerminalPreview() {
             {isLive ? (
               <>
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
-                <Pause className="h-3 w-3" />
+                <Pause className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
                 <span>LIVE</span>
               </>
             ) : (
               <>
-                <Play className="h-3 w-3 text-amber-400" />
+                <Play className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-amber-400" />
                 <span>PAUSED</span>
               </>
             )}
           </button>
 
           {/* View Mode Switcher */}
-          <div className="flex rounded-md border border-white/[0.08] bg-[#080c14] p-0.5 font-mono text-[11px]">
+          <div className="flex shrink-0 rounded-md border border-white/[0.08] bg-[#080c14] p-0.5 font-mono text-[10px] sm:text-[11px]">
             <button
               onClick={() => setViewMode('narrative')}
-              className={`flex items-center gap-1 rounded px-2.5 py-1 transition ${
+              className={`flex items-center gap-1 rounded px-2 py-0.5 sm:px-2.5 sm:py-1 transition ${
                 viewMode === 'narrative'
                   ? 'bg-white/[0.1] text-white font-bold shadow-xs'
                   : 'text-slate-400 hover:text-slate-200'
@@ -291,7 +291,7 @@ export function HeroTerminalPreview() {
             </button>
             <button
               onClick={() => setViewMode('telemetry')}
-              className={`flex items-center gap-1 rounded px-2.5 py-1 transition ${
+              className={`flex items-center gap-1 rounded px-2 py-0.5 sm:px-2.5 sm:py-1 transition ${
                 viewMode === 'telemetry'
                   ? 'bg-white/[0.1] text-white font-bold shadow-xs'
                   : 'text-slate-400 hover:text-slate-200'
@@ -302,7 +302,7 @@ export function HeroTerminalPreview() {
             </button>
             <button
               onClick={() => setViewMode('json')}
-              className={`flex items-center gap-1 rounded px-2.5 py-1 transition ${
+              className={`flex items-center gap-1 rounded px-2 py-0.5 sm:px-2.5 sm:py-1 transition ${
                 viewMode === 'json'
                   ? 'bg-white/[0.1] text-white font-bold shadow-xs'
                   : 'text-slate-400 hover:text-slate-200'
@@ -338,7 +338,7 @@ export function HeroTerminalPreview() {
             </div>
           </div>
 
-          <div className="space-y-1.5">
+          <div className="space-y-1.5 max-h-[220px] sm:max-h-[300px] lg:max-h-none overflow-y-auto pr-0.5">
             {filteredSignals.map((signal) => {
               const isSelected = signal.id === activeSignal.id;
               return (
@@ -352,7 +352,7 @@ export function HeroTerminalPreview() {
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-1.5 flex-wrap">
                       <span className="font-mono text-xs font-bold text-slate-100">{signal.symbol}</span>
                       <span
                         className={`font-mono text-[10px] font-semibold px-1 rounded ${
@@ -382,12 +382,12 @@ export function HeroTerminalPreview() {
         </div>
 
         {/* Right Column: Deep Synthesis / Order Flow / JSON Inspector */}
-        <div className="p-4 lg:col-span-7 flex flex-col justify-between bg-[#080c14]/90">
+        <div className="p-3.5 sm:p-4 lg:col-span-7 flex flex-col justify-between bg-[#080c14]/90">
           <div>
             {/* Active Header */}
-            <div className="flex items-start justify-between border-b border-white/[0.06] pb-3">
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 border-b border-white/[0.06] pb-3">
               <div>
-                <div className="flex items-center gap-2 font-mono">
+                <div className="flex items-center gap-2 font-mono flex-wrap">
                   <h4 className="text-base font-bold text-white">{activeSignal.symbol}</h4>
                   <span className="text-xs text-slate-400">({activeSignal.name})</span>
                   <span className="text-xs font-bold text-slate-200">{activeSignal.price}</span>
@@ -399,13 +399,13 @@ export function HeroTerminalPreview() {
                     {activeSignal.change}
                   </span>
                 </div>
-                <div className="mt-1 flex items-center gap-2 font-mono text-[11px] text-coral">
-                  <Layers className="h-3 w-3" />
-                  <span>{activeSignal.catalystSummary}</span>
+                <div className="mt-1 flex items-center gap-1.5 font-mono text-[11px] text-coral">
+                  <Layers className="h-3 w-3 shrink-0" />
+                  <span className="line-clamp-1">{activeSignal.catalystSummary}</span>
                 </div>
               </div>
 
-              <div className="text-right">
+              <div className="self-start sm:self-auto sm:text-right">
                 <span className="inline-flex items-center gap-1 rounded border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[11px] font-bold text-emerald-400">
                   <CheckCircle2 className="h-3 w-3" />
                   {activeSignal.confidence}% Conviction
@@ -416,7 +416,7 @@ export function HeroTerminalPreview() {
             {/* TAB 1: Grounded Narrative Synthesis */}
             {viewMode === 'narrative' && (
               <div className="mt-3.5 space-y-3">
-                <div className="rounded-xl border border-sea/25 bg-[#0e1626]/90 p-3.5">
+                <div className="rounded-xl border border-sea/25 bg-[#0e1626]/90 p-3 sm:p-3.5">
                   <div className="flex items-center justify-between border-b border-white/[0.06] pb-2">
                     <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-sea flex items-center gap-1.5">
                       <Zap className="h-3 w-3" />
@@ -433,7 +433,7 @@ export function HeroTerminalPreview() {
                 </div>
 
                 {/* Quantitative Metric Badges */}
-                <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
                   <div className="rounded-lg border border-white/[0.06] bg-[#0c121e] p-2.5">
                     <span className="text-[10px] text-slate-500 uppercase">Volume Anomaly</span>
                     <p className="mt-0.5 font-bold text-white">{activeSignal.metrics.volumeSurge}</p>
@@ -449,7 +449,7 @@ export function HeroTerminalPreview() {
             {/* TAB 2: Order Flow & Microstructure Telemetry */}
             {viewMode === 'telemetry' && (
               <div className="mt-3.5 space-y-3 font-mono text-xs">
-                <div className="rounded-xl border border-white/[0.06] bg-[#0e1626] p-3.5">
+                <div className="rounded-xl border border-white/[0.06] bg-[#0e1626] p-3 sm:p-3.5">
                   <div className="flex justify-between items-center mb-2 text-[11px]">
                     <span className="text-slate-400">Taker Order Book Imbalance</span>
                     <span className="text-emerald-400 font-bold">{activeSignal.metrics.orderImbalance}</span>
@@ -472,7 +472,7 @@ export function HeroTerminalPreview() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                   <div className="rounded-lg border border-white/[0.06] bg-[#0c121e] p-2.5">
                     <span className="text-[10px] text-slate-500 uppercase">Anomaly Z-Score</span>
                     <p className="mt-0.5 font-bold text-sea">+{activeSignal.jsonPayload.anomaly_detection.z_score}σ</p>
@@ -497,7 +497,7 @@ export function HeroTerminalPreview() {
                   <span>{copied ? 'COPIED' : 'COPY JSON'}</span>
                 </button>
 
-                <pre className="max-h-[175px] overflow-auto rounded-xl border border-white/[0.06] bg-[#060910] p-3 font-mono text-[11px] text-emerald-400/90 leading-tight">
+                <pre className="max-h-[175px] overflow-auto rounded-xl border border-white/[0.06] bg-[#060910] p-3 font-mono text-[10px] sm:text-[11px] text-emerald-400/90 leading-tight">
                   {JSON.stringify(activeSignal.jsonPayload, null, 2)}
                 </pre>
               </div>
@@ -505,7 +505,7 @@ export function HeroTerminalPreview() {
           </div>
 
           {/* Footer Bar */}
-          <div className="mt-4 flex items-center justify-between border-t border-white/[0.06] pt-2.5 font-mono text-[10px] text-slate-500">
+          <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 border-t border-white/[0.06] pt-2.5 font-mono text-[9px] sm:text-[10px] text-slate-500">
             <span>SOCKET STREAM: /v2/stream/alpha-events</span>
             <span className="text-sea">PACKET ID: #{activeSignal.jsonPayload.event_id}</span>
           </div>

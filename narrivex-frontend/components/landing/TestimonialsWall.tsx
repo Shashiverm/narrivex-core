@@ -44,24 +44,24 @@ const testimonials: Testimonial[] = [
 export function TestimonialsWall() {
   return (
     <section className="mb-24">
-      <div className="mb-10 text-center">
+      <div className="mb-8 sm:mb-10 text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-sea/30 bg-sea/10 px-3 py-1 font-mono text-xs font-semibold text-sea">
           <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
           Verified Desk Feedback
         </div>
-        <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl text-slate-900 dark:text-white">
+        <h2 className="mt-3 font-display text-2xl font-bold md:text-5xl text-slate-900 dark:text-white">
           Trusted by High-Conviction Operators
         </h2>
-        <p className="mt-3 text-base text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+        <p className="mt-3 text-xs sm:text-base text-slate-600 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
           See how active quantitative analysts and prop traders build asymmetric conviction with Narrivex.
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-4 sm:gap-6 md:grid-cols-3">
         {testimonials.map((item, idx) => (
           <div
             key={idx}
-            className="flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-xs backdrop-blur transition hover:border-slate-300 dark:border-white/[0.08] dark:bg-[#0d131f]/70 dark:hover:border-white/[0.14]"
+            className="flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white/80 p-4 sm:p-6 shadow-xs backdrop-blur transition hover:border-slate-300 dark:border-white/[0.08] dark:bg-[#0d131f]/70 dark:hover:border-white/[0.14]"
           >
             <div>
               <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-white/[0.06]">
@@ -78,12 +78,12 @@ export function TestimonialsWall() {
                 ))}
               </div>
 
-              <p className="mt-3 text-xs leading-relaxed text-slate-700 dark:text-slate-300 font-sans italic">
+              <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-300 font-sans italic">
                 &quot;{item.quote}&quot;
               </p>
             </div>
 
-            <div className="mt-6 border-t border-slate-100 pt-3 dark:border-white/[0.06]">
+            <div className="mt-5 sm:mt-6 border-t border-slate-100 pt-3 dark:border-white/[0.06]">
               <h4 className="font-display text-sm font-bold text-slate-900 dark:text-white">
                 {item.author}
               </h4>

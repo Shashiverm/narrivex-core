@@ -117,41 +117,61 @@ export function GlobalInfrastructureMap() {
   }, []);
 
   return (
-    <section className="mb-24 rounded-3xl border border-white/[0.08] bg-[#090d16] p-6 text-slate-100 shadow-2xl sm:p-10">
+    <section className="mb-24 rounded-3xl border border-white/[0.08] bg-[#090d16] p-4 sm:p-8 lg:p-10 text-slate-100 shadow-2xl">
       {/* Header telemetry info */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.06] pb-6">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-white/[0.06] pb-6">
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-sea/30 bg-sea/10 px-3 py-1 font-mono text-xs font-semibold text-sea">
             <Radio className="h-3.5 w-3.5 animate-pulse" />
             Co-Located High-Frequency Ingestion Mesh
           </div>
-          <h2 className="mt-3 font-display text-3xl font-bold tracking-tight sm:text-4xl text-white">
+          <h2 className="mt-3 font-display text-2xl font-bold tracking-tight sm:text-4xl text-white">
             Sub-50ms Global Ingestion Nodes
           </h2>
-          <p className="mt-2 text-sm text-slate-400 max-w-2xl font-sans">
+          <p className="mt-2 text-xs sm:text-sm text-slate-400 max-w-2xl font-sans leading-relaxed">
             Narrivex operates proprietary ingestion nodes co-located in tier-1 financial data centers, enabling real-time market synthesis before retail feeds update.
           </p>
         </div>
 
         {/* Real-time counters */}
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="rounded-xl border border-white/[0.06] bg-[#0c121e] px-4 py-2.5 text-right font-mono">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 w-full lg:w-auto">
+          <div className="rounded-xl border border-white/[0.06] bg-[#0c121e] px-3.5 py-2 sm:px-4 sm:py-2.5 text-left sm:text-right font-mono">
             <span className="text-[10px] uppercase tracking-wider text-slate-400">Events Processed (24h)</span>
-            <p className="text-base font-bold text-sea tabular-nums">
+            <p className="text-sm sm:text-base font-bold text-sea tabular-nums">
               {packetsProcessed.toLocaleString()} <span className="text-xs text-slate-500">pkts</span>
             </p>
           </div>
-          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-2.5 text-right font-mono">
+          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-2 sm:px-4 sm:py-2.5 text-left sm:text-right font-mono">
             <span className="text-[10px] uppercase tracking-wider text-emerald-400">Global Mesh SLA</span>
-            <p className="text-base font-bold text-emerald-400">99.999%</p>
+            <p className="text-sm sm:text-base font-bold text-emerald-400">99.999%</p>
           </div>
         </div>
       </div>
 
+      {/* Mobile Node Switcher Carousel/Tabs for easy touch interaction */}
+      <div className="mt-4 flex lg:hidden items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
+        {edgeNodes.map((node) => {
+          const isSelected = selectedNode.id === node.id;
+          return (
+            <button
+              key={node.id}
+              onClick={() => setSelectedNode(node)}
+              className={`shrink-0 rounded-lg px-2.5 py-1.5 font-mono text-[11px] font-semibold transition ${
+                isSelected
+                  ? 'bg-sea text-white shadow-xs font-bold'
+                  : 'bg-[#0c121e] text-slate-400 border border-white/[0.06]'
+              }`}
+            >
+              {node.id.toUpperCase()} • {node.pingMs}ms
+            </button>
+          );
+        })}
+      </div>
+
       {/* Network Mesh Simulation & Node Details */}
-      <div className="mt-8 grid gap-8 lg:grid-cols-12 items-center">
+      <div className="mt-6 sm:mt-8 grid gap-6 lg:gap-8 lg:grid-cols-12 items-center">
         {/* World Network Canvas Topology */}
-        <div className="relative min-h-[340px] rounded-2xl border border-white/[0.06] bg-[#060910] p-4 lg:col-span-7 flex items-center justify-center overflow-hidden">
+        <div className="relative min-h-[280px] sm:min-h-[340px] rounded-2xl border border-white/[0.06] bg-[#060910] p-3 sm:p-4 lg:col-span-7 flex items-center justify-center overflow-hidden">
           {/* Subtle Grid Pattern */}
           <div className="absolute inset-0 bg-tech-grid opacity-50 pointer-events-none" />
 
@@ -172,7 +192,7 @@ export function GlobalInfrastructureMap() {
           </svg>
 
           {/* Interactive Hub Node Dots */}
-          <div className="relative h-full w-full min-h-[290px]">
+          <div className="relative h-full w-full min-h-[250px] sm:min-h-[290px]">
             {edgeNodes.map((node) => {
               const isSelected = selectedNode.id === node.id;
               return (
@@ -184,10 +204,10 @@ export function GlobalInfrastructureMap() {
                 >
                   <div className="relative flex items-center justify-center">
                     {isSelected && (
-                      <span className="absolute h-8 w-8 animate-ping rounded-full bg-sea/25" />
+                      <span className="absolute h-7 w-7 sm:h-8 sm:w-8 animate-ping rounded-full bg-sea/25" />
                     )}
                     <span
-                      className={`h-3.5 w-3.5 rounded-full border-2 transition-all duration-200 ${
+                      className={`h-3 w-3 sm:h-3.5 sm:w-3.5 rounded-full border-2 transition-all duration-200 ${
                         isSelected
                           ? 'border-white bg-sea shadow-[0_0_12px_#0ea5e9]'
                           : 'border-slate-600 bg-slate-800 hover:border-sea hover:bg-sea/60'
@@ -196,7 +216,7 @@ export function GlobalInfrastructureMap() {
                   </div>
 
                   <div
-                    className={`mt-1.5 whitespace-nowrap rounded-md px-2 py-0.5 font-mono text-[10px] font-bold shadow-md transition ${
+                    className={`mt-1 whitespace-nowrap rounded-md px-1.5 py-0.2 sm:px-2 sm:py-0.5 font-mono text-[9px] sm:text-[10px] font-bold shadow-md transition ${
                       isSelected
                         ? 'bg-sea text-white'
                         : 'bg-[#080c14]/95 text-slate-300 border border-white/[0.08] group-hover:border-sea/50'
@@ -212,28 +232,28 @@ export function GlobalInfrastructureMap() {
 
         {/* Selected Hub Inspector Card */}
         <div className="lg:col-span-5 space-y-3 font-mono text-xs">
-          <div className="rounded-2xl border border-white/[0.08] bg-[#0c121e]/90 p-5 shadow-xl">
+          <div className="rounded-2xl border border-white/[0.08] bg-[#0c121e]/90 p-4 sm:p-5 shadow-xl">
             <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
               <div className="flex items-center gap-2.5">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sea/15 text-sea">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sea/15 text-sea shrink-0">
                   <Server className="h-4 w-4" />
                 </div>
-                <div>
-                  <h4 className="font-display text-sm font-bold text-white">{selectedNode.city}</h4>
-                  <span className="text-[11px] text-slate-400">{selectedNode.datacenter}</span>
+                <div className="min-w-0">
+                  <h4 className="font-display text-sm font-bold text-white truncate">{selectedNode.city}</h4>
+                  <span className="text-[11px] text-slate-400 truncate block">{selectedNode.datacenter}</span>
                 </div>
               </div>
 
-              <span className="inline-flex items-center gap-1 rounded border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-400">
+              <span className="inline-flex shrink-0 items-center gap-1 rounded border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-400">
                 <ShieldCheck className="h-3 w-3" />
                 ACTIVE
               </span>
             </div>
 
             <div className="mt-4 space-y-2.5 text-xs">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-0.5 sm:gap-2">
                 <span className="text-slate-400">Co-Located Feeds:</span>
-                <span className="font-semibold text-slate-200 text-right truncate max-w-[200px]">
+                <span className="font-semibold text-slate-200 text-left sm:text-right truncate max-w-full sm:max-w-[220px]">
                   {selectedNode.primaryVenues}
                 </span>
               </div>
@@ -273,17 +293,17 @@ export function GlobalInfrastructureMap() {
 
           {/* Quick Metrics Bar */}
           <div className="grid grid-cols-3 gap-2 text-center">
-            <div className="rounded-xl border border-white/[0.06] bg-[#0c121e]/70 p-2.5">
-              <span className="text-[10px] text-slate-500 uppercase">P99 Latency</span>
-              <p className="mt-0.5 text-sm font-bold text-sea">&lt;25ms</p>
+            <div className="rounded-xl border border-white/[0.06] bg-[#0c121e]/70 p-2 sm:p-2.5">
+              <span className="text-[9px] sm:text-[10px] text-slate-500 uppercase">P99 Latency</span>
+              <p className="mt-0.5 text-xs sm:text-sm font-bold text-sea">&lt;25ms</p>
             </div>
-            <div className="rounded-xl border border-white/[0.06] bg-[#0c121e]/70 p-2.5">
-              <span className="text-[10px] text-slate-500 uppercase">Direct Venues</span>
-              <p className="mt-0.5 text-sm font-bold text-coral">120+ Hubs</p>
+            <div className="rounded-xl border border-white/[0.06] bg-[#0c121e]/70 p-2 sm:p-2.5">
+              <span className="text-[9px] sm:text-[10px] text-slate-500 uppercase">Direct Venues</span>
+              <p className="mt-0.5 text-xs sm:text-sm font-bold text-coral">120+ Hubs</p>
             </div>
-            <div className="rounded-xl border border-white/[0.06] bg-[#0c121e]/70 p-2.5">
-              <span className="text-[10px] text-slate-500 uppercase">Failover</span>
-              <p className="mt-0.5 text-sm font-bold text-emerald-400">&lt;500μs Auto</p>
+            <div className="rounded-xl border border-white/[0.06] bg-[#0c121e]/70 p-2 sm:p-2.5">
+              <span className="text-[9px] sm:text-[10px] text-slate-500 uppercase">Failover</span>
+              <p className="mt-0.5 text-xs sm:text-sm font-bold text-emerald-400">&lt;500μs Auto</p>
             </div>
           </div>
         </div>

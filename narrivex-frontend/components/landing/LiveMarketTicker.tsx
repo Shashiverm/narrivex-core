@@ -60,8 +60,8 @@ export function LiveMarketTicker() {
   return (
     <div className="w-full border-b border-slate-200/80 bg-[#070b12] text-slate-200 dark:border-white/[0.07] select-none">
       {/* Top Telemetry Header */}
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-1.5 text-[11px] text-slate-400">
-        <div className="flex items-center gap-3">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-3 py-1.5 text-[11px] text-slate-400 sm:px-4">
+        <div className="flex items-center gap-2 sm:gap-3">
           <div className="flex items-center gap-1.5 font-mono">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -91,15 +91,15 @@ export function LiveMarketTicker() {
         </div>
 
         {/* Category filters */}
-        <div className="flex items-center gap-1 font-mono text-[10px]">
-          <span className="text-slate-500 mr-1 hidden md:inline">Feeds:</span>
+        <div className="flex max-w-full items-center gap-1 overflow-x-auto no-scrollbar py-0.5 font-mono text-[10px]">
+          <span className="text-slate-500 mr-1 hidden md:inline shrink-0">Feeds:</span>
           {(['All', 'Crypto', 'Equities', 'Forex', 'Commodities'] as const).map((filter) => {
             const isActive = activeFilter === filter;
             return (
               <button
                 key={filter}
                 onClick={() => setActiveFilter(filter)}
-                className={`rounded-md px-2 py-0.5 transition-colors ${
+                className={`shrink-0 rounded-md px-2 py-0.5 transition-colors ${
                   isActive
                     ? 'bg-sea/15 text-sea border border-sea/30 font-bold'
                     : 'text-slate-400 hover:bg-white/[0.04] hover:text-slate-200'

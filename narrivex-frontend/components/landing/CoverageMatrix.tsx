@@ -105,38 +105,38 @@ export function CoverageMatrix() {
   }, [activeData, searchQuery]);
 
   return (
-    <section className="mb-24 rounded-3xl border border-slate-200/80 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-white/[0.08] dark:bg-[#0d131f]/70 sm:p-10">
+    <section className="mb-24 rounded-3xl border border-slate-200/80 bg-white/80 p-4 shadow-sm backdrop-blur dark:border-white/[0.08] dark:bg-[#0d131f]/70 sm:p-8 lg:p-10">
       {/* Header with Title and Search / Tabs */}
-      <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/80 pb-6 dark:border-white/[0.06]">
+      <div className="mb-8 flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200/80 pb-6 dark:border-white/[0.06]">
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-sea/30 bg-sea/10 px-3 py-1 font-mono text-xs font-semibold text-sea">
             <Globe2 className="h-3.5 w-3.5" />
             Cross-Asset Unified Ingestion
           </div>
-          <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl text-slate-900 dark:text-white">
+          <h2 className="mt-3 font-display text-2xl font-bold md:text-4xl text-slate-900 dark:text-white">
             14,800+ Instruments Monitored in Real Time
           </h2>
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 max-w-xl">
+          <p className="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
             Stream unified intelligence across crypto mempools, equities dark pools, FX interbank, and futures from a single endpoint.
           </p>
         </div>
 
         {/* Search & Category Pills */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full lg:w-auto">
           {/* Quick Search */}
-          <div className="relative">
+          <div className="relative w-full sm:w-auto">
             <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
               placeholder="Search ticker or trigger..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full sm:w-56 rounded-xl border border-slate-200 bg-white py-1.5 pl-8 pr-3 text-xs text-slate-800 placeholder-slate-400 focus:border-sea focus:outline-none dark:border-white/[0.08] dark:bg-[#090d16] dark:text-slate-200"
+              className="w-full sm:w-52 md:w-60 rounded-xl border border-slate-200 bg-white py-1.5 pl-8 pr-3 text-xs text-slate-800 placeholder-slate-400 focus:border-sea focus:outline-none dark:border-white/[0.08] dark:bg-[#090d16] dark:text-slate-200"
             />
           </div>
 
           {/* Category Switcher Tabs */}
-          <div className="flex flex-wrap gap-1 rounded-xl border border-slate-200 bg-slate-100/80 p-1 dark:border-white/[0.08] dark:bg-[#070a10]">
+          <div className="flex items-center overflow-x-auto no-scrollbar gap-1 rounded-xl border border-slate-200 bg-slate-100/80 p-1 dark:border-white/[0.08] dark:bg-[#070a10]">
             {assetCategories.map((cat) => {
               const isSelected = activeCategory === cat.id;
               const Icon = cat.icon;
@@ -144,7 +144,7 @@ export function CoverageMatrix() {
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
-                  className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 font-mono text-xs font-semibold transition ${
+                  className={`flex shrink-0 items-center gap-1.5 rounded-lg px-2.5 sm:px-3 py-1.5 font-mono text-xs font-semibold transition ${
                     isSelected
                       ? 'bg-white text-slate-900 shadow-xs dark:bg-white/[0.1] dark:text-white font-bold'
                       : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
@@ -160,14 +160,14 @@ export function CoverageMatrix() {
       </div>
 
       {/* Asset Table Preview */}
-      <div className="overflow-x-auto rounded-xl border border-slate-200/80 bg-white/90 shadow-xs dark:border-white/[0.06] dark:bg-[#090d16]/90">
-        <table className="w-full min-w-[720px] text-left text-xs">
+      <div className="relative overflow-x-auto rounded-xl border border-slate-200/80 bg-white/90 shadow-xs dark:border-white/[0.06] dark:bg-[#090d16]/90">
+        <table className="w-full min-w-[680px] text-left text-xs">
           <thead className="bg-slate-50/80 border-b border-slate-200/80 font-mono text-[11px] font-semibold text-slate-500 uppercase dark:bg-[#0c121e] dark:border-white/[0.06] dark:text-slate-400">
             <tr>
-              <th className="px-5 py-3.5">Instrument / Pair</th>
-              <th className="px-5 py-3.5">24h Volatility State</th>
-              <th className="px-5 py-3.5">Primary Quantitative Trigger Rules</th>
-              <th className="px-5 py-3.5 text-right">Ingestion Latency</th>
+              <th className="px-4 sm:px-5 py-3.5">Instrument / Pair</th>
+              <th className="px-4 sm:px-5 py-3.5">24h Volatility State</th>
+              <th className="px-4 sm:px-5 py-3.5">Primary Quantitative Trigger Rules</th>
+              <th className="px-4 sm:px-5 py-3.5 text-right">Ingestion Latency</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 dark:divide-white/[0.04]">
@@ -183,8 +183,8 @@ export function CoverageMatrix() {
                   key={asset.symbol}
                   className="hover:bg-slate-50/80 dark:hover:bg-white/[0.02] transition-colors"
                 >
-                  <td className="px-5 py-3.5 font-medium">
-                    <div className="flex items-center gap-2">
+                  <td className="px-4 sm:px-5 py-3.5 font-medium">
+                    <div className="flex items-center gap-1.5 flex-wrap">
                       <span className="font-mono text-xs font-bold text-slate-900 dark:text-white">
                         {asset.symbol}
                       </span>
@@ -192,7 +192,7 @@ export function CoverageMatrix() {
                     </div>
                   </td>
 
-                  <td className="px-5 py-3.5 font-mono">
+                  <td className="px-4 sm:px-5 py-3.5 font-mono whitespace-nowrap">
                     <span
                       className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[10px] font-bold ${
                         asset.volatilityLevel === 'high'
@@ -207,11 +207,11 @@ export function CoverageMatrix() {
                     </span>
                   </td>
 
-                  <td className="px-5 py-3.5 text-slate-600 dark:text-slate-300 font-sans text-xs">
+                  <td className="px-4 sm:px-5 py-3.5 text-slate-600 dark:text-slate-300 font-sans text-xs">
                     {asset.primaryTriggers}
                   </td>
 
-                  <td className="px-5 py-3.5 text-right font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                  <td className="px-4 sm:px-5 py-3.5 text-right font-mono font-bold text-emerald-600 dark:text-emerald-400 whitespace-nowrap">
                     ⚡ {asset.latency}
                   </td>
                 </tr>
@@ -222,8 +222,8 @@ export function CoverageMatrix() {
       </div>
 
       {/* Venues connected footer bar */}
-      <div className="mt-5 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400 px-1">
-        <div className="flex flex-wrap items-center gap-2">
+      <div className="mt-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400 px-1">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           <span className="font-mono text-[11px] font-semibold text-slate-700 dark:text-slate-300">
             Directly Ingested Venues:
           </span>
@@ -236,7 +236,7 @@ export function CoverageMatrix() {
             </span>
           ))}
         </div>
-        <span className="font-mono text-xs font-semibold text-sea">{activeData.totalMonitored} monitored</span>
+        <span className="font-mono text-xs font-semibold text-sea shrink-0">{activeData.totalMonitored} monitored</span>
       </div>
     </section>
   );
