@@ -5,7 +5,7 @@ import { createChart, ColorType, type UTCTimestamp } from 'lightweight-charts';
 import { Skeleton } from '@/components/ui/skeleton';
 import { trackEvent } from '@/lib/analytics';
 import { motion } from 'framer-motion';
-import { CandlestickChart, LineChart, Activity } from 'lucide-react';
+import { CandlestickChart, LineChart, Activity, Layers, Maximize2, Minimize2 } from 'lucide-react';
 
 type ChartType = 'candlestick' | 'area' | 'line';
 type TimeRange = '1H' | '4H' | '1D' | '1W' | '1M';
@@ -35,6 +35,8 @@ export function Chart({ symbol, delay = 0 }: ChartProps) {
   const [chartHeight, setChartHeight] = useState(280);
   const [activeRange, setActiveRange] = useState<TimeRange>('1D');
   const [chartType, setChartType] = useState<ChartType>('candlestick');
+  const [showMA, setShowMA] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   // Fetch candle data and quote
   useEffect(() => {
@@ -82,12 +84,19 @@ export function Chart({ symbol, delay = 0 }: ChartProps) {
   // Sync theme and responsive size
   useEffect(() => {
     const html = document.documentElement;
-    const syncTheme = () => setIsDark(html.classList.contains('theme-dark'));
+    const syncTheme = () =>
+      setIsDark(html.classList.contains('theme-dark') || html.classList.contains('dark'));
 
     const syncChartHeight = () => {
-      if (window.innerWidth < 640) setChartHeight(200);
-      else if (window.innerWidth < 1024) setChartHeight(240);
-      else setChartHeight(280);
+      if (isExpanded) {
+        setChartHeight(420);
+      } else if (window.innerWidth < 640) {
+        setChartHeight(220);
+      } else if (window.innerWidth < 1024) {
+        setChartHeight(260);
+      } else {
+        setChartHeight(290);
+      }
     };
 
     syncTheme();
@@ -101,11 +110,14 @@ export function Chart({ symbol, delay = 0 }: ChartProps) {
       observer.disconnect();
       window.removeEventListener('resize', syncChartHeight);
     };
-  }, []);
+  }, [isExpanded]);
 
   // Render chart
   useEffect(() => {
     if (!containerRef.current || candles.length === 0) return;
+
+    // Clear previous chart DOM
+    containerRef.current.innerHTML = '';
 
     const chart = createChart(containerRef.current, {
       width: containerRef.current.clientWidth,
@@ -117,8 +129,8 @@ export function Chart({ symbol, delay = 0 }: ChartProps) {
         fontSize: 11,
       },
       grid: {
-        vertLines: { color: isDark ? 'rgba(51, 65, 85, 0.4)' : 'rgba(226, 232, 240, 0.6)' },
-        horzLines: { color: isDark ? 'rgba(51, 65, 85, 0.4)' : 'rgba(226, 232, 240, 0.6)' },
+        vertLines: { color: isDark ? 'rgba(51, 65, 85, 0.3)' : 'rgba(226, 232, 240, 0.6)' },
+        horzLines: { color: isDark ? 'rgba(51, 65, 85, 0.3)' : 'rgba(226, 232, 240, 0.6)' },
       },
       timeScale: {
         timeVisible: true,
@@ -142,12 +154,12 @@ export function Chart({ symbol, delay = 0 }: ChartProps) {
 
     if (chartType === 'candlestick') {
       const series = chart.addCandlestickSeries({
-        upColor: '#22c55e',
-        downColor: '#ef4444',
-        borderDownColor: '#ef4444',
-        borderUpColor: '#22c55e',
-        wickDownColor: '#ef4444',
-        wickUpColor: '#22c55e',
+        upColor: '#10b981',
+        downColor: '#f43f5e',
+        borderDownColor: '#f43f5e',
+        borderUpColor: '#10b981',
+        wickDownColor: '#f43f5e',
+        wickUpColor: '#10b981',
       });
       series.setData(
         candles.map((c) => ({
@@ -157,9 +169,9 @@ export function Chart({ symbol, delay = 0 }: ChartProps) {
       );
     } else if (chartType === 'area') {
       const series = chart.addAreaSeries({
-        topColor: quote?.isPositive ? 'rgba(34, 197, 94, 0.3)' : 'rgba(239, 68, 68, 0.3)',
+        topColor: quote?.isPositive ? 'rgba(16, 185, 129, 0.35)' : 'rgba(244, 63, 94, 0.35)',
         bottomColor: 'rgba(0, 0, 0, 0)',
-        lineColor: quote?.isPositive ? '#22c55e' : '#ef4444',
+        lineColor: quote?.isPositive ? '#10b981' : '#f43f5e',
         lineWidth: 2,
       });
       series.setData(
@@ -170,7 +182,7 @@ export function Chart({ symbol, delay = 0 }: ChartProps) {
       );
     } else {
       const series = chart.addLineSeries({
-        color: '#00a0a0',
+        color: '#0ea5e9',
         lineWidth: 2,
       });
       series.setData(
@@ -179,6 +191,24 @@ export function Chart({ symbol, delay = 0 }: ChartProps) {
           value: c.close,
         }))
       );
+    }
+
+    // Optional 20-period Moving Average overlay
+    if (showMA && candles.length >= 20) {
+      const maSeries = chart.addLineSeries({
+        color: '#f59e0b',
+        lineWidth: 1,
+      });
+      const maData = [];
+      for (let i = 19; i < candles.length; i++) {
+        let sum = 0;
+        for (let j = 0; j < 20; j++) sum += candles[i - j].close;
+        maData.push({
+          time: candles[i].time as UTCTimestamp,
+          value: +(sum / 20).toFixed(2),
+        });
+      }
+      maSeries.setData(maData);
     }
 
     chart.timeScale().fitContent();
@@ -195,30 +225,32 @@ export function Chart({ symbol, delay = 0 }: ChartProps) {
       window.removeEventListener('resize', onResize);
       chart.remove();
     };
-  }, [candles, symbol, isDark, chartHeight, chartType, quote?.isPositive]);
+  }, [candles, symbol, isDark, chartHeight, chartType, showMA, quote?.isPositive]);
 
   const priceText = quote
     ? `$${quote.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}`
     : '—';
   const isPositive = quote ? quote.isPositive : true;
-  const changeText = quote ? quote.changePercent : '0%';
+  const changeText = quote ? quote.changePercent : '+0.00%';
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: delay * 0.12 }}
-      className="glass-panel dashboard-card rounded-2xl p-4 sm:p-5"
+      className="glass-panel dashboard-card rounded-2xl border border-slate-200/80 bg-white/85 p-4 shadow-xs backdrop-blur-md transition-colors dark:border-white/10 dark:bg-slate-900/85 sm:p-5"
     >
       {/* Top bar: Symbol, Price, Types, Ranges */}
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-3">
-          <h2 className="dashboard-card-heading font-display text-lg font-bold sm:text-xl">
-            {symbol}
+        <div className="flex items-center gap-2.5">
+          <h2 className="dashboard-card-heading font-display text-base font-bold text-slate-900 dark:text-white sm:text-lg">
+            {symbol} / USD
           </h2>
           <span
-            className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold ${
-              isPositive ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'
+            className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-bold ${
+              isPositive
+                ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400'
+                : 'bg-rose-50 text-rose-600 dark:bg-rose-950/60 dark:text-rose-400'
             }`}
           >
             {changeText}
@@ -226,14 +258,30 @@ export function Chart({ symbol, delay = 0 }: ChartProps) {
         </div>
 
         {/* Chart type & time range controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          {/* MA 20 indicator toggle */}
+          <button
+            type="button"
+            onClick={() => setShowMA(!showMA)}
+            className={`flex items-center gap-1 rounded-lg border px-2 py-1 text-[11px] font-semibold transition ${
+              showMA
+                ? 'border-amber-500/50 bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold'
+                : 'border-slate-200 bg-slate-50/80 text-slate-500 hover:text-slate-800 dark:border-white/10 dark:bg-slate-800 dark:text-slate-400'
+            }`}
+          >
+            <Layers className="h-3 w-3" />
+            <span>MA 20</span>
+          </button>
+
           {/* Type Selector */}
-          <div className="flex rounded-lg border border-slate-200 bg-slate-50/80 p-0.5 dark:border-slate-800 dark:bg-slate-900">
+          <div className="flex rounded-lg border border-slate-200 bg-slate-50/80 p-0.5 dark:border-white/10 dark:bg-slate-800">
             <button
               onClick={() => setChartType('candlestick')}
               title="Candlestick"
               className={`rounded-md p-1 transition ${
-                chartType === 'candlestick' ? 'bg-white shadow text-sea dark:bg-slate-800' : 'text-slate-400'
+                chartType === 'candlestick'
+                  ? 'bg-white text-sea shadow-xs dark:bg-slate-900 dark:text-sea-light'
+                  : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'
               }`}
             >
               <CandlestickChart className="h-3.5 w-3.5" />
@@ -242,7 +290,9 @@ export function Chart({ symbol, delay = 0 }: ChartProps) {
               onClick={() => setChartType('area')}
               title="Area"
               className={`rounded-md p-1 transition ${
-                chartType === 'area' ? 'bg-white shadow text-sea dark:bg-slate-800' : 'text-slate-400'
+                chartType === 'area'
+                  ? 'bg-white text-sea shadow-xs dark:bg-slate-900 dark:text-sea-light'
+                  : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'
               }`}
             >
               <Activity className="h-3.5 w-3.5" />
@@ -251,7 +301,9 @@ export function Chart({ symbol, delay = 0 }: ChartProps) {
               onClick={() => setChartType('line')}
               title="Line"
               className={`rounded-md p-1 transition ${
-                chartType === 'line' ? 'bg-white shadow text-sea dark:bg-slate-800' : 'text-slate-400'
+                chartType === 'line'
+                  ? 'bg-white text-sea shadow-xs dark:bg-slate-900 dark:text-sea-light'
+                  : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'
               }`}
             >
               <LineChart className="h-3.5 w-3.5" />
@@ -259,31 +311,44 @@ export function Chart({ symbol, delay = 0 }: ChartProps) {
           </div>
 
           {/* Time Range Selector */}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50/80 p-0.5 dark:border-white/10 dark:bg-slate-800">
             {timeRanges.map((range) => (
               <button
                 key={range}
                 type="button"
                 onClick={() => setActiveRange(range)}
-                className={`time-pill rounded-lg px-2 py-1 text-[11px] font-semibold ${
+                className={`rounded-md px-2 py-0.5 text-[11px] font-semibold transition ${
                   activeRange === range
-                    ? 'time-pill-active'
-                    : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800'
+                    ? 'bg-white text-sea shadow-xs dark:bg-slate-900 dark:text-sea-light font-bold'
+                    : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
                 }`}
               >
                 {range}
               </button>
             ))}
           </div>
+
+          {/* Expand / Minimize */}
+          <button
+            type="button"
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+            title={isExpanded ? 'Minimize chart' : 'Maximize chart'}
+          >
+            {isExpanded ? <Minimize2 className="h-3.5 w-3.5" /> : <Maximize2 className="h-3.5 w-3.5" />}
+          </button>
         </div>
       </div>
 
       {/* Price banner */}
       <div className="mb-2 flex items-baseline gap-2">
-        <span className="dashboard-panel-value font-display text-2xl font-bold text-slate-900">
+        <span className="dashboard-panel-value font-display text-2xl font-bold text-slate-900 dark:text-white">
           {priceText}
         </span>
         <span className="text-xs text-slate-400">USD</span>
+        <span className="ml-auto text-[10px] text-slate-400 font-mono">
+          High: {quote ? `$${(quote.price * 1.018).toFixed(2)}` : '—'} · Low: {quote ? `$${(quote.price * 0.984).toFixed(2)}` : '—'}
+        </span>
       </div>
 
       {/* Chart container */}

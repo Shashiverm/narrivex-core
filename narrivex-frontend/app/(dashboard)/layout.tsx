@@ -32,13 +32,23 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="dashboard-page min-h-screen bg-[#f0f2f5] lg:flex">
-      <div className="hidden lg:block lg:shrink-0">
+    <div className="dashboard-page relative min-h-screen bg-slate-100/70 text-slate-900 transition-colors duration-200 dark:bg-[#070b12] dark:text-slate-100 lg:flex">
+      {/* Ambient background engineering grid & radial glow */}
+      <div
+        className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(14,165,233,0.08),transparent_70%)] dark:bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(14,165,233,0.14),transparent_70%)]"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none fixed inset-0 z-0 bg-tech-grid opacity-60 dark:opacity-40"
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 hidden lg:block lg:shrink-0">
         <Sidebar />
       </div>
 
       <div
-        className={`fixed inset-0 z-40 bg-slate-950/45 transition-opacity duration-300 lg:hidden ${
+        className={`fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-xs transition-opacity duration-300 lg:hidden ${
           isSidebarOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
         onClick={() => setIsSidebarOpen(false)}
@@ -50,12 +60,12 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <Sidebar onNavigate={() => setIsSidebarOpen(false)} className="h-full" />
+        <Sidebar onNavigate={() => setIsSidebarOpen(false)} className="h-full shadow-2xl" />
       </div>
 
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="relative z-10 flex min-w-0 flex-1 flex-col">
         <Header onMenuClick={() => setIsSidebarOpen(true)} />
-        <main className="flex-1 p-4 pb-28 sm:p-6">{children}</main>
+        <main className="flex-1 p-3.5 pb-24 sm:p-6 lg:p-7">{children}</main>
       </div>
     </div>
   );
